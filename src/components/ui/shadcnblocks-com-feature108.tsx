@@ -30,7 +30,7 @@ interface Feature108Props {
 
 const Feature108 = ({
   badge = "Inkaer",
-  heading = "Showcase Your Skills Through Real Work",
+  heading = "Show What You've Got!",
   description = "Demonstrate your expertise with actual projects and challenges.",
   tabs = [
     {
