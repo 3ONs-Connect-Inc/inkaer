@@ -1,87 +1,75 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Play } from 'lucide-react';
-import { TypewriterEffectSmooth } from '@/components/ui/typewriter-effect';
+import { Play } from 'lucide-react';
 
 const HeroSection = () => {
-  const words = [
-    {
-      text: "Get",
-    },
-    {
-      text: "Hired",
-    },
-    {
-      text: "Based",
-    },
-    {
-      text: "on",
-    },
-    {
-      text: "Real",
-      className: "text-inkaer-blue font-playfair font-black italic",
-    },
-    {
-      text: "Skills,",
-      className: "text-inkaer-blue font-playfair font-black italic",
-    },
-    {
-      text: "Not",
-    },
-    {
-      text: "Resumes",
-    },
-  ];
-
   return (
-    <section className="pt-8 pb-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-inkaer-blue/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-inkaer-dark-blue/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
+          
           {/* Left Content */}
           <div className="space-y-8 animate-fade-in">
-            {/* Main Heading with Typewriter Effect */}
-            <div className="space-y-4">
-              <TypewriterEffectSmooth 
-                words={words} 
-                className="text-left justify-start my-4"
-                cursorClassName="bg-inkaer-blue"
-              />
+            <div className="space-y-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-sora font-medium leading-tight text-gray-900">
+                Get Hired Based on{' '}
+                <span className="font-playfair font-extrabold italic text-inkaer-blue">
+                  Real Skills
+                </span>
+                , Not Resumes
+              </h1>
+              
+              <p className="text-xl sm:text-2xl text-gray-600 font-sora leading-relaxed max-w-2xl">
+                Upload your portfolio or tackle real-world engineering challenges designed to highlight your competitiveness and creativity
+              </p>
             </div>
 
-            {/* Subheading */}
-            <p className="text-xl text-gray-600 font-sora leading-relaxed animate-slide-up" style={{ animationDelay: '0.3s' }}>
-              Upload your portfolio or tackle real-world engineering challenges designed to highlight your competitiveness and creativity
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{ animationDelay: '0.6s' }}>
-              <Button className="bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <Button className="bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105 hover:shadow-xl">
                 Get Started
-                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button 
                 variant="outline" 
-                className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105"
+                className="border-2 border-inkaer-blue text-inkaer-blue hover:bg-inkaer-blue hover:text-white font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105 group"
               >
-                <Play className="w-5 h-5 mr-2" />
+                <Play className="w-5 h-5 mr-2 group-hover:animate-bounce-gentle" />
                 Watch Demo
               </Button>
             </div>
           </div>
 
-          {/* Right Image */}
-          <div className="relative animate-scale-in" style={{ animationDelay: '0.4s' }}>
-            <div className="relative z-10">
+          {/* Right Content - Hero Image */}
+          <div className="relative animate-slide-up">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=600&fit=crop&crop=face"
-                alt="Professional woman working on laptop"
-                className="w-full h-auto rounded-2xl shadow-2xl"
+                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop&crop=faces"
+                alt="Professional woman working on engineering challenges"
+                className="w-full h-auto object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-inkaer-blue/20 to-transparent"></div>
             </div>
-            {/* Background Decorative Elements */}
-            <div className="absolute -top-6 -right-6 w-full h-full bg-gradient-inkaer-light rounded-2xl -z-10"></div>
-            <div className="absolute top-6 right-6 w-24 h-24 bg-inkaer-light-blue/20 rounded-full animate-bounce-gentle"></div>
+            
+            {/* Floating elements */}
+            <div className="absolute -top-6 -right-6 bg-white rounded-xl shadow-lg p-4 animate-scale-in">
+              <div className="flex items-center space-x-2">
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm font-sora font-semibold text-gray-700">Skills Verified</span>
+              </div>
+            </div>
+            
+            <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 animate-scale-in">
+              <div className="flex items-center space-x-2">
+                <div className="text-2xl font-bold text-inkaer-blue">Free</div>
+                <span className="text-sm font-sora text-gray-600">To Use</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
