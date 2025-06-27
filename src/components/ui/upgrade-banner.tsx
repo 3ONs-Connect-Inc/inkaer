@@ -41,27 +41,6 @@ export function UpgradeBanner({
 }: UpgradeBannerProps) {
   const [isHovered, setIsHovered] = React.useState(false);
 
-  const iconVariants = {
-    hidden: { x: 0, y: 0, opacity: 0, rotate: 0 },
-    visible: (custom: { x: number; y: number }) => ({
-      x: custom.x,
-      y: custom.y,
-      opacity: 1,
-      rotate: 360,
-      transition: {
-        x: { duration: 0.3, ease: "easeOut" },
-        y: { duration: 0.3, ease: "easeOut" },
-        opacity: { duration: 0.3 },
-        rotate: {
-          duration: 1,
-          type: "spring",
-          stiffness: 100,
-          damping: 10,
-        },
-      },
-    }),
-  };
-
   return (
     <div className={cn("mx-auto flex items-center justify-center", className)}>
       <AnimatePresence>
@@ -72,19 +51,17 @@ export function UpgradeBanner({
           transition={{ duration: 0.4 }}
         >
           <motion.div
-            initial="hidden"
-            animate={isHovered ? "visible" : "hidden"}
-            variants={iconVariants}
-            custom={{ x: -10, y: -10 }}
+            initial={{ x: 0, y: 0, opacity: 0, rotate: 0 }}
+            animate={isHovered ? { x: -10, y: -10, opacity: 1, rotate: 360 } : { x: 0, y: 0, opacity: 0, rotate: 0 }}
+            transition={{ duration: 0.3 }}
             className="pointer-events-none absolute left-[4px] top-[2px]"
           >
             <SettingsFilled className="text-inkaer-blue" />
           </motion.div>
           <motion.div
-            initial="hidden"
-            animate={isHovered ? "visible" : "hidden"}
-            variants={iconVariants}
-            custom={{ x: 10, y: 10 }}
+            initial={{ x: 0, y: 0, opacity: 0, rotate: 0 }}
+            animate={isHovered ? { x: 10, y: 10, opacity: 1, rotate: 360 } : { x: 0, y: 0, opacity: 0, rotate: 0 }}
+            transition={{ duration: 0.3 }}
             className="pointer-events-none absolute bottom-[2px] left-[6rem]"
           >
             <SettingsFilled className="text-inkaer-blue" />
