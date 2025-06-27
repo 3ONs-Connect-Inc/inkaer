@@ -73,7 +73,12 @@ export default {
 					'dark-blue': 'rgb(41, 98, 255)',
 					'gradient-start': 'rgb(0, 170, 254)',
 					'gradient-end': 'rgb(41, 98, 255)'
-				}
+				},
+				"color-1": "hsl(var(--color-1))",
+				"color-2": "hsl(var(--color-2))",
+				"color-3": "hsl(var(--color-3))",
+				"color-4": "hsl(var(--color-4))",
+				"color-5": "hsl(var(--color-5))",
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -134,7 +139,11 @@ export default {
 					'50%': {
 						transform: 'translateY(-5px)'
 					}
-				}
+				},
+				rainbow: {
+					"0%": { "background-position": "0%" },
+					"100%": { "background-position": "200%" },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -142,7 +151,8 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'slide-up': 'slide-up 0.8s ease-out',
 				'scale-in': 'scale-in 0.4s ease-out',
-				'bounce-gentle': 'bounce-gentle 2s infinite'
+				'bounce-gentle': 'bounce-gentle 2s infinite',
+				rainbow: "rainbow var(--speed, 2s) infinite linear",
 			},
 			backgroundImage: {
 				'gradient-inkaer': 'linear-gradient(135deg, rgb(0, 170, 254) 0%, rgb(41, 98, 255) 100%)',
