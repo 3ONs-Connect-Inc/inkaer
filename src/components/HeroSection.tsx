@@ -41,7 +41,7 @@ const HeroSection = () => {
               </h1>
               
               <p className="text-xl sm:text-2xl text-gray-600 font-sora leading-relaxed max-w-2xl">
-                Upload your portfolio. Tackle real challenges. Get noticed and get hired.
+                Upload your portfolio or tackle real-world engineering challenges that highlight your edge, and get you hired fast.
               </p>
             </div>
 
