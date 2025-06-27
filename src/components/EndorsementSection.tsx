@@ -1,51 +1,28 @@
 
 import React from 'react';
+import { UpgradeBanner } from '@/components/ui/upgrade-banner';
 
 const EndorsementSection = () => {
-  const companies = [
-    {
-      name: 'Google',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg'
-    },
-    {
-      name: 'Microsoft',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg'
-    },
-    {
-      name: 'PWC',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/0/05/PwC_Logo.svg'
-    },
-    {
-      name: 'Bombardier',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/7/75/Bombardier_logo.svg'
-    }
-  ];
-
   return (
-    <section className="bg-white py-8">
+    <section className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center space-y-6">
-          <h3 className="text-lg font-sora font-medium text-gray-600">
+        <div className="text-center mb-8">
+          <p className="text-lg text-gray-600 font-sora mb-6">
             Endorsed by early contributors from:
-          </h3>
+          </p>
           
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
-            {companies.map((company) => (
-              <div key={company.name} className="flex items-center justify-center h-12 w-32 grayscale hover:grayscale-0 transition-all duration-300">
-                <img
-                  src={company.logo}
-                  alt={`${company.name} logo`}
-                  className="max-h-8 w-auto object-contain"
-                />
-              </div>
-            ))}
+          <div className="flex justify-center items-center space-x-12 mb-8 flex-wrap gap-y-6">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png" alt="Google" className="h-8 opacity-60 hover:opacity-100 transition-opacity" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/2048px-Microsoft_logo.svg.png" alt="Microsoft" className="h-8 opacity-60 hover:opacity-100 transition-opacity" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/PwC_Logo.svg/2560px-PwC_Logo.svg.png" alt="PwC" className="h-8 opacity-60 hover:opacity-100 transition-opacity" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Bombardier_logo.svg/2560px-Bombardier_logo.svg.png" alt="Bombardier" className="h-8 opacity-60 hover:opacity-100 transition-opacity" />
           </div>
           
-          <div className="inline-flex items-center bg-gradient-inkaer-light px-6 py-3 rounded-full">
-            <span className="text-inkaer-blue font-sora font-semibold text-lg">
-              🎉 Inkaer is free to use
-            </span>
-          </div>
+          <UpgradeBanner
+            buttonText="Inkaer is free to use"
+            description="with verified skill assessments"
+            className="mt-6"
+          />
         </div>
       </div>
     </section>

@@ -3,10 +3,23 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { RainbowButton } from '@/components/ui/rainbow-button';
 import { Play } from 'lucide-react';
+import { FlickeringGrid } from '@/components/ui/flickering-grid';
 
 const HeroSection = () => {
   return (
-    <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden pt-4">
+    <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden">
+      {/* Flickering Grid Background */}
+      <div className="absolute inset-0 opacity-30">
+        <FlickeringGrid
+          className="z-0 absolute inset-0 size-full"
+          squareSize={4}
+          gridGap={6}
+          color="rgb(0, 170, 254)"
+          maxOpacity={0.1}
+          flickerChance={0.05}
+        />
+      </div>
+
       {/* Background decorative elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-inkaer-blue/5 rounded-full blur-3xl"></div>
@@ -62,13 +75,6 @@ const HeroSection = () => {
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                 <span className="text-sm font-sora font-semibold text-gray-700">Skills Verified</span>
-              </div>
-            </div>
-            
-            <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 animate-scale-in">
-              <div className="flex items-center space-x-2">
-                <div className="text-2xl font-bold text-inkaer-blue">Free</div>
-                <span className="text-sm font-sora text-gray-600">To Use</span>
               </div>
             </div>
           </div>
