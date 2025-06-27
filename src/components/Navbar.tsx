@@ -6,16 +6,9 @@ import { Button } from '@/components/ui/button';
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const leftNavItems = [
-    { label: 'Dashboard', href: '#dashboard' },
-    { label: 'Projects', href: '#projects' },
-    { label: 'Ranks', href: '#ranks' },
-    { label: 'Certification', href: '#certification' }
-  ];
-
-  const rightNavItems = [
+  const navItems = [
     { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Job Postings', href: '#job-postings' },
+    { label: 'Certification', href: '#certification' },
     { label: 'Sign In', href: '#sign-in' }
   ];
 
@@ -23,20 +16,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Left Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {leftNavItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Logo */}
+          {/* Logo - Far Left */}
           <div className="flex-shrink-0">
             <img 
               src="/lovable-uploads/43b0acd6-b3f5-4c6c-8343-272a5aefe7c2.png" 
@@ -47,7 +27,7 @@ const Navbar = () => {
 
           {/* Right Navigation */}
           <div className="hidden lg:flex items-center space-x-6">
-            {rightNavItems.map((item) => (
+            {navItems.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -77,7 +57,7 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4 space-y-4">
             <div className="space-y-2">
-              {[...leftNavItems, ...rightNavItems].map((item) => (
+              {navItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}

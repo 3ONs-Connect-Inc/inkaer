@@ -5,15 +5,15 @@ import { Play } from 'lucide-react';
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-inkaer-blue/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-inkaer-dark-blue/5 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
+        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
           
           {/* Left Content */}
           <div className="space-y-8 animate-fade-in">
@@ -27,7 +27,7 @@ const HeroSection = () => {
               </h1>
               
               <p className="text-xl sm:text-2xl text-gray-600 font-sora leading-relaxed max-w-2xl">
-                Tackle real-world engineering challenges designed to highlight your competitiveness and creativity
+                Upload your portfolio or tackle real-world engineering challenges designed to highlight your competitiveness and creativity
               </p>
             </div>
 
@@ -66,8 +66,8 @@ const HeroSection = () => {
             
             <div className="absolute -bottom-6 -left-6 bg-white rounded-xl shadow-lg p-4 animate-scale-in">
               <div className="flex items-center space-x-2">
-                <div className="text-2xl font-bold text-inkaer-blue">94%</div>
-                <span className="text-sm font-sora text-gray-600">Success Rate</span>
+                <div className="text-2xl font-bold text-inkaer-blue">Free</div>
+                <span className="text-sm font-sora text-gray-600">To Use</span>
               </div>
             </div>
           </div>
