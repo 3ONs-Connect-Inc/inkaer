@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
@@ -41,23 +40,10 @@ const UploadPortfolio = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 relative overflow-hidden">
-      {/* Flickering Grid Background */}
-      <div className="absolute inset-0 opacity-30">
-        <FlickeringGrid
-          className="z-0 absolute inset-0 size-full"
-          squareSize={4}
-          gridGap={6}
-          color="rgb(0, 170, 254)"
-          maxOpacity={0.1}
-          flickerChance={0.05}
-        />
-      </div>
-
-      {/* Background decorative elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-inkaer-blue/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-inkaer-dark-blue/5 rounded-full blur-3xl"></div>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Premium Static Background */}
+      <div className="fixed inset-0 z-0">
+        <FlickeringGrid className="absolute inset-0 size-full" />
       </div>
 
       <div className="relative z-10">
