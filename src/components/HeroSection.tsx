@@ -33,7 +33,7 @@ const HeroSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button className="mt-2.5 w-fit gap-2 bg-inkaer-blue hover:bg-inkaer-dark-blue font-sora">
+              <Button className="bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold px-8 py-4 text-lg">
                 <a href="login-landing">
                 Get Started
                 </a>
