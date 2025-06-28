@@ -33,14 +33,14 @@ const HeroSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button className="bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold px-8 py-4 text-lg">
+              <Button className="w-fit gap-2 bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold px-8 py-4 text-lg">
                 <a href="login-landing">
                 Get Started
                 </a>
               </Button>
               <Button 
                 variant="outline" 
-                className="border-2 border-inkaer-blue text-inkaer-blue hover:bg-inkaer-blue hover:text-white font-sora font-semibold px-8 py-4 text-lg group"
+                className="w-fit gap-2 border-2 border-inkaer-blue text-inkaer-blue hover:bg-inkaer-blue hover:text-white font-sora font-semibold px-8 py-4 text-lg group"
               >
                 <Play className="w-5 h-5 mr-2 group-hover:animate-bounce-gentle" />
                 Watch Demo

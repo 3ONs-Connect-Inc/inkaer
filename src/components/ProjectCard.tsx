@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Clock, Users, Star } from 'lucide-react';
@@ -109,7 +108,7 @@ const ProjectCard = ({
         </div>
 
         {/* Action Button */}
-        <Button className="w-full bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
+        <Button className="w-fit gap-2 bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
           Start Challenge
           <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
         </Button>

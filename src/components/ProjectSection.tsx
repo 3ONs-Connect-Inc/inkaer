@@ -36,7 +36,7 @@ const ProjectSection = ({ title, projects, showSeeAll = true }: ProjectSectionPr
           {showSeeAll && (
             <Button 
               variant="ghost" 
-              className="text-inkaer-blue hover:text-inkaer-dark-blue font-sora font-semibold"
+              className="w-fit gap-2 text-inkaer-blue hover:text-inkaer-dark-blue font-sora font-semibold"
             >
               See All
               <ArrowRight className="w-4 h-4 ml-1" />

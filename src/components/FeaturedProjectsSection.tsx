@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Clock, Users, Star } from 'lucide-react';
@@ -129,7 +128,7 @@ const FeaturedProjectsSection = () => {
                 </div>
 
                 {/* Action Button */}
-                <Button className="w-full bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
+                <Button className="w-fit gap-2 bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
                   Start Challenge
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
                 </Button>
@@ -142,7 +141,7 @@ const FeaturedProjectsSection = () => {
         <div className="text-center">
           <Button 
             variant="outline" 
-            className="border-2 border-inkaer-blue text-inkaer-blue hover:bg-inkaer-blue hover:text-white font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105"
+            className="w-fit gap-2 border-2 border-inkaer-blue text-inkaer-blue hover:bg-inkaer-blue hover:text-white font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105"
           >
             View All Projects
             <ArrowRight className="w-5 h-5 ml-2" />
