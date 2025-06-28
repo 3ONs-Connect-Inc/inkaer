@@ -34,7 +34,7 @@ const ProjectCard = ({
     switch (difficulty) {
       case 'Intermediate': return 'text-yellow-600 bg-yellow-100';
       case 'Advanced': return 'text-orange-600 bg-orange-100';
-      case 'Elite': return 'text-red-600 bg-red-100';
+      case 'Expert': return 'text-red-600 bg-red-100';
       default: return 'text-green-600 bg-green-100';
     }
   };

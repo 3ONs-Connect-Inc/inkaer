@@ -120,7 +120,9 @@ const Feature108 = ({
                     {tab.content.description}
                   </p>
                   <Button className="mt-2.5 w-fit gap-2 bg-inkaer-blue hover:bg-inkaer-dark-blue font-sora" size="lg">
+                    <a href="/upload-portfolio">
                     {tab.content.buttonText}
+                    </a>
                   </Button>
                 </div>
                 <img
