@@ -191,17 +191,6 @@ const UploadPortfolio = () => {
                 </form>
               </CardContent>
             </Card>
-
-            {/* Submit Project Button */}
-            {/*<div className="text-center">
-              <Button
-                onClick={handleSubmit}
-                size="lg"
-                className="bg-gradient-inkaer hover:opacity-90 text-white font-sora font-bold px-12 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                Submit Project
-              </Button>
-            </div>*/}
           </div>
         </section>
 
