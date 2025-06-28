@@ -48,11 +48,13 @@ const SignIn = () => {
           <CardHeader className="text-center space-y-4">
             {/* Prominent Inkaer Logo */}
             <div className="flex justify-center">
+             <a href="/" className="flex items-center gap-2">
               <img 
                 src="/lovable-uploads/43b0acd6-b3f5-4c6c-8343-272a5aefe7c2.png" 
                 alt="Inkaer" 
                 className="h-16 w-auto"
               />
+             </a>
             </div>
             <CardTitle className="text-3xl font-sora font-bold text-gray-900">
               Welcome Back
