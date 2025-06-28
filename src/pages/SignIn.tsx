@@ -138,7 +138,7 @@ const SignIn = () => {
             <div className="text-center">
               <p className="text-gray-600 font-sora">
                 Don't have an account?{' '}
-                <a href="#" className="text-inkaer-blue hover:text-inkaer-dark-blue font-semibold">
+                <a href="sign-up" className="text-inkaer-blue hover:text-inkaer-dark-blue font-semibold">
                   Sign up
                 </a>
               </p>
