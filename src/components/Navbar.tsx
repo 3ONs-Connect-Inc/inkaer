@@ -28,10 +28,10 @@ const Navbar = () => {
               Certification
             </a>
             <Button asChild variant="ghost" size="sm" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
-              <a href="#sign-in">Sign In</a>
+              <a href="sign-in">Sign In</a>
             </Button>
             <Button asChild size="sm" className="bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold px-6 py-2 rounded-full transition-all duration-200 hover:scale-105">
-              <a href="#get-started">Get Started</a>
+              <a href="sign-up">Get Started</a>
             </Button>
           </div>
         </nav>
