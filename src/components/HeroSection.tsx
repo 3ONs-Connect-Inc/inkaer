@@ -3,23 +3,10 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { RainbowButton } from '@/components/ui/rainbow-button';
 import { Play } from 'lucide-react';
-import { FlickeringGrid } from '@/components/ui/flickering-grid';
 
 const HeroSection = () => {
   return (
     <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden">
-      {/* Flickering Grid Background */}
-      <div className="absolute inset-0 opacity-30">
-        <FlickeringGrid
-          className="z-0 absolute inset-0 size-full"
-          squareSize={4}
-          gridGap={6}
-          color="rgb(0, 170, 254)"
-          maxOpacity={0.1}
-          flickerChance={0.05}
-        />
-      </div>
-
       {/* Background decorative elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-inkaer-blue/5 rounded-full blur-3xl"></div>
@@ -46,14 +33,14 @@ const HeroSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <RainbowButton className="font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105 hover:shadow-xl">
+              <Button className="bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold px-8 py-4 text-lg">
                 <a href="login-landing">
                 Get Started
                 </a>
-              </RainbowButton>
+              </Button>
               <Button 
                 variant="outline" 
-                className="border-2 border-inkaer-blue text-inkaer-blue hover:bg-inkaer-blue hover:text-white font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105 group"
+                className="border-2 border-inkaer-blue text-inkaer-blue hover:bg-inkaer-blue hover:text-white font-sora font-semibold px-8 py-4 text-lg group"
               >
                 <Play className="w-5 h-5 mr-2 group-hover:animate-bounce-gentle" />
                 Watch Demo
