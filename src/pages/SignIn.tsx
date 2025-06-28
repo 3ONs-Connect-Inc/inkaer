@@ -127,8 +127,9 @@ const SignIn = () => {
               <Button
                 type="submit"
                 className="w-full bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold py-3 rounded-full text-lg"
-              >
+              ><a href="login-landing" className="flex items-center gap-2">
                 Sign In
+              </a>
               </Button>
             </form>
 
