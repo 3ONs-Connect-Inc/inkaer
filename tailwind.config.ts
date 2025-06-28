@@ -156,7 +156,8 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-inkaer': 'linear-gradient(135deg, rgb(0, 170, 254) 0%, rgb(41, 98, 255) 100%)',
-				'gradient-inkaer-light': 'linear-gradient(135deg, rgba(0, 170, 254, 0.1) 0%, rgba(41, 98, 255, 0.1) 100%)'
+				'gradient-inkaer-light': 'linear-gradient(135deg, rgba(0, 170, 254, 0.1) 0%, rgba(41, 98, 255, 0.1) 100%)',
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 			}
 		}
 	},
