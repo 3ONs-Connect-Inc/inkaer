@@ -193,7 +193,7 @@ const UploadPortfolio = () => {
             </Card>
 
             {/* Submit Project Button */}
-            <div className="text-center">
+            {/* <div className="text-center">
               <Button
                 onClick={handleSubmit}
                 size="lg"
@@ -201,7 +201,7 @@ const UploadPortfolio = () => {
               >
                 Submit Project
               </Button>
-            </div>
+            </div>*/}
           </div>
         </section>
 
