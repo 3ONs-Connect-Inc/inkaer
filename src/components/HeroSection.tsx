@@ -47,7 +47,9 @@ const HeroSection = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <RainbowButton className="font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105 hover:shadow-xl">
+                <a href="login-landing">
                 Get Started
+                </a>
               </RainbowButton>
               <Button 
                 variant="outline" 
