@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { ChatInput } from '@/components/ui/chat-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { FlickeringGrid } from '@/components/ui/flickering-grid';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Upload, FileText, File } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -13,6 +12,19 @@ const UploadPortfolio = () => {
   const [stepFile, setStepFile] = useState<File | null>(null);
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [explanation, setExplanation] = useState('');
+  const [selectedDomain, setSelectedDomain] = useState('mechanical');
+
+  const engineeringDomains = [
+    { value: 'mechanical', label: 'Mechanical Engineering', available: true },
+    { value: 'electrical', label: 'Electrical and Mechatronics', available: false },
+    { value: 'civil', label: 'Civil / Structural', available: false },
+    { value: 'software', label: 'Software (Backend)', available: false },
+    { value: 'uiux', label: 'UI/UX (Product Usability Design)', available: false },
+    { value: 'rf', label: 'Radio Frequency (RF)', available: false },
+    { value: 'antenna', label: 'Antenna', available: false },
+    { value: 'embedded', label: 'Embedded', available: false },
+    { value: 'aerospace', label: 'Aerospace', available: false },
+  ];
 
   const handleStepUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -37,28 +49,15 @@ const UploadPortfolio = () => {
     }
     
     toast.success('Project submitted successfully!');
-    console.log('Submitting project:', { stepFile, pdfFile, explanation });
+    console.log('Submitting project:', { stepFile, pdfFile, explanation, domain: selectedDomain });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 relative overflow-hidden">
-      {/* Flickering Grid Background */}
-      <div className="absolute inset-0 opacity-30">
-        <FlickeringGrid
-          className="z-0 absolute inset-0 size-full"
-          squareSize={4}
-          gridGap={6}
-          color="rgb(0, 170, 254)"
-          maxOpacity={0.1}
-          flickerChance={0.05}
-        />
-      </div>
-
-      {/* Background decorative elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-inkaer-blue/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-inkaer-dark-blue/5 rounded-full blur-3xl"></div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30 relative overflow-hidden">
+      {/* Premium Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-100/30"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,170,254,0.05)_0%,transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,120,200,0.08)_0%,transparent_50%)]"></div>
 
       <div className="relative z-10">
         <LoggedInNavbar />
@@ -66,13 +65,41 @@ const UploadPortfolio = () => {
         {/* Main Content */}
         <section className="py-12">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8">
               <h1 className="text-4xl sm:text-5xl font-sora font-bold text-gray-900 mb-4">
                 Upload Your Portfolio
               </h1>
-              <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto">
+              <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto mb-6">
                 Submit your engineering projects and showcase your technical skills.
               </p>
+              
+              {/* Engineering Domain Dropdown */}
+              <div className="max-w-md mx-auto">
+                <Select value={selectedDomain} onValueChange={setSelectedDomain}>
+                  <SelectTrigger className="w-full bg-white/80 backdrop-blur-sm border-gray-200 font-sora">
+                    <SelectValue placeholder="Select Engineering Domain" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white/95 backdrop-blur-md border-gray-200">
+                    {engineeringDomains.map((domain) => (
+                      <SelectItem 
+                        key={domain.value} 
+                        value={domain.value}
+                        disabled={!domain.available}
+                        className="font-sora"
+                      >
+                        <div className="flex items-center justify-between w-full">
+                          <span>{domain.label}</span>
+                          {!domain.available && (
+                            <span className="ml-2 px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                              Coming Soon
+                            </span>
+                          )}
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 mb-8">
@@ -109,7 +136,7 @@ const UploadPortfolio = () => {
                     />
                     <Button
                       onClick={() => document.getElementById('step-upload')?.click()}
-                      className="w-full bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold"
+                      className="w-full bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold"
                     >
                       <Upload className="w-4 h-4 mr-2" />
                       Upload STEP File
@@ -151,7 +178,7 @@ const UploadPortfolio = () => {
                     />
                     <Button
                       onClick={() => document.getElementById('pdf-upload')?.click()}
-                      className="w-full bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold"
+                      className="w-full bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold"
                     >
                       <Upload className="w-4 h-4 mr-2" />
                       Upload PDF
@@ -183,7 +210,7 @@ const UploadPortfolio = () => {
                   <div className="flex items-center justify-end p-3 pt-0">
                     <Button
                       type="submit" 
-                      className="bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold"
+                      className="bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold"
                     >
                       Submit Project
                     </Button>

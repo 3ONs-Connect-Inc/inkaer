@@ -4,11 +4,42 @@ import LoggedInNavbar from '@/components/LoggedInNavbar';
 import ShowWhatYouGotSection from '@/components/ShowWhatYouGotSection';
 import ProjectSection from '@/components/ProjectSection';
 import Footer from '@/components/Footer';
-import { FlickeringGrid } from '@/components/ui/flickering-grid';
 
 const LoginLanding = () => {
-  // Sample project data
-  const featuredProjects = [
+  // Portfolio projects ready for review
+  const portfolioProjects = [
+    {
+      title: "Automated Assembly Line Design",
+      category: "Mechanical Engineering",
+      difficulty: "Advanced",
+      duration: "Submitted 2 days ago",
+      participants: 1,
+      rating: 4.8,
+      description: "Complete mechanical design of an automated assembly line with robotic integration and quality control systems.",
+      tags: ["CAD", "Automation", "Robotics"],
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
+      author: "Sarah Mitchell",
+      comments: 3,
+      type: "portfolio"
+    },
+    {
+      title: "Wind Turbine Blade Optimization", 
+      category: "Aerospace Engineering",
+      difficulty: "Expert",
+      duration: "Submitted 1 week ago",
+      participants: 1,
+      rating: 4.9,
+      description: "Aerodynamic optimization of wind turbine blades using computational fluid dynamics and structural analysis.",
+      tags: ["CFD", "Optimization", "Renewable Energy"],
+      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
+      author: "Marcus Chen",
+      comments: 7,
+      type: "portfolio"
+    }
+  ];
+
+  // Featured challenges
+  const featuredChallenges = [
     {
       title: "Project Alpha",
       category: "Backend Engineering",
@@ -20,7 +51,8 @@ const LoginLanding = () => {
       tags: ["Python", "Docker", "PostgreSQL"],
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
       author: "John Stone",
-      comments: 12
+      comments: 12,
+      type: "challenge"
     },
     {
       title: "Heat Exchanger Redesign", 
@@ -33,7 +65,8 @@ const LoginLanding = () => {
       tags: ["CAD", "Thermal", "Engineering"],
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
       author: "Cathy Lee",
-      comments: 25
+      comments: 25,
+      type: "challenge"
     }
   ];
 
@@ -49,7 +82,8 @@ const LoginLanding = () => {
       tags: ["CAD", "Drone", "Modular"],
       image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
       author: "Daniel Brown",
-      comments: 18
+      comments: 18,
+      type: "challenge"
     }
   ];
 
@@ -65,7 +99,8 @@ const LoginLanding = () => {
       tags: ["CFD", "Simulation", "Thermal"],
       image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
       author: "Ivy Timmons",
-      comments: 31
+      comments: 31,
+      type: "challenge"
     }
   ];
 
@@ -81,29 +116,17 @@ const LoginLanding = () => {
       tags: ["FEA", "Testing", "Structural"],
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
       author: "Kevin Carpenter",
-      comments: 10
+      comments: 10,
+      type: "challenge"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 relative overflow-hidden">
-      {/* Flickering Grid Background */}
-      <div className="absolute inset-0 opacity-30">
-        <FlickeringGrid
-          className="z-0 absolute inset-0 size-full"
-          squareSize={4}
-          gridGap={6}
-          color="rgb(0, 170, 254)"
-          maxOpacity={0.1}
-          flickerChance={0.05}
-        />
-      </div>
-
-      {/* Background decorative elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-inkaer-blue/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-inkaer-dark-blue/5 rounded-full blur-3xl"></div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30 relative overflow-hidden">
+      {/* Premium Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-100/30"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,170,254,0.05)_0%,transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,120,200,0.08)_0%,transparent_50%)]"></div>
 
       <div className="relative z-10">
         <LoggedInNavbar />
@@ -126,20 +149,29 @@ const LoginLanding = () => {
         
         <div className="space-y-8">
           <ProjectSection 
-            title="Featured Projects" 
-            projects={featuredProjects}
+            title="Featured Portfolio Projects" 
+            projects={portfolioProjects}
+            projectType="portfolio"
           />
           <ProjectSection 
-            title="New Projects" 
+            title="Featured Challenges" 
+            projects={featuredChallenges}
+            projectType="challenge"
+          />
+          <ProjectSection 
+            title="New Challenges" 
             projects={newProjects}
+            projectType="challenge"
           />
           <ProjectSection 
             title="My Projects" 
             projects={myProjects}
+            projectType="challenge"
           />
           <ProjectSection 
             title="Starred Projects" 
             projects={starredProjects}
+            projectType="challenge"
           />
         </div>
 

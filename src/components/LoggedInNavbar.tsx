@@ -28,11 +28,11 @@ const LoggedInNavbar = () => {
             </a>
           </div>
           <div className="flex items-center gap-6">
-            <a href="#dashboard" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
+            <a href="/login-landing" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
               Dashboard
             </a>
-            <a href="#project" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
-              Project
+            <a href="/projects" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
+              Projects
             </a>
             <a href="#rank" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
               Rank
@@ -81,11 +81,11 @@ const LoggedInNavbar = () => {
                 </SheetHeader>
                 <div className="my-6 flex flex-col gap-6">
                   <div className="space-y-4">
-                    <a href="#dashboard" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
+                    <a href="/login-landing" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
                       Dashboard
                     </a>
-                    <a href="#project" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
-                      Project
+                    <a href="/projects" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
+                      Projects
                     </a>
                     <a href="#rank" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
                       Rank

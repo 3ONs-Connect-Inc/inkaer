@@ -1,30 +1,26 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { RainbowButton } from '@/components/ui/rainbow-button';
 import { Play } from 'lucide-react';
-import { FlickeringGrid } from '@/components/ui/flickering-grid';
+import YoutubeModal from './YoutubeModal';
 
 const HeroSection = () => {
-  return (
-    <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden">
-      {/* Flickering Grid Background */}
-      <div className="absolute inset-0 opacity-30">
-        <FlickeringGrid
-          className="z-0 absolute inset-0 size-full"
-          squareSize={4}
-          gridGap={6}
-          color="rgb(0, 170, 254)"
-          maxOpacity={0.1}
-          flickerChance={0.05}
-        />
-      </div>
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
-      {/* Background decorative elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-inkaer-blue/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-inkaer-dark-blue/5 rounded-full blur-3xl"></div>
-      </div>
+  const extractVideoId = (url: string) => {
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&\n?#]+)/);
+    return match ? match[1] : '';
+  };
+
+  const videoId = extractVideoId('https://youtu.be/g9GKzkO2rgU?si=DmZh7wOvzzWWsmz3');
+
+  return (
+    <section className="relative bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30 overflow-hidden">
+      {/* Premium Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/20 to-indigo-100/30"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,170,254,0.05)_0%,transparent_50%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,120,200,0.08)_0%,transparent_50%)]"></div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[70vh]">
@@ -46,13 +42,14 @@ const HeroSection = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <RainbowButton className="font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105 hover:shadow-xl">
+              <RainbowButton className="font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:shadow-xl">
                 <a href="login-landing">
                 Get Started
                 </a>
               </RainbowButton>
               <Button 
                 variant="outline" 
+                onClick={() => setIsVideoModalOpen(true)}
                 className="border-2 border-inkaer-blue text-inkaer-blue hover:bg-inkaer-blue hover:text-white font-sora font-semibold px-8 py-4 text-lg rounded-full transition-all duration-200 hover:scale-105 group"
               >
                 <Play className="w-5 h-5 mr-2 group-hover:animate-bounce-gentle" />
@@ -82,6 +79,14 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
+      {/* YouTube Modal */}
+      <YoutubeModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        videoId={videoId}
+        title="Inkaer Platform Demo"
+      />
     </section>
   );
 };

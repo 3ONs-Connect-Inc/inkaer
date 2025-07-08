@@ -16,15 +16,17 @@ interface Project {
   image: string;
   author?: string;
   comments?: number;
+  type?: 'portfolio' | 'challenge';
 }
 
 interface ProjectSectionProps {
   title: string;
   projects: Project[];
   showSeeAll?: boolean;
+  projectType?: 'portfolio' | 'challenge';
 }
 
-const ProjectSection = ({ title, projects, showSeeAll = true }: ProjectSectionProps) => {
+const ProjectSection = ({ title, projects, showSeeAll = true, projectType = 'challenge' }: ProjectSectionProps) => {
   return (
     <section className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,6 +52,7 @@ const ProjectSection = ({ title, projects, showSeeAll = true }: ProjectSectionPr
             <ProjectCard
               key={index}
               {...project}
+              projectType={projectType}
             />
           ))}
         </div>
