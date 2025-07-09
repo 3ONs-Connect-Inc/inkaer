@@ -15,6 +15,7 @@ interface ProjectCardProps {
   image: string;
   author?: string;
   comments?: number;
+  projectType?: 'portfolio' | 'challenge';
 }
 
 const ProjectCard = ({
@@ -28,7 +29,8 @@ const ProjectCard = ({
   tags,
   image,
   author,
-  comments
+  comments,
+  projectType = 'challenge'
 }: ProjectCardProps) => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -37,6 +39,10 @@ const ProjectCard = ({
       case 'Expert': return 'text-red-600 bg-red-100';
       default: return 'text-green-600 bg-green-100';
     }
+  };
+
+  const getButtonText = () => {
+    return projectType === 'portfolio' ? 'View Project' : 'Start Challenge';
   };
 
   return (
@@ -54,6 +60,13 @@ const ProjectCard = ({
             {difficulty}
           </span>
         </div>
+        {projectType === 'portfolio' && (
+          <div className="absolute top-4 left-4">
+            <span className="px-3 py-1 bg-blue-600 text-white rounded-full text-xs font-semibold font-sora">
+              Portfolio
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Project Content */}
@@ -109,8 +122,8 @@ const ProjectCard = ({
         </div>
 
         {/* Action Button */}
-        <Button className="w-full bg-gradient-inkaer hover:opacity-90 text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
-          Start Challenge
+        <Button className="w-full bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
+          {getButtonText()}
           <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
         </Button>
       </div>

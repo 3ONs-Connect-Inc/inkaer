@@ -20,7 +20,7 @@ const LoginLanding = () => {
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
       author: "Sarah Mitchell",
       comments: 3,
-      type: "portfolio"
+      type: "portfolio" as const
     },
     {
       title: "Wind Turbine Blade Optimization", 
@@ -34,7 +34,7 @@ const LoginLanding = () => {
       image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
       author: "Marcus Chen",
       comments: 7,
-      type: "portfolio"
+      type: "portfolio" as const
     }
   ];
 
@@ -52,7 +52,7 @@ const LoginLanding = () => {
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&h=400&fit=crop",
       author: "John Stone",
       comments: 12,
-      type: "challenge"
+      type: "challenge" as const
     },
     {
       title: "Heat Exchanger Redesign", 
@@ -66,7 +66,7 @@ const LoginLanding = () => {
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
       author: "Cathy Lee",
       comments: 25,
-      type: "challenge"
+      type: "challenge" as const
     }
   ];
 
@@ -83,7 +83,7 @@ const LoginLanding = () => {
       image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
       author: "Daniel Brown",
       comments: 18,
-      type: "challenge"
+      type: "challenge" as const
     }
   ];
 
@@ -100,7 +100,7 @@ const LoginLanding = () => {
       image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
       author: "Ivy Timmons",
       comments: 31,
-      type: "challenge"
+      type: "challenge" as const
     }
   ];
 
@@ -117,7 +117,7 @@ const LoginLanding = () => {
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
       author: "Kevin Carpenter",
       comments: 10,
-      type: "challenge"
+      type: "challenge" as const
     }
   ];
 
