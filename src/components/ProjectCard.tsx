@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Clock, Users, Star } from 'lucide-react';
 
@@ -43,6 +43,13 @@ const ProjectCard = ({
 
   const getButtonText = () => {
     return projectType === 'portfolio' ? 'View Project' : 'Start Challenge';
+  };
+
+  const getProjectLink = () => {
+    if (projectType === 'portfolio') {
+      return `/portfolio/1`; // Using a mock ID for now
+    }
+    return '#'; // Challenge projects would link to their challenge page
   };
 
   return (
@@ -122,10 +129,19 @@ const ProjectCard = ({
         </div>
 
         {/* Action Button */}
-        <Button className="w-full bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
-          {getButtonText()}
-          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-        </Button>
+        {projectType === 'portfolio' ? (
+          <Link to={getProjectLink()}>
+            <Button className="w-full bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
+              {getButtonText()}
+              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+            </Button>
+          </Link>
+        ) : (
+          <Button className="w-full bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
+            {getButtonText()}
+            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+          </Button>
+        )}
       </div>
     </div>
   );
