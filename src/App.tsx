@@ -8,6 +8,7 @@ import Pricing from './pages/Pricing';
 import Upgrade from './pages/Upgrade';
 import UploadPortfolio from './pages/UploadPortfolio';
 import PortfolioProject from './pages/PortfolioProject';
+import Challenge from './pages/Challenge';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
@@ -34,6 +35,7 @@ function App() {
         <Route path="/upgrade" element={<Upgrade />} />
         <Route path="/upload-portfolio" element={<UploadPortfolio />} />
         <Route path="/portfolio/:id" element={<PortfolioProject />} />
+        <Route path="/challenge/:id" element={<Challenge />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />

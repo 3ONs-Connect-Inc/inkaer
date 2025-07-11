@@ -15,7 +15,7 @@ interface ProjectCardProps {
   image: string;
   author?: string;
   comments?: number;
-  projectType?: 'portfolio' | 'challenge';
+  type?: 'portfolio' | 'challenge';
 }
 
 const ProjectCard = ({
@@ -30,36 +30,40 @@ const ProjectCard = ({
   image,
   author,
   comments,
-  projectType = 'challenge'
+  type = 'challenge'
 }: ProjectCardProps) => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
+      case 'Beginner': return 'text-green-600 bg-green-100';
       case 'Intermediate': return 'text-yellow-600 bg-yellow-100';
       case 'Advanced': return 'text-orange-600 bg-orange-100';
-      case 'Expert': return 'text-red-600 bg-red-100';
-      default: return 'text-green-600 bg-green-100';
+      case 'Elite': return 'text-red-600 bg-red-100';
+      default: return 'text-gray-600 bg-gray-100';
     }
   };
 
-  const getButtonText = () => {
-    return projectType === 'portfolio' ? 'View Project' : 'Start Challenge';
+  const getProjectTypeColor = (type: string) => {
+    return type === 'portfolio' ? 'bg-blue-600' : 'bg-green-600';
   };
 
-  const getProjectLink = () => {
-    if (projectType === 'portfolio') {
-      return `/portfolio/1`; // Using a mock ID for now
-    }
-    return '#'; // Challenge projects would link to their challenge page
+  const getButtonText = (type: string) => {
+    return type === 'portfolio' ? 'View Project' : 'Start Challenge';
+  };
+
+  const getProjectLink = (type: string, title: string) => {
+    // Create a simple ID from title for demo purposes
+    const id = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    return type === 'portfolio' ? `/portfolio/${id}` : `/challenge/${id}`;
   };
 
   return (
-    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden min-w-[320px] flex-shrink-0">
+    <div className="group bg-white/80 backdrop-blur-sm border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 rounded-2xl overflow-hidden min-w-[320px] flex-shrink-0">
       {/* Project Image */}
       <div className="relative overflow-hidden">
         <img
           src={image}
           alt={`${title} project`}
-          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         <div className="absolute top-4 right-4">
@@ -67,13 +71,11 @@ const ProjectCard = ({
             {difficulty}
           </span>
         </div>
-        {projectType === 'portfolio' && (
-          <div className="absolute top-4 left-4">
-            <span className="px-3 py-1 bg-blue-600 text-white rounded-full text-xs font-semibold font-sora">
-              Portfolio
-            </span>
-          </div>
-        )}
+        <div className="absolute top-4 left-4">
+          <span className={`px-3 py-1 ${getProjectTypeColor(type)} text-white rounded-full text-xs font-semibold font-sora capitalize`}>
+            {type}
+          </span>
+        </div>
       </div>
 
       {/* Project Content */}
@@ -90,7 +92,7 @@ const ProjectCard = ({
               by {author}
             </p>
           )}
-          <p className="text-gray-600 font-sora leading-relaxed line-clamp-2">
+          <p className="text-gray-600 font-sora leading-relaxed text-sm">
             {description}
           </p>
         </div>
@@ -103,25 +105,20 @@ const ProjectCard = ({
           </div>
           <div className="flex items-center space-x-1">
             <Users className="w-4 h-4" />
-            <span>{participants.toLocaleString()}</span>
+            <span>{participants}</span>
           </div>
           <div className="flex items-center space-x-1">
             <Star className="w-4 h-4 fill-current text-yellow-400" />
             <span>{rating}</span>
           </div>
-          {comments && (
-            <div className="flex items-center space-x-1">
-              <span>{comments} Comments</span>
-            </div>
-          )}
         </div>
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2">
-          {tags.slice(0, 3).map((tag, tagIndex) => (
+          {tags.map((tag, index) => (
             <span
-              key={tagIndex}
-              className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-sora font-medium rounded-full"
+              key={index}
+              className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-sora font-medium rounded-full"
             >
               {tag}
             </span>
@@ -129,19 +126,15 @@ const ProjectCard = ({
         </div>
 
         {/* Action Button */}
-        {projectType === 'portfolio' ? (
-          <Link to={getProjectLink()}>
-            <Button className="w-full bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
-              {getButtonText()}
-              <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-            </Button>
-          </Link>
-        ) : (
-          <Button className="w-full bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold py-3 rounded-full group transition-all duration-200">
-            {getButtonText()}
+        <Link
+          to={getProjectLink(type, title)}
+          className="block"
+        >
+          <Button className="w-full bg-inkaer-blue hover:bg-inkaer-dark-blue text-white font-sora font-semibold py-2 rounded-lg group transition-all duration-200">
+            {getButtonText(type)}
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
           </Button>
-        )}
+        </Link>
       </div>
     </div>
   );

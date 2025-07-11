@@ -22,7 +22,7 @@ const Certifications = () => {
     {
       step: 3,
       title: "Skill Verification",
-      description: "Complete domain-specific technical assessments",
+      description: "Complete proctored, domain-specific technical assessments",
       icon: <CheckCircle className="w-6 h-6" />
     },
     {
