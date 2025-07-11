@@ -1,11 +1,25 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
+import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Check, X, Crown, Star, Zap } from 'lucide-react';
 
-const Pricing = () => {
+interface FeatureDetails {
+  included: boolean;
+  value?: string;
+  note?: string;
+}
+
+interface PricingProps {
+  isLoggedIn?: boolean;
+  currentPlan?: 'freemium' | 'premium';
+}
+
+const Pricing = ({ isLoggedIn = false, currentPlan = 'freemium' }: PricingProps) => {
+  const [isYearly, setIsYearly] = useState(false);
+
   const plans = [
     {
       name: "Freemium",
@@ -14,36 +28,66 @@ const Pricing = () => {
       popular: false,
       description: "Perfect for getting started with engineering project sharing",
       features: {
-        "Submit Projects": { included: true, value: "Unlimited" },
-        "Peer Reviews": { included: true, value: "Unlimited" },
-        "See Employer Challenges": { included: false },
-        "Apply for Jobs": { included: false },
-        "Project Boosting (More Peer Visibility)": { included: false },
-        "Rank Visibility to Employers": { included: true, note: "Certified Only" },
-        "Certification Badge": { included: true, note: "Certified Only" },
-        "Priority Job Applications": { included: false },
-        "Profile Boosting (More Employer Visibility)": { included: false }
+        "Submit Projects": { included: true, value: "Unlimited" } as FeatureDetails,
+        "Peer Reviews": { included: true, value: "Unlimited" } as FeatureDetails,
+        "See Employer Challenges": { included: false } as FeatureDetails,
+        "Apply for Jobs": { included: false } as FeatureDetails,
+        "Project Boosting (More Peer Visibility)": { included: false } as FeatureDetails,
+        "Rank Visibility to Employers": { included: true, note: "Certified Only" } as FeatureDetails,
+        "Certification Badge": { included: true, note: "Certified Only" } as FeatureDetails,
+        "Priority Job Applications": { included: false } as FeatureDetails,
+        "Profile Boosting (More Employer Visibility)": { included: false } as FeatureDetails
       }
     },
     {
       name: "Premium",
       subtitle: "(Certified & Uncertified)",
-      price: "$9.99/mo",
+      price: isYearly ? "$99.99/yr" : "$9.99/mo",
       popular: true,
       description: "Unlock full access to job opportunities and enhanced visibility",
       features: {
-        "Submit Projects": { included: true, value: "Unlimited" },
-        "Peer Reviews": { included: true, value: "Unlimited" },
-        "See Employer Challenges": { included: true },
-        "Apply for Jobs": { included: true },
-        "Project Boosting (More Peer Visibility)": { included: true },
-        "Rank Visibility to Employers": { included: true },
-        "Certification Badge": { included: true, note: "Certified Only" },
-        "Priority Job Applications": { included: true, note: "Certified Only" },
-        "Profile Boosting (More Employer Visibility)": { included: true, note: "Certified Only" }
+        "Submit Projects": { included: true, value: "Unlimited" } as FeatureDetails,
+        "Peer Reviews": { included: true, value: "Unlimited" } as FeatureDetails,
+        "See Employer Challenges": { included: true } as FeatureDetails,
+        "Apply for Jobs": { included: true } as FeatureDetails,
+        "Project Boosting (More Peer Visibility)": { included: true } as FeatureDetails,
+        "Rank Visibility to Employers": { included: true, note: "Certified Only" } as FeatureDetails,
+        "Certification Badge": { included: true, note: "Certified Only" } as FeatureDetails,
+        "Priority Job Applications": { included: true } as FeatureDetails,
+        "Profile Boosting (More Employer Visibility)": { included: true } as FeatureDetails
       }
     }
   ];
+
+  const getButtonText = (planName: string) => {
+    if (!isLoggedIn) {
+      return "Get Started";
+    }
+    
+    const planKey = planName.toLowerCase() as 'freemium' | 'premium';
+    if (currentPlan === planKey) {
+      return "Current Plan";
+    }
+    
+    if (planKey === 'premium') {
+      return "Upgrade";
+    } else {
+      return "Downgrade";
+    }
+  };
+
+  const getButtonProps = (planName: string) => {
+    if (!isLoggedIn) {
+      return { disabled: false, variant: "default" as const };
+    }
+    
+    const planKey = planName.toLowerCase() as 'freemium' | 'premium';
+    if (currentPlan === planKey) {
+      return { disabled: true, variant: "secondary" as const };
+    }
+    
+    return { disabled: false, variant: "default" as const };
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30 relative overflow-hidden">
@@ -53,7 +97,7 @@ const Pricing = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(0,120,200,0.08)_0%,transparent_50%)]"></div>
 
       <div className="relative z-10">
-        <Navbar />
+        {isLoggedIn ? <LoggedInNavbar /> : <Navbar />}
         
         {/* Hero Section */}
         <section className="py-16">
@@ -61,9 +105,34 @@ const Pricing = () => {
             <h1 className="text-4xl sm:text-5xl font-sora font-bold text-gray-900 mb-6">
               Choose Your Plan
             </h1>
-            <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto mb-12">
+            <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto mb-8">
               Select the plan that fits your career goals and unlock opportunities to showcase your engineering skills.
             </p>
+            
+            {/* Monthly/Yearly Toggle */}
+            <div className="flex items-center justify-center gap-4 mb-12">
+              <span className={`font-sora font-medium ${!isYearly ? 'text-inkaer-blue' : 'text-gray-600'}`}>
+                Monthly
+              </span>
+              <button
+                onClick={() => setIsYearly(!isYearly)}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  isYearly ? 'bg-inkaer-blue' : 'bg-gray-200'
+                }`}
+              >
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    isYearly ? 'translate-x-6' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+              <span className={`font-sora font-medium ${isYearly ? 'text-inkaer-blue' : 'text-gray-600'}`}>
+                Yearly
+                <span className="ml-1 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                  Save 17%
+                </span>
+              </span>
+            </div>
           </div>
         </section>
 
@@ -111,13 +180,21 @@ const Pricing = () => {
                     plan.popular 
                       ? 'ring-2 ring-inkaer-blue scale-105 border-inkaer-blue' 
                       : 'border border-gray-200'
-                  } transition-all duration-300 hover:shadow-2xl`}
+                  } ${isLoggedIn && currentPlan === plan.name.toLowerCase() ? 'ring-2 ring-green-500' : ''} transition-all duration-300 hover:shadow-2xl`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                       <div className="bg-gradient-to-r from-inkaer-blue to-indigo-600 text-white px-4 py-1 rounded-full text-sm font-sora font-semibold flex items-center gap-1">
                         <Star className="w-3 h-3 fill-current" />
                         Most Popular
+                      </div>
+                    </div>
+                  )}
+
+                  {isLoggedIn && currentPlan === plan.name.toLowerCase() && (
+                    <div className="absolute -top-4 right-4">
+                      <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-sora font-semibold">
+                        Current Plan
                       </div>
                     </div>
                   )}
@@ -165,6 +242,18 @@ const Pricing = () => {
                       </div>
                     ))}
                   </div>
+
+                  <Button
+                    className={`w-full font-sora font-semibold py-3 rounded-full transition-all duration-200 ${
+                      plan.popular && !getButtonProps(plan.name).disabled
+                        ? 'bg-inkaer-blue hover:bg-inkaer-dark-blue text-white hover:scale-105'
+                        : ''
+                    }`}
+                    variant={getButtonProps(plan.name).variant}
+                    disabled={getButtonProps(plan.name).disabled}
+                  >
+                    {getButtonText(plan.name)}
+                  </Button>
                 </div>
               ))}
             </div>

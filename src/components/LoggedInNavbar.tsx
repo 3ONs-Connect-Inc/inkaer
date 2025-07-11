@@ -64,7 +64,7 @@ const LoggedInNavbar = () => {
               size="sm" 
               className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-sora font-semibold px-4 py-2 rounded-full transition-all duration-200 hover:scale-105"
             >
-              <a href="/pricing">
+              <a href="/upgrade">
                 <Crown className="w-4 h-4 mr-1" />
                 Upgrade
               </a>
@@ -140,7 +140,7 @@ const LoggedInNavbar = () => {
                   </div>
                   <div className="flex flex-col gap-3 border-t pt-4">
                     <Button asChild className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-sora font-semibold py-3 rounded-full">
-                      <a href="/pricing" className="font-sora">
+                      <a href="/upgrade" className="font-sora">
                         <Crown className="mr-2 h-4 w-4" />
                         Upgrade
                       </a>
