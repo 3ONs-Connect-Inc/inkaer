@@ -39,14 +39,11 @@ const LoggedInNavbar = () => {
             <a href="/projects" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
               Projects
             </a>
-            <a href="#rank" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
+            <a href="/rank" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
               Rank
             </a>
-            <a href="#certifications" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
+            <a href="/certifications" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
               Certifications
-            </a>
-            <a href="/pricing" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
-              Pricing
             </a>
             
             {/* User Rank and Points */}
@@ -134,14 +131,11 @@ const LoggedInNavbar = () => {
                     <a href="/projects" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
                       Projects
                     </a>
-                    <a href="#rank" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
+                    <a href="/rank" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
                       Rank
                     </a>
-                    <a href="#certifications" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
+                    <a href="/certifications" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
                       Certifications
-                    </a>
-                    <a href="/pricing" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
-                      Pricing
                     </a>
                   </div>
                   <div className="flex flex-col gap-3 border-t pt-4">
@@ -152,13 +146,13 @@ const LoggedInNavbar = () => {
                       </a>
                     </Button>
                     <Button asChild variant="outline" className="justify-start">
-                      <a href="#profile" className="font-sora">
+                      <a href="/profile" className="font-sora">
                         <User className="mr-2 h-4 w-4" />
                         Profile
                       </a>
                     </Button>
                     <Button asChild variant="ghost" className="justify-start text-red-600 hover:text-red-700 hover:bg-red-50">
-                      <a href="#logout" className="font-sora">
+                      <a href="/logout" className="font-sora">
                         <LogOut className="mr-2 h-4 w-4" />
                         Logout
                       </a>

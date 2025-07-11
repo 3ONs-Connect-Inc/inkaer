@@ -9,60 +9,28 @@ const Pricing = () => {
   const plans = [
     {
       name: "Freemium",
-      subtitle: "(Uncertified)",
+      subtitle: "(Certified & Uncertified)",
       price: "Free",
       popular: false,
+      description: "Perfect for getting started with engineering project sharing",
       features: {
         "Submit Projects": { included: true, value: "Unlimited" },
         "Peer Reviews": { included: true, value: "Unlimited" },
         "See Employer Challenges": { included: false },
         "Apply for Jobs": { included: false },
         "Project Boosting (More Peer Visibility)": { included: false },
-        "Rank Visibility to Employers": { included: false },
-        "Certification Badge": { included: false },
+        "Rank Visibility to Employers": { included: true, note: "Certified Only" },
+        "Certification Badge": { included: true, note: "Certified Only" },
         "Priority Job Applications": { included: false },
         "Profile Boosting (More Employer Visibility)": { included: false }
       }
     },
     {
-      name: "Certified",
-      subtitle: "Freemium",
-      price: "Free",
-      popular: false,
-      features: {
-        "Submit Projects": { included: true, value: "Unlimited" },
-        "Peer Reviews": { included: true, value: "Unlimited" },
-        "See Employer Challenges": { included: false },
-        "Apply for Jobs": { included: false },
-        "Project Boosting (More Peer Visibility)": { included: false },
-        "Rank Visibility to Employers": { included: true },
-        "Certification Badge": { included: true },
-        "Priority Job Applications": { included: false },
-        "Profile Boosting (More Employer Visibility)": { included: false }
-      }
-    },
-    {
-      name: "Uncertified",
-      subtitle: "Premium",
+      name: "Premium",
+      subtitle: "(Certified & Uncertified)",
       price: "$9.99/mo",
       popular: true,
-      features: {
-        "Submit Projects": { included: true, value: "Unlimited" },
-        "Peer Reviews": { included: true, value: "Unlimited" },
-        "See Employer Challenges": { included: true },
-        "Apply for Jobs": { included: true },
-        "Project Boosting (More Peer Visibility)": { included: true },
-        "Rank Visibility to Employers": { included: false },
-        "Certification Badge": { included: false },
-        "Priority Job Applications": { included: false },
-        "Profile Boosting (More Employer Visibility)": { included: false }
-      }
-    },
-    {
-      name: "Certified",
-      subtitle: "Premium",
-      price: "$9.99/mo",
-      popular: false,
+      description: "Unlock full access to job opportunities and enhanced visibility",
       features: {
         "Submit Projects": { included: true, value: "Unlimited" },
         "Peer Reviews": { included: true, value: "Unlimited" },
@@ -70,9 +38,9 @@ const Pricing = () => {
         "Apply for Jobs": { included: true },
         "Project Boosting (More Peer Visibility)": { included: true },
         "Rank Visibility to Employers": { included: true },
-        "Certification Badge": { included: true },
-        "Priority Job Applications": { included: true },
-        "Profile Boosting (More Employer Visibility)": { included: true }
+        "Certification Badge": { included: true, note: "Certified Only" },
+        "Priority Job Applications": { included: true, note: "Certified Only" },
+        "Profile Boosting (More Employer Visibility)": { included: true, note: "Certified Only" }
       }
     }
   ];
@@ -91,18 +59,51 @@ const Pricing = () => {
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl font-sora font-bold text-gray-900 mb-6">
-              Rank Levels & Pricing Model
+              Choose Your Plan
             </h1>
             <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto mb-12">
-              Choose the plan that fits your career goals and unlock opportunities to showcase your engineering skills.
+              Select the plan that fits your career goals and unlock opportunities to showcase your engineering skills.
             </p>
+          </div>
+        </section>
+
+        {/* Certification Explanation */}
+        <section className="pb-12">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-white/50 rounded-2xl p-8 mb-12">
+              <h2 className="text-2xl font-sora font-bold text-gray-900 mb-4 text-center">
+                Certified vs Uncertified
+              </h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-green-50 rounded-xl p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Check className="w-5 h-5 text-green-600" />
+                    <h3 className="font-sora font-semibold text-green-800">Certified Engineers</h3>
+                  </div>
+                  <p className="text-green-700 font-sora text-sm">
+                    Engineers who have completed our verification process through peer reviews and assessments. 
+                    They receive enhanced visibility to employers and priority access to opportunities.
+                  </p>
+                </div>
+                <div className="bg-blue-50 rounded-xl p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Star className="w-5 h-5 text-blue-600" />
+                    <h3 className="font-sora font-semibold text-blue-800">Uncertified Engineers</h3>
+                  </div>
+                  <p className="text-blue-700 font-sora text-sm">
+                    Engineers building their portfolio and working towards certification. 
+                    Full access to platform features with the opportunity to become certified.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Pricing Cards */}
         <section className="pb-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-8">
               {plans.map((plan, index) => (
                 <div
                   key={index}
@@ -128,22 +129,15 @@ const Pricing = () => {
                     <p className="text-gray-600 font-sora text-sm mb-4">
                       {plan.subtitle}
                     </p>
-                    <div className="text-4xl font-sora font-bold text-inkaer-blue mb-6">
+                    <div className="text-4xl font-sora font-bold text-inkaer-blue mb-4">
                       {plan.price}
                     </div>
-                    
-                    <Button 
-                      className={`w-full py-3 rounded-full font-sora font-semibold transition-all duration-200 ${
-                        plan.popular
-                          ? 'bg-inkaer-blue hover:bg-inkaer-dark-blue text-white'
-                          : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
-                      }`}
-                    >
-                      {plan.price === "Free" ? "Get Started" : "Upgrade Now"}
-                    </Button>
+                    <p className="text-gray-600 font-sora text-sm mb-6">
+                      {plan.description}
+                    </p>
                   </div>
 
-                  <div className="space-y-4">
+                  <div className="space-y-4 mb-8">
                     {Object.entries(plan.features).map(([feature, details]) => (
                       <div key={feature} className="flex items-start gap-3">
                         <div className="flex-shrink-0 mt-0.5">
@@ -160,6 +154,11 @@ const Pricing = () => {
                           {details.value && (
                             <span className="ml-2 text-sm font-sora font-semibold text-inkaer-blue">
                               {details.value}
+                            </span>
+                          )}
+                          {details.note && (
+                            <span className="ml-2 text-xs font-sora text-gray-500 italic">
+                              ({details.note})
                             </span>
                           )}
                         </div>
