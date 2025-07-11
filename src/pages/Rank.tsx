@@ -6,11 +6,12 @@ import { Crown, Star, Trophy, TrendingUp } from 'lucide-react';
 
 const Rank = () => {
   const rankLevels = [
-    { name: "Beginner", points: "0-500", color: "text-gray-600", bgColor: "bg-gray-100" },
+    { name: "Novice", points: "0-100", color: "text-gray-600", bgColor: "bg-gray-100" },
+    { name: "Beginner", points: "101-500", color: "text-brown-600", bgColor: "bg-brown-100" },
     { name: "Intermediate", points: "501-1500", color: "text-green-600", bgColor: "bg-green-100" },
     { name: "Advanced", points: "1501-3000", color: "text-blue-600", bgColor: "bg-blue-100" },
     { name: "Expert", points: "3001-5000", color: "text-purple-600", bgColor: "bg-purple-100" },
-    { name: "Master", points: "5000+", color: "text-orange-600", bgColor: "bg-orange-100" }
+    { name: "Elite", points: "5000+", color: "text-orange-600", bgColor: "bg-orange-100" }
   ];
 
   return (

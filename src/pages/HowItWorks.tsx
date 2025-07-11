@@ -2,14 +2,14 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { CheckCircle, Users, Trophy, Briefcase } from 'lucide-react';
+import { CheckCircle, Users, Trophy, Award, Briefcase } from 'lucide-react';
 
 const HowItWorks = () => {
   const steps = [
     {
       icon: <CheckCircle className="w-8 h-8 text-inkaer-blue" />,
-      title: "Submit Your Projects",
-      description: "Upload your engineering projects and showcase your technical skills to our community of professionals."
+      title: "Submit Your Projects or Complete Challenges",
+      description: "Upload your engineering projects or tackle our curated challenges to showcase your technical skills to our community of professionals."
     },
     {
       icon: <Users className="w-8 h-8 text-inkaer-blue" />,
@@ -20,6 +20,11 @@ const HowItWorks = () => {
       icon: <Trophy className="w-8 h-8 text-inkaer-blue" />,
       title: "Build Your Rank",
       description: "Earn points and improve your ranking based on project quality and peer feedback."
+    },
+    {
+      icon: <Award className="w-8 h-8 text-inkaer-blue" />,
+      title: "Get Certified",
+      description: "Achieve certification badges that validate your expertise in specific engineering domains."
     },
     {
       icon: <Briefcase className="w-8 h-8 text-inkaer-blue" />,
@@ -43,7 +48,7 @@ const HowItWorks = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="text-center">
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">

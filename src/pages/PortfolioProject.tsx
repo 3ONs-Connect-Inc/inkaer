@@ -8,29 +8,24 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Star, ThumbsUp, ThumbsDown, MessageSquare, FileText, Download } from 'lucide-react';
+import { Star, ThumbsUp, ThumbsDown, MessageSquare, FileText } from 'lucide-react';
 import { toast } from 'sonner';
-
-interface Grade {
-  id: string;
-  rating: number;
-  comment: string;
-  timestamp: string;
-  replies: Reply[];
-}
 
 interface Vote {
   id: string;
   type: 'upvote' | 'downvote';
   comment: string;
   timestamp: string;
-  replies: Reply[];
+  author: string;
 }
 
-interface Reply {
+interface Grade {
   id: string;
+  rating: number;
   comment: string;
   timestamp: string;
+  author: string;
+  votes: Vote[];
 }
 
 const PortfolioProject = () => {
@@ -41,24 +36,24 @@ const PortfolioProject = () => {
       rating: 4,
       comment: 'Excellent work on the thermal analysis. The methodology is sound and results are well-presented.',
       timestamp: '2 days ago',
-      replies: []
+      author: 'Dr. Sarah Chen',
+      votes: [
+        {
+          id: 'v1',
+          type: 'upvote',
+          comment: 'I agree, the thermal analysis is very thorough.',
+          timestamp: '1 day ago',
+          author: 'Mike Johnson'
+        }
+      ]
     },
     {
       id: '2',
       rating: 5,
       comment: 'Outstanding attention to detail in the CAD modeling. Professional quality work.',
       timestamp: '1 week ago',
-      replies: []
-    }
-  ]);
-  
-  const [votes, setVotes] = useState<Vote[]>([
-    {
-      id: '1',
-      type: 'upvote',
-      comment: 'Great project, very innovative approach to the problem.',
-      timestamp: '3 days ago',
-      replies: []
+      author: 'Prof. David Kumar',
+      votes: []
     }
   ]);
 
@@ -67,6 +62,7 @@ const PortfolioProject = () => {
   const [isGradeDialogOpen, setIsGradeDialogOpen] = useState(false);
   const [isVoteDialogOpen, setIsVoteDialogOpen] = useState(false);
   const [voteType, setVoteType] = useState<'upvote' | 'downvote'>('upvote');
+  const [selectedGradeId, setSelectedGradeId] = useState<string>('');
 
   // Mock project data
   const project = {
@@ -80,8 +76,6 @@ const PortfolioProject = () => {
   };
 
   const averageGrade = grades.length > 0 ? grades.reduce((sum, grade) => sum + grade.rating, 0) / grades.length : 0;
-  const upvotes = votes.filter(vote => vote.type === 'upvote').length;
-  const downvotes = votes.filter(vote => vote.type === 'downvote').length;
 
   const handleGradeSubmit = () => {
     if (!newGrade.comment.trim()) {
@@ -94,7 +88,8 @@ const PortfolioProject = () => {
       rating: newGrade.rating,
       comment: newGrade.comment,
       timestamp: 'Just now',
-      replies: []
+      author: 'Current User', // In real app, this would be the logged-in user's name
+      votes: []
     };
 
     setGrades([grade, ...grades]);
@@ -114,18 +109,30 @@ const PortfolioProject = () => {
       type: voteType,
       comment: voteComment,
       timestamp: 'Just now',
-      replies: []
+      author: 'Current User' // In real app, this would be the logged-in user's name
     };
 
-    setVotes([vote, ...votes]);
+    setGrades(grades.map(grade => 
+      grade.id === selectedGradeId 
+        ? { ...grade, votes: [vote, ...grade.votes] }
+        : grade
+    ));
+
     setVoteComment('');
     setIsVoteDialogOpen(false);
     toast.success(`${voteType === 'upvote' ? 'Upvote' : 'Downvote'} submitted successfully!`);
   };
 
-  const openVoteDialog = (type: 'upvote' | 'downvote') => {
+  const openVoteDialog = (gradeId: string, type: 'upvote' | 'downvote') => {
+    setSelectedGradeId(gradeId);
     setVoteType(type);
     setIsVoteDialogOpen(true);
+  };
+
+  const getVoteCounts = (votes: Vote[]) => {
+    const upvotes = votes.filter(vote => vote.type === 'upvote').length;
+    const downvotes = votes.filter(vote => vote.type === 'downvote').length;
+    return { upvotes, downvotes };
   };
 
   return (
@@ -148,16 +155,6 @@ const PortfolioProject = () => {
                   <div className="flex items-center gap-1">
                     <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                     <span>{averageGrade.toFixed(1)} ({grades.length} grades)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="flex items-center gap-1">
-                      <ThumbsUp className="w-4 h-4 text-green-600" />
-                      {upvotes}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <ThumbsDown className="w-4 h-4 text-red-600" />
-                      {downvotes}
-                    </span>
                   </div>
                 </div>
               </div>
@@ -186,9 +183,6 @@ const PortfolioProject = () => {
                   <CardTitle className="flex items-center gap-2 font-sora">
                     <FileText className="w-5 h-5" />
                     3D Model ({project.stepFile})
-                    <Button variant="ghost" size="sm" className="ml-auto">
-                      <Download className="w-4 h-4" />
-                    </Button>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -208,9 +202,6 @@ const PortfolioProject = () => {
                   <CardTitle className="flex items-center gap-2 font-sora">
                     <FileText className="w-5 h-5" />
                     Report ({project.pdfFile})
-                    <Button variant="ghost" size="sm" className="ml-auto">
-                      <Download className="w-4 h-4" />
-                    </Button>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -237,61 +228,62 @@ const PortfolioProject = () => {
               </CardContent>
             </Card>
 
-            {/* Grading and Voting Section */}
-            <div className="grid lg:grid-cols-3 gap-6 mb-8">
-              <div className="lg:col-span-2">
-                <Card className="bg-white/80 backdrop-blur-sm border-gray-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between font-sora">
-                      Grades & Comments
-                      <Dialog open={isGradeDialogOpen} onOpenChange={setIsGradeDialogOpen}>
-                        <DialogTrigger asChild>
-                          <Button className="bg-inkaer-blue hover:bg-inkaer-dark-blue">
-                            <Star className="w-4 h-4 mr-2" />
-                            Grade Project
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                          <DialogHeader>
-                            <DialogTitle>Grade This Project</DialogTitle>
-                          </DialogHeader>
-                          <div className="space-y-4">
-                            <div>
-                              <label className="block text-sm font-medium mb-2">Rating</label>
-                              <div className="flex gap-1">
-                                {[1, 2, 3, 4, 5].map((star) => (
-                                  <button
-                                    key={star}
-                                    onClick={() => setNewGrade({ ...newGrade, rating: star })}
-                                    className={`w-8 h-8 ${star <= newGrade.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                                  >
-                                    <Star className="w-full h-full fill-current" />
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium mb-2">Comment *</label>
-                              <Textarea
-                                value={newGrade.comment}
-                                onChange={(e) => setNewGrade({ ...newGrade, comment: e.target.value })}
-                                placeholder="Share your feedback on this project..."
-                                rows={4}
-                              />
-                            </div>
-                            <Button onClick={handleGradeSubmit} className="w-full">
-                              Submit Grade
-                            </Button>
+            {/* Grading Section */}
+            <Card className="bg-white/80 backdrop-blur-sm border-gray-200">
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between font-sora">
+                  Grades & Comments
+                  <Dialog open={isGradeDialogOpen} onOpenChange={setIsGradeDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button className="bg-inkaer-blue hover:bg-inkaer-dark-blue">
+                        <Star className="w-4 h-4 mr-2" />
+                        Grade Project
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Grade This Project</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Rating</label>
+                          <div className="flex gap-1">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <button
+                                key={star}
+                                onClick={() => setNewGrade({ ...newGrade, rating: star })}
+                                className={`w-8 h-8 ${star <= newGrade.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                              >
+                                <Star className="w-full h-full fill-current" />
+                              </button>
+                            ))}
                           </div>
-                        </DialogContent>
-                      </Dialog>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {grades.map((grade) => (
-                        <div key={grade.id} className="border-b border-gray-200 pb-4">
-                          <div className="flex items-center gap-2 mb-2">
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium mb-2">Comment *</label>
+                          <Textarea
+                            value={newGrade.comment}
+                            onChange={(e) => setNewGrade({ ...newGrade, comment: e.target.value })}
+                            placeholder="Share your feedback on this project..."
+                            rows={4}
+                          />
+                        </div>
+                        <Button onClick={handleGradeSubmit} className="w-full">
+                          Submit Grade
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {grades.map((grade) => {
+                    const { upvotes, downvotes } = getVoteCounts(grade.votes);
+                    return (
+                      <div key={grade.id} className="border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
                             <div className="flex">
                               {[1, 2, 3, 4, 5].map((star) => (
                                 <Star
@@ -300,90 +292,84 @@ const PortfolioProject = () => {
                                 />
                               ))}
                             </div>
+                            <span className="font-medium text-gray-900">{grade.author}</span>
                             <span className="text-sm text-gray-500">{grade.timestamp}</span>
                           </div>
-                          <p className="text-gray-700 font-sora">{grade.comment}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div>
-                <Card className="bg-white/80 backdrop-blur-sm border-gray-200">
-                  <CardHeader>
-                    <CardTitle className="font-sora">Project Voting</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex gap-2">
-                        <Dialog open={isVoteDialogOpen} onOpenChange={setIsVoteDialogOpen}>
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="outline"
-                              onClick={() => openVoteDialog('upvote')}
-                              className="flex-1"
-                            >
-                              <ThumbsUp className="w-4 h-4 mr-2 text-green-600" />
-                              {upvotes}
-                            </Button>
-                          </DialogTrigger>
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="outline"
-                              onClick={() => openVoteDialog('downvote')}
-                              className="flex-1"
-                            >
-                              <ThumbsDown className="w-4 h-4 mr-2 text-red-600" />
-                              {downvotes}
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>
-                                {voteType === 'upvote' ? 'Upvote' : 'Downvote'} Project
-                              </DialogTitle>
-                            </DialogHeader>
-                            <div className="space-y-4">
-                              <div>
-                                <label className="block text-sm font-medium mb-2">Comment *</label>
-                                <Textarea
-                                  value={voteComment}
-                                  onChange={(e) => setVoteComment(e.target.value)}
-                                  placeholder={`Why are you ${voteType === 'upvote' ? 'upvoting' : 'downvoting'} this project?`}
-                                  rows={3}
-                                />
-                              </div>
-                              <Button onClick={handleVoteSubmit} className="w-full">
-                                Submit {voteType === 'upvote' ? 'Upvote' : 'Downvote'}
-                              </Button>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </div>
-
-                      <div className="space-y-3">
-                        <h4 className="font-medium font-sora">Recent Votes</h4>
-                        {votes.map((vote) => (
-                          <div key={vote.id} className="text-sm">
-                            <div className="flex items-center gap-2 mb-1">
-                              {vote.type === 'upvote' ? (
-                                <ThumbsUp className="w-3 h-3 text-green-600" />
-                              ) : (
-                                <ThumbsDown className="w-3 h-3 text-red-600" />
-                              )}
-                              <span className="text-gray-500">{vote.timestamp}</span>
-                            </div>
-                            <p className="text-gray-700">{vote.comment}</p>
+                          <div className="flex items-center gap-2">
+                            <Dialog open={isVoteDialogOpen} onOpenChange={setIsVoteDialogOpen}>
+                              <DialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => openVoteDialog(grade.id, 'upvote')}
+                                  className="text-green-600 hover:text-green-700"
+                                >
+                                  <ThumbsUp className="w-4 h-4 mr-1" />
+                                  {upvotes}
+                                </Button>
+                              </DialogTrigger>
+                              <DialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => openVoteDialog(grade.id, 'downvote')}
+                                  className="text-red-600 hover:text-red-700"
+                                >
+                                  <ThumbsDown className="w-4 h-4 mr-1" />
+                                  {downvotes}
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent>
+                                <DialogHeader>
+                                  <DialogTitle>
+                                    {voteType === 'upvote' ? 'Upvote' : 'Downvote'} Comment
+                                  </DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                  <div>
+                                    <label className="block text-sm font-medium mb-2">Comment *</label>
+                                    <Textarea
+                                      value={voteComment}
+                                      onChange={(e) => setVoteComment(e.target.value)}
+                                      placeholder={`Why are you ${voteType === 'upvote' ? 'upvoting' : 'downvoting'} this comment?`}
+                                      rows={3}
+                                    />
+                                  </div>
+                                  <Button onClick={handleVoteSubmit} className="w-full">
+                                    Submit {voteType === 'upvote' ? 'Upvote' : 'Downvote'}
+                                  </Button>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
                           </div>
-                        ))}
+                        </div>
+                        <p className="text-gray-700 font-sora mb-3">{grade.comment}</p>
+                        
+                        {/* Votes/Replies */}
+                        {grade.votes.length > 0 && (
+                          <div className="ml-4 border-l-2 border-gray-200 pl-4 space-y-3">
+                            {grade.votes.map((vote) => (
+                              <div key={vote.id} className="text-sm">
+                                <div className="flex items-center gap-2 mb-1">
+                                  {vote.type === 'upvote' ? (
+                                    <ThumbsUp className="w-3 h-3 text-green-600" />
+                                  ) : (
+                                    <ThumbsDown className="w-3 h-3 text-red-600" />
+                                  )}
+                                  <span className="font-medium text-gray-900">{vote.author}</span>
+                                  <span className="text-gray-500">{vote.timestamp}</span>
+                                </div>
+                                <p className="text-gray-700">{vote.comment}</p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </section>
 
