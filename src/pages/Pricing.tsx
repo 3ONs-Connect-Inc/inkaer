@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Check, X, Shield, Star } from 'lucide-react';
+import { Check, X, Shield, Star, Plus, Minus } from 'lucide-react';
 
 interface PricingProps {
   isLoggedIn?: boolean;
@@ -13,6 +13,30 @@ interface PricingProps {
 
 const Pricing = ({ isLoggedIn = false, currentPlan = 'freemium' }: PricingProps) => {
   const [billingCycle, setBillingCycle] = useState('monthly');
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
+
+  const toggleFaq = (index: number) => {
+    setExpandedFaq(expandedFaq === index ? null : index);
+  };
+
+  const faqData = [
+    {
+      question: "What's the difference between Certified and Uncertified?",
+      answer: "Certified users have completed our verification process, demonstrating their engineering expertise through peer reviews and assessments. This gives them enhanced visibility to employers and priority access to opportunities."
+    },
+    {
+      question: "Can I upgrade or downgrade my plan anytime?",
+      answer: "Yes, you can change your plan at any time. Upgrades take effect immediately, while downgrades will take effect at the end of your current billing cycle."
+    },
+    {
+      question: "What's included in the storage limit?",
+      answer: "Storage includes all your project files, images, documents, and portfolio content. Premium users get unlimited storage for all content types."
+    },
+    {
+      question: "Are certifications recognized by employers?",
+      answer: "Our certifications are peer-reviewed and skill-verified. Premium users can add verified badges to their LinkedIn profiles and resumes."
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30 relative overflow-hidden">
@@ -137,7 +161,7 @@ const Pricing = ({ isLoggedIn = false, currentPlan = 'freemium' }: PricingProps)
                     </div>
                     <div className="flex items-start">
                       <X className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-500 font-sora">Pre-Job Applications</span>
+                      <span className="text-gray-500 font-sora">Priority Job Applications</span>
                     </div>
                     <div className="flex items-start">
                       <X className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
@@ -177,9 +201,11 @@ const Pricing = ({ isLoggedIn = false, currentPlan = 'freemium' }: PricingProps)
                     <p className="text-gray-600 font-sora mb-4">(Certified & Uncertified)</p>
                     <div className="mb-4">
                       <span className="text-5xl font-sora font-bold text-inkaer-blue">
-                        ${billingCycle === 'yearly' ? '8.25' : '9.99'}
+                        ${billingCycle === 'yearly' ? '99' : '9.99'}
                       </span>
-                      <span className="text-gray-600 font-sora ml-2">/mo</span>
+                      <span className="text-gray-600 font-sora ml-2">
+                        {billingCycle === 'yearly' ? '/year' : '/month'}
+                      </span>
                     </div>
                     <p className="text-gray-600 font-sora">
                       Unlock full access to job opportunities and enhanced visibility
@@ -246,39 +272,33 @@ const Pricing = ({ isLoggedIn = false, currentPlan = 'freemium' }: PricingProps)
               <h2 className="text-3xl font-sora font-bold text-center text-gray-900 mb-12">
                 Frequently Asked Questions
               </h2>
-              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
-                  <h3 className="font-sora font-semibold text-gray-900 mb-3">
-                    What's the difference between Certified and Uncertified?
-                  </h3>
-                  <p className="text-gray-600 font-sora">
-                    Certified users have completed our verification process, demonstrating their engineering expertise through peer reviews and assessments. This gives them enhanced visibility to employers and priority access to opportunities.
-                  </p>
-                </div>
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
-                  <h3 className="font-sora font-semibold text-gray-900 mb-3">
-                    Can I upgrade or downgrade my plan anytime?
-                  </h3>
-                  <p className="text-gray-600 font-sora">
-                    Yes, you can change your plan at any time. Upgrades take effect immediately, while downgrades will take effect at the end of your current billing cycle.
-                  </p>
-                </div>
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
-                  <h3 className="font-sora font-semibold text-gray-900 mb-3">
-                    What's included in the storage limit?
-                  </h3>
-                  <p className="text-gray-600 font-sora">
-                    Storage includes all your project files, images, documents, and portfolio content. Premium users get unlimited storage for all content types.
-                  </p>
-                </div>
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
-                  <h3 className="font-sora font-semibold text-gray-900 mb-3">
-                    Are certifications recognized by employers?
-                  </h3>
-                  <p className="text-gray-600 font-sora">
-                    Our certifications are peer-reviewed and skill-verified. Premium users can add verified badges to their LinkedIn profiles and resumes.
-                  </p>
-                </div>
+              <div className="max-w-3xl mx-auto space-y-4">
+                {faqData.map((faq, index) => (
+                  <div key={index} className="bg-white/90 backdrop-blur-sm rounded-xl shadow-md border border-gray-200 overflow-hidden transition-all duration-200 hover:shadow-lg">
+                    <button
+                      onClick={() => toggleFaq(index)}
+                      className="w-full px-6 py-5 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-inkaer-blue focus:ring-inset transition-colors hover:bg-gray-50"
+                    >
+                      <h3 className="font-sora font-semibold text-gray-900 text-lg">
+                        {faq.question}
+                      </h3>
+                      <div className="ml-4 flex-shrink-0">
+                        {expandedFaq === index ? (
+                          <Minus className="w-5 h-5 text-inkaer-blue transition-transform duration-200" />
+                        ) : (
+                          <Plus className="w-5 h-5 text-gray-400 transition-transform duration-200" />
+                        )}
+                      </div>
+                    </button>
+                    {expandedFaq === index && (
+                      <div className="px-6 pb-5 pt-2 border-t border-gray-100">
+                        <p className="text-gray-600 font-sora leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>

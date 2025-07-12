@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
@@ -253,87 +252,176 @@ const Projects = () => {
             </div>
           </div>
 
-          {/* Projects Grid */}
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-            {filteredProjects.map((project, index) => (
-              <Card
-                key={index}
-                className="group bg-white border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden"
-              >
-                {/* Project Image */}
-                <div className="relative overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={`${project.title} project`}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                  <div className="absolute top-4 right-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(project.difficulty)}`}>
-                      {project.difficulty}
-                    </span>
-                  </div>
-                  <div className="absolute top-4 left-4">
-                    <span className={`px-3 py-1 ${getProjectTypeColor(project.type)} text-white rounded-full text-xs font-semibold font-sora capitalize`}>
-                      {project.type}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Project Content */}
-                <CardContent className="p-6 space-y-4">
-                  <div className="space-y-2">
-                    <div className="text-sm text-blue-600 font-sora font-semibold uppercase tracking-wide">
-                      {project.category}
-                    </div>
-                    <h3 className="text-xl font-sora font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-gray-500 font-sora">
-                      by {project.author}
-                    </p>
-                    <p className="text-gray-600 font-sora leading-relaxed text-sm">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Project Stats */}
-                  <div className="flex items-center justify-between text-sm text-gray-500 font-sora">
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-4 h-4" />
-                      <span>{project.duration}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Users className="w-4 h-4" />
-                      <span>{project.participants}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="w-4 h-4 fill-current text-yellow-400" />
-                      <span>{project.rating}</span>
-                    </div>
-                  </div>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, tagIndex) => (
-                      <span
-                        key={tagIndex}
-                        className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-sora font-medium rounded-full"
-                      >
-                        {tag}
+          {/* Projects Display - Grid or List View */}
+          {viewMode === 'grid' ? (
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
+              {filteredProjects.map((project, index) => (
+                <Card
+                  key={index}
+                  className="group bg-white border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+                >
+                  {/* Project Image */}
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={`${project.title} project`}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div className="absolute top-4 right-4">
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(project.difficulty)}`}>
+                        {project.difficulty}
                       </span>
-                    ))}
+                    </div>
+                    <div className="absolute top-4 left-4">
+                      <span className={`px-3 py-1 ${getProjectTypeColor(project.type)} text-white rounded-full text-xs font-semibold font-sora capitalize`}>
+                        {project.type}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Action Button */}
-                  <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-sora font-semibold py-2 rounded-lg group transition-all duration-200">
-                    {getButtonText(project.type)}
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  {/* Project Content */}
+                  <CardContent className="p-6 space-y-4">
+                    <div className="space-y-2">
+                      <div className="text-sm text-blue-600 font-sora font-semibold uppercase tracking-wide">
+                        {project.category}
+                      </div>
+                      <h3 className="text-xl font-sora font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-gray-500 font-sora">
+                        by {project.author}
+                      </p>
+                      <p className="text-gray-600 font-sora leading-relaxed text-sm">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    {/* Project Stats */}
+                    <div className="flex items-center justify-between text-sm text-gray-500 font-sora">
+                      <div className="flex items-center space-x-1">
+                        <Clock className="w-4 h-4" />
+                        <span>{project.duration}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Users className="w-4 h-4" />
+                        <span>{project.participants}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Star className="w-4 h-4 fill-current text-yellow-400" />
+                        <span>{project.rating}</span>
+                      </div>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag, tagIndex) => (
+                        <span
+                          key={tagIndex}
+                          className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-sora font-medium rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Action Button */}
+                    <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-sora font-semibold py-2 rounded-lg group transition-all duration-200">
+                      {getButtonText(project.type)}
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredProjects.map((project, index) => (
+                <Card
+                  key={index}
+                  className="group bg-white border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                >
+                  <CardContent className="p-6">
+                    <div className="flex gap-6">
+                      {/* Project Image */}
+                      <div className="relative overflow-hidden flex-shrink-0">
+                        <img
+                          src={project.image}
+                          alt={`${project.title} project`}
+                          className="w-32 h-24 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute top-2 right-2">
+                          <span className={`px-2 py-1 rounded text-xs font-semibold font-sora ${getDifficultyColor(project.difficulty)}`}>
+                            {project.difficulty}
+                          </span>
+                        </div>
+                        <div className="absolute top-2 left-2">
+                          <span className={`px-2 py-1 ${getProjectTypeColor(project.type)} text-white rounded text-xs font-semibold font-sora capitalize`}>
+                            {project.type}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Project Content */}
+                      <div className="flex-1 space-y-3">
+                        <div>
+                          <div className="text-sm text-blue-600 font-sora font-semibold uppercase tracking-wide">
+                            {project.category}
+                          </div>
+                          <h3 className="text-xl font-sora font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+                            {project.title}
+                          </h3>
+                          <p className="text-sm text-gray-500 font-sora">
+                            by {project.author}
+                          </p>
+                        </div>
+
+                        <p className="text-gray-600 font-sora leading-relaxed text-sm">
+                          {project.description}
+                        </p>
+
+                        {/* Project Stats */}
+                        <div className="flex items-center gap-6 text-sm text-gray-500 font-sora">
+                          <div className="flex items-center space-x-1">
+                            <Clock className="w-4 h-4" />
+                            <span>{project.duration}</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <Users className="w-4 h-4" />
+                            <span>{project.participants}</span>
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <Star className="w-4 h-4 fill-current text-yellow-400" />
+                            <span>{project.rating}</span>
+                          </div>
+                        </div>
+
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag, tagIndex) => (
+                            <span
+                              key={tagIndex}
+                              className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-sora font-medium rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Action Button */}
+                      <div className="flex-shrink-0 flex items-center">
+                        <Button className="bg-blue-500 hover:bg-blue-600 text-white font-sora font-semibold py-2 px-4 rounded-lg group transition-all duration-200">
+                          {getButtonText(project.type)}
+                          <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
 
           {filteredProjects.length === 0 && (
             <div className="text-center py-12">
