@@ -19,7 +19,7 @@ import {
 
 const LoggedInNavbar = () => {
   // Mock user data - in real app this would come from state/context
-  const userRank = "Expert";
+  const userRank = "Advanced";
   const userPoints = 2450;
 
   return (
@@ -39,15 +39,9 @@ const LoggedInNavbar = () => {
             <a href="/projects" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
               Projects
             </a>
-            <a href="/rank" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
-              Rank
-            </a>
-            <a href="/certifications" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
-              Certifications
-            </a>
             
-            {/* User Rank and Points */}
-            <div className="flex items-center gap-4 px-3 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200">
+            {/* User Rank and Points - Now Clickable */}
+            <a href="/user-rank-dashboard" className="flex items-center gap-4 px-3 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200 hover:shadow-md transition-all duration-200">
               <div className="flex items-center gap-1">
                 <Crown className="w-4 h-4 text-inkaer-blue" />
                 <span className="text-sm font-sora font-semibold text-inkaer-blue">{userRank}</span>
@@ -56,7 +50,7 @@ const LoggedInNavbar = () => {
                 <Star className="w-4 h-4 text-yellow-500 fill-current" />
                 <span className="text-sm font-sora font-semibold text-gray-700">{userPoints.toLocaleString()}</span>
               </div>
-            </div>
+            </a>
 
             {/* Upgrade Button */}
             <Button 
@@ -97,8 +91,8 @@ const LoggedInNavbar = () => {
               <img src="/lovable-uploads/43b0acd6-b3f5-4c6c-8343-272a5aefe7c2.png" className="h-8 w-auto" alt="Inkaer" />
             </a>
             
-            {/* Mobile Rank and Points */}
-            <div className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200">
+            {/* Mobile Rank and Points - Now Clickable */}
+            <a href="/user-rank-dashboard" className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200 hover:shadow-md transition-all duration-200">
               <div className="flex items-center gap-1">
                 <Crown className="w-3 h-3 text-inkaer-blue" />
                 <span className="text-xs font-sora font-semibold text-inkaer-blue">{userRank}</span>
@@ -107,7 +101,7 @@ const LoggedInNavbar = () => {
                 <Star className="w-3 h-3 text-yellow-500 fill-current" />
                 <span className="text-xs font-sora font-semibold text-gray-700">{userPoints.toLocaleString()}</span>
               </div>
-            </div>
+            </a>
             
             <Sheet>
               <SheetTrigger asChild>
@@ -130,12 +124,6 @@ const LoggedInNavbar = () => {
                     </a>
                     <a href="/projects" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
                       Projects
-                    </a>
-                    <a href="/rank" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
-                      Rank
-                    </a>
-                    <a href="/certifications" className="block text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium py-2">
-                      Certifications
                     </a>
                   </div>
                   <div className="flex flex-col gap-3 border-t pt-4">

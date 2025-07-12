@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import Rank from './pages/Rank';
 import Certifications from './pages/Certifications';
+import UserRankDashboard from './pages/UserRankDashboard';
 import HowItWorks from './pages/HowItWorks';
 import About from './pages/About';
 import Careers from './pages/Careers';
@@ -41,6 +42,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/rank" element={<Rank />} />
         <Route path="/certifications" element={<Certifications />} />
+        <Route path="/user-rank-dashboard" element={<UserRankDashboard />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/about" element={<About />} />
         <Route path="/careers" element={<Careers />} />

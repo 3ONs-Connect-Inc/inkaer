@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -6,8 +5,8 @@ import { Crown, Star, Trophy, TrendingUp } from 'lucide-react';
 
 const Rank = () => {
   const rankLevels = [
-    { name: "Novice", points: "0-100", color: "text-gray-600", bgColor: "bg-gray-100" },
-    { name: "Beginner", points: "101-500", color: "text-brown-600", bgColor: "bg-brown-100" },
+    { name: "Newly Joined", points: "0-50", color: "text-gray-600", bgColor: "bg-gray-100", description: "Welcome! Complete any activity to advance to Beginner." },
+    { name: "Beginner", points: "51-500", color: "text-brown-600", bgColor: "bg-brown-100" },
     { name: "Intermediate", points: "501-1500", color: "text-green-600", bgColor: "bg-green-100" },
     { name: "Advanced", points: "1501-3000", color: "text-blue-600", bgColor: "bg-blue-100" },
     { name: "Expert", points: "3001-5000", color: "text-purple-600", bgColor: "bg-purple-100" },
@@ -42,6 +41,11 @@ const Rank = () => {
                   <p className="text-gray-600 font-sora mb-4">
                     {rank.points} points
                   </p>
+                  {rank.description && (
+                    <p className="text-sm text-gray-500 font-sora italic">
+                      {rank.description}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
