@@ -1,50 +1,91 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
-import { Crown, Star, Trophy, Target, CheckCircle, ArrowRight } from 'lucide-react';
+import { Crown, Star, Trophy, Target, CheckCircle, ArrowRight, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const UserRankDashboard = () => {
+  const [selectedDomain, setSelectedDomain] = useState('mechanical');
+  
   // Mock user data - in real app this would come from state/context
   const currentRank = "Advanced";
   const currentPoints = 2450;
   const nextRank = "Expert";
   const pointsToNext = 550; // 3000 - 2450
 
+  const domains = [
+    { value: 'mechanical', label: 'Mechanical Engineering', code: 'ME' },
+    { value: 'electrical', label: 'Electrical Engineering', code: 'EE' },
+    { value: 'civil', label: 'Civil Engineering', code: 'CE' },
+    { value: 'software', label: 'Software Engineering', code: 'SE' },
+    { value: 'aerospace', label: 'Aerospace Engineering', code: 'AE' }
+  ];
+
   const rankLevels = [
-    { name: "Novice", points: "Newly Joined", color: "text-gray-600", bgColor: "bg-gray-100", minPoints: 0, maxPoints: 0 },
-    { name: "Beginner", points: "1-500", color: "text-brown-600", bgColor: "bg-brown-100", minPoints: 1, maxPoints: 500 },
-    { name: "Intermediate", points: "501-1500", color: "text-green-600", bgColor: "bg-green-100", minPoints: 501, maxPoints: 1500 },
-    { name: "Advanced", points: "1501-3000", color: "text-blue-600", bgColor: "bg-blue-100", minPoints: 1501, maxPoints: 3000 },
-    { name: "Expert", points: "3001-5000", color: "text-purple-600", bgColor: "bg-purple-100", minPoints: 3001, maxPoints: 5000 },
-    { name: "Elite", points: "5000+", color: "text-orange-600", bgColor: "bg-orange-100", minPoints: 5000, maxPoints: Infinity }
+    { name: "Novice", points: "Newly Joined", color: "text-gray-600", bgColor: "bg-gray-100", minPoints: 0, maxPoints: 0, code: "0" },
+    { name: "Beginner", points: "1-500", color: "text-brown-600", bgColor: "bg-brown-100", minPoints: 1, maxPoints: 500, code: "1" },
+    { name: "Intermediate", points: "501-1500", color: "text-green-600", bgColor: "bg-green-100", minPoints: 501, maxPoints: 1500, code: "2" },
+    { name: "Advanced", points: "1501-3000", color: "text-blue-600", bgColor: "bg-blue-100", minPoints: 1501, maxPoints: 3000, code: "3" },
+    { name: "Expert", points: "3001-5000", color: "text-purple-600", bgColor: "bg-purple-100", minPoints: 3001, maxPoints: 5000, code: "4" },
+    { name: "Elite", points: "5000+", color: "text-orange-600", bgColor: "bg-orange-100", minPoints: 5000, maxPoints: Infinity, code: "Elite" }
   ];
 
   const currentRankIndex = rankLevels.findIndex(rank => rank.name === currentRank);
   const currentRankInfo = rankLevels[currentRankIndex];
   const progressPercent = currentRankInfo.maxPoints === 0 ? 100 : ((currentPoints - currentRankInfo.minPoints) / (currentRankInfo.maxPoints - currentRankInfo.minPoints)) * 100;
 
-  const availableCertifications = [
-    {
-      title: "Mechanical Engineering",
-      description: "Verify your mechanical engineering expertise",
-      requirements: "Advanced rank required",
-      available: currentRankIndex >= 3
-    },
-    {
-      title: "Software Engineering", 
-      description: "Demonstrate your software development skills",
-      requirements: "Advanced rank required",
-      available: currentRankIndex >= 3
-    },
-    {
-      title: "Civil Engineering",
-      description: "Showcase your civil engineering knowledge",
-      requirements: "Expert rank required", 
-      available: currentRankIndex >= 4
+  const selectedDomainInfo = domains.find(d => d.value === selectedDomain);
+
+  const getCertifications = () => {
+    const certs = [];
+    
+    // Start from Beginner (index 1) since certification starts at Beginner
+    for (let i = 1; i < rankLevels.length; i++) {
+      const rank = rankLevels[i];
+      const isAvailable = currentRankIndex >= i; // Available if current rank is equal or higher
+      const certCode = `${selectedDomainInfo?.code}${rank.code}`;
+      
+      certs.push({
+        title: `${selectedDomainInfo?.label} (${rank.name})`,
+        code: certCode,
+        rank: rank.name,
+        available: isAvailable,
+        requirements: getRequirements(rank.name, isAvailable),
+        description: getCertDescription(rank.name, selectedDomainInfo?.label || ''),
+        bgColor: rank.bgColor,
+        color: rank.color
+      });
     }
-  ];
+    
+    return certs;
+  };
+
+  const getRequirements = (rankName: string, isAvailable: boolean) => {
+    if (!isAvailable) {
+      return `Requires ${rankName} rank or higher`;
+    }
+    
+    switch (rankName) {
+      case 'Beginner':
+        return 'Complete 2 basic projects • Peer review participation • Basic skill assessment';
+      case 'Intermediate':
+        return 'Complete 3 intermediate projects • Mentor 1 beginner • Technical interview';
+      case 'Advanced':
+        return 'Lead 1 complex project • Industry case study • Advanced technical assessment';
+      case 'Expert':
+        return 'Portfolio of 5+ advanced projects • Peer teaching • Expert-level evaluation';
+      case 'Elite':
+        return 'Demonstrate mastery across multiple domains • Industry recognition • Elite assessment';
+      default:
+        return 'Requirements not specified';
+    }
+  };
+
+  const getCertDescription = (rankName: string, domain: string) => {
+    return `Verify your ${domain.toLowerCase()} expertise at the ${rankName.toLowerCase()} level`;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30">
@@ -59,6 +100,25 @@ const UserRankDashboard = () => {
             <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto">
               Track your ranking progress and unlock new certifications
             </p>
+          </div>
+
+          {/* Domain Selection */}
+          <div className="mb-8 max-w-md mx-auto">
+            <label className="block text-sm font-sora font-medium text-gray-700 mb-2 text-center">
+              Select Engineering Domain
+            </label>
+            <Select value={selectedDomain} onValueChange={setSelectedDomain}>
+              <SelectTrigger className="w-full bg-white border-gray-200 font-sora">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-white border-gray-200 z-50">
+                {domains.map(domain => (
+                  <SelectItem key={domain.value} value={domain.value} className="font-sora">
+                    {domain.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Current Rank Status */}
@@ -131,10 +191,10 @@ const UserRankDashboard = () => {
           {/* Available Certifications */}
           <div className="bg-white rounded-2xl p-8 shadow-lg">
             <h2 className="text-2xl font-sora font-bold text-gray-900 mb-6 text-center">
-              Available Certifications
+              {selectedDomainInfo?.label} Certifications
             </h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              {availableCertifications.map((cert, index) => (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {getCertifications().map((cert, index) => (
                 <div 
                   key={index} 
                   className={`border-2 rounded-xl p-6 transition-all duration-200 ${
@@ -144,16 +204,22 @@ const UserRankDashboard = () => {
                   }`}
                 >
                   <div className="text-center mb-4">
-                    <Trophy className={`w-12 h-12 mx-auto mb-3 ${cert.available ? 'text-green-600' : 'text-gray-400'}`} />
-                    <h3 className="font-sora font-semibold text-gray-900 mb-2">
+                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${cert.bgColor} mb-3`}>
+                      <Trophy className={`w-8 h-8 ${cert.available ? cert.color : 'text-gray-400'}`} />
+                    </div>
+                    <h3 className="font-sora font-semibold text-gray-900 mb-1">
                       {cert.title}
                     </h3>
+                    <p className="text-sm text-gray-500 font-sora mb-2">
+                      Code: {cert.code}
+                    </p>
                     <p className="text-sm text-gray-600 font-sora mb-3">
                       {cert.description}
                     </p>
-                    <p className={`text-xs font-sora ${cert.available ? 'text-green-600' : 'text-gray-500'}`}>
-                      {cert.requirements}
-                    </p>
+                    <div className={`text-xs font-sora p-3 rounded-lg mb-3 ${cert.available ? 'bg-blue-50 text-blue-800' : 'bg-gray-100 text-gray-600'}`}>
+                      <p className="font-medium mb-1">Requirements:</p>
+                      <p>{cert.requirements}</p>
+                    </div>
                   </div>
                   <Button 
                     className={`w-full font-sora font-semibold ${

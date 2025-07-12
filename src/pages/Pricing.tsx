@@ -1,16 +1,10 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from '@/components/Navbar';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Check, X, Crown, Star, Zap } from 'lucide-react';
-
-interface FeatureDetails {
-  included: boolean;
-  value?: string;
-  note?: string;
-}
+import { Check, X } from 'lucide-react';
 
 interface PricingProps {
   isLoggedIn?: boolean;
@@ -18,76 +12,55 @@ interface PricingProps {
 }
 
 const Pricing = ({ isLoggedIn = false, currentPlan = 'freemium' }: PricingProps) => {
-  const [isYearly, setIsYearly] = useState(false);
-
   const plans = [
     {
-      name: "Freemium",
-      subtitle: "(Certified & Uncertified)",
-      price: "Free",
-      popular: false,
-      description: "Perfect for getting started with engineering project sharing",
-      features: {
-        "Submit Projects": { included: true, value: "Unlimited" } as FeatureDetails,
-        "Peer Reviews": { included: true, value: "Unlimited" } as FeatureDetails,
-        "See Employer Challenges": { included: false } as FeatureDetails,
-        "Apply for Jobs": { included: false } as FeatureDetails,
-        "Project Boosting (More Peer Visibility)": { included: false } as FeatureDetails,
-        "Rank Visibility to Employers": { included: true, note: "Certified Only" } as FeatureDetails,
-        "Certification Badge": { included: true, note: "Certified Only" } as FeatureDetails,
-        "Priority Job Applications": { included: false } as FeatureDetails,
-        "Profile Boosting (More Employer Visibility)": { included: false } as FeatureDetails
-      }
+      name: 'Freemium',
+      price: 'Free',
+      period: 'forever',
+      description: 'Perfect for getting started with engineering projects',
+      features: [
+        'Access to basic engineering challenges',
+        'Community forum participation',
+        'Basic project portfolio',
+        'Peer review system',
+        'Basic skill assessments',
+        '100MB storage limit',
+        'Standard support'
+      ],
+      limitations: [
+        'Limited to 3 project uploads per month',
+        'No advanced certifications',
+        'Basic analytics only'
+      ],
+      buttonText: currentPlan === 'freemium' ? 'Current Plan' : 'Get Started',
+      buttonVariant: 'outline' as const,
+      popular: false
     },
     {
-      name: "Premium",
-      subtitle: "(Certified & Uncertified)",
-      price: isYearly ? "$99.99/yr" : "$9.99/mo",
-      popular: true,
-      description: "Unlock full access to job opportunities and enhanced visibility",
-      features: {
-        "Submit Projects": { included: true, value: "Unlimited" } as FeatureDetails,
-        "Peer Reviews": { included: true, value: "Unlimited" } as FeatureDetails,
-        "See Employer Challenges": { included: true } as FeatureDetails,
-        "Apply for Jobs": { included: true } as FeatureDetails,
-        "Project Boosting (More Peer Visibility)": { included: true } as FeatureDetails,
-        "Rank Visibility to Employers": { included: true, note: "Certified Only" } as FeatureDetails,
-        "Certification Badge": { included: true, note: "Certified Only" } as FeatureDetails,
-        "Priority Job Applications": { included: true } as FeatureDetails,
-        "Profile Boosting (More Employer Visibility)": { included: true } as FeatureDetails
-      }
+      name: 'Premium',
+      price: '$29',
+      period: 'per month',
+      description: 'Unlock your full engineering potential',
+      features: [
+        'Everything in Freemium',
+        'Unlimited project uploads',
+        'Advanced engineering challenges',
+        'Professional certifications',
+        'Advanced analytics & insights',
+        'Priority mentor matching',
+        'Industry project collaborations',
+        'Resume builder with verification',
+        'Unlimited storage',
+        'Priority support',
+        'Exclusive webinars & workshops',
+        'LinkedIn certification badge'
+      ],
+      limitations: [],
+      buttonText: currentPlan === 'premium' ? 'Current Plan' : 'Upgrade Now',
+      buttonVariant: 'default' as const,
+      popular: true
     }
   ];
-
-  const getButtonText = (planName: string) => {
-    if (!isLoggedIn) {
-      return "Get Started";
-    }
-    
-    const planKey = planName.toLowerCase() as 'freemium' | 'premium';
-    if (currentPlan === planKey) {
-      return "Current Plan";
-    }
-    
-    if (planKey === 'premium') {
-      return "Upgrade";
-    } else {
-      return "Downgrade";
-    }
-  };
-
-  const getButtonProps = (planName: string) => {
-    if (!isLoggedIn) {
-      return { disabled: false, variant: "default" as const };
-    }
-    
-    const planKey = planName.toLowerCase() as 'freemium' | 'premium';
-    if (currentPlan === planKey) {
-      return { disabled: true, variant: "secondary" as const };
-    }
-    
-    return { disabled: false, variant: "default" as const };
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30 relative overflow-hidden">
@@ -99,189 +72,139 @@ const Pricing = ({ isLoggedIn = false, currentPlan = 'freemium' }: PricingProps)
       <div className="relative z-10">
         {isLoggedIn ? <LoggedInNavbar /> : <Navbar />}
         
-        {/* Hero Section */}
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl font-sora font-bold text-gray-900 mb-6">
-              Choose Your Plan
-            </h1>
-            <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto mb-8">
-              Select the plan that fits your career goals and unlock opportunities to showcase your engineering skills.
-            </p>
-            
-            {/* Monthly/Yearly Toggle */}
-            <div className="flex items-center justify-center gap-4 mb-12">
-              <span className={`font-sora font-medium ${!isYearly ? 'text-inkaer-blue' : 'text-gray-600'}`}>
-                Monthly
-              </span>
-              <button
-                onClick={() => setIsYearly(!isYearly)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  isYearly ? 'bg-inkaer-blue' : 'bg-gray-200'
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    isYearly ? 'translate-x-6' : 'translate-x-1'
-                  }`}
-                />
-              </button>
-              <span className={`font-sora font-medium ${isYearly ? 'text-inkaer-blue' : 'text-gray-600'}`}>
-                Yearly
-                <span className="ml-1 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
-                  Save 17%
-                </span>
-              </span>
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h1 className="text-5xl sm:text-6xl font-sora font-bold text-gray-900 mb-8">
+                Choose Your Plan
+              </h1>
+              <p className="text-2xl text-gray-600 font-sora max-w-3xl mx-auto">
+                Start free and upgrade when you're ready to unlock advanced features
+              </p>
             </div>
-          </div>
-        </section>
 
-        {/* Certification Explanation */}
-        <section className="pb-12">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-white/50 rounded-2xl p-8 mb-12">
-              <h2 className="text-2xl font-sora font-bold text-gray-900 mb-4 text-center">
-                Certified vs Uncertified
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-green-50 rounded-xl p-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Check className="w-5 h-5 text-green-600" />
-                    <h3 className="font-sora font-semibold text-green-800">Certified Engineers</h3>
-                  </div>
-                  <p className="text-green-700 font-sora text-sm">
-                    Engineers who have completed our verification process through peer reviews and assessments. 
-                    They receive enhanced visibility to employers and priority access to opportunities.
-                  </p>
-                </div>
-                <div className="bg-blue-50 rounded-xl p-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Star className="w-5 h-5 text-blue-600" />
-                    <h3 className="font-sora font-semibold text-blue-800">Uncertified Engineers</h3>
-                  </div>
-                  <p className="text-blue-700 font-sora text-sm">
-                    Engineers building their portfolio and working towards certification. 
-                    Full access to platform features with the opportunity to become certified.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Pricing Cards */}
-        <section className="pb-20">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {plans.map((plan, index) => (
                 <div
                   key={index}
-                  className={`relative bg-white rounded-2xl shadow-lg p-8 ${
+                  className={`bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border transition-all duration-300 hover:shadow-xl relative ${
                     plan.popular 
-                      ? 'ring-2 ring-inkaer-blue scale-105 border-inkaer-blue' 
-                      : 'border border-gray-200'
-                  } ${isLoggedIn && currentPlan === plan.name.toLowerCase() ? 'ring-2 ring-green-500' : ''} transition-all duration-300 hover:shadow-2xl`}
+                      ? 'border-inkaer-blue ring-2 ring-inkaer-blue/20 scale-105' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <div className="bg-gradient-to-r from-inkaer-blue to-indigo-600 text-white px-4 py-1 rounded-full text-sm font-sora font-semibold flex items-center gap-1">
-                        <Star className="w-3 h-3 fill-current" />
+                      <span className="bg-inkaer-blue text-white px-6 py-2 rounded-full text-sm font-sora font-semibold">
                         Most Popular
-                      </div>
+                      </span>
                     </div>
                   )}
 
-                  {isLoggedIn && currentPlan === plan.name.toLowerCase() && (
-                    <div className="absolute -top-4 right-4">
-                      <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-sora font-semibold">
-                        Current Plan
+                  <div className="p-8">
+                    <div className="text-center mb-8">
+                      <h3 className="text-2xl font-sora font-bold text-gray-900 mb-2">
+                        {plan.name}
+                      </h3>
+                      <div className="mb-4">
+                        <span className="text-4xl font-sora font-bold text-gray-900">
+                          {plan.price}
+                        </span>
+                        {plan.period && (
+                          <span className="text-gray-600 font-sora ml-2">
+                            {plan.period}
+                          </span>
+                        )}
                       </div>
+                      <p className="text-gray-600 font-sora">
+                        {plan.description}
+                      </p>
                     </div>
-                  )}
-                  
-                  <div className="text-center mb-8">
-                    <h3 className="text-2xl font-sora font-bold text-gray-900 mb-2">
-                      {plan.name}
-                    </h3>
-                    <p className="text-gray-600 font-sora text-sm mb-4">
-                      {plan.subtitle}
-                    </p>
-                    <div className="text-4xl font-sora font-bold text-inkaer-blue mb-4">
-                      {plan.price}
-                    </div>
-                    <p className="text-gray-600 font-sora text-sm mb-6">
-                      {plan.description}
-                    </p>
-                  </div>
 
-                  <div className="space-y-4 mb-8">
-                    {Object.entries(plan.features).map(([feature, details]) => (
-                      <div key={feature} className="flex items-start gap-3">
-                        <div className="flex-shrink-0 mt-0.5">
-                          {details.included ? (
-                            <Check className="w-5 h-5 text-green-500" />
-                          ) : (
-                            <X className="w-5 h-5 text-red-500" />
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <span className="text-sm font-sora text-gray-700">
+                    <div className="space-y-4 mb-8">
+                      {plan.features.map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-start">
+                          <Check className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-700 font-sora">
                             {feature}
                           </span>
-                          {details.value && (
-                            <span className="ml-2 text-sm font-sora font-semibold text-inkaer-blue">
-                              {details.value}
-                            </span>
-                          )}
-                          {details.note && (
-                            <span className="ml-2 text-xs font-sora text-gray-500 italic">
-                              ({details.note})
-                            </span>
-                          )}
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                      
+                      {plan.limitations.map((limitation, limitationIndex) => (
+                        <div key={limitationIndex} className="flex items-start opacity-60">
+                          <X className="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                          <span className="text-gray-500 font-sora">
+                            {limitation}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
 
-                  <Button
-                    className={`w-full font-sora font-semibold py-3 rounded-full transition-all duration-200 ${
-                      plan.popular && !getButtonProps(plan.name).disabled
-                        ? 'bg-inkaer-blue hover:bg-inkaer-dark-blue text-white hover:scale-105'
-                        : ''
-                    }`}
-                    variant={getButtonProps(plan.name).variant}
-                    disabled={getButtonProps(plan.name).disabled}
-                  >
-                    {getButtonText(plan.name)}
-                  </Button>
+                    <Button
+                      className={`w-full font-sora font-semibold py-3 text-lg transition-all duration-200 ${
+                        plan.popular
+                          ? 'bg-inkaer-blue hover:bg-inkaer-dark-blue text-white'
+                          : plan.buttonVariant === 'outline'
+                          ? 'border-2 border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50'
+                          : ''
+                      } ${
+                        (currentPlan === 'freemium' && plan.name === 'Freemium') ||
+                        (currentPlan === 'premium' && plan.name === 'Premium')
+                          ? 'opacity-50 cursor-not-allowed'
+                          : ''
+                      }`}
+                      variant={plan.popular ? 'default' : plan.buttonVariant}
+                      disabled={
+                        (currentPlan === 'freemium' && plan.name === 'Freemium') ||
+                        (currentPlan === 'premium' && plan.name === 'Premium')
+                      }
+                    >
+                      {plan.buttonText}
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>
-          </div>
-        </section>
 
-        {/* FAQ Section */}
-        <section className="py-16 bg-white/50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-sora font-bold text-gray-900 mb-8">
-              Frequently Asked Questions
-            </h2>
-            <div className="space-y-6 text-left">
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h3 className="font-sora font-semibold text-gray-900 mb-2">
-                  What's the difference between Certified and Uncertified?
-                </h3>
-                <p className="text-gray-600 font-sora">
-                  Certified users have completed our verification process, demonstrating their engineering expertise through peer reviews and assessments. This gives them enhanced visibility to employers and priority access to opportunities.
-                </p>
-              </div>
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <h3 className="font-sora font-semibold text-gray-900 mb-2">
-                  Can I upgrade or downgrade my plan anytime?
-                </h3>
-                <p className="text-gray-600 font-sora">
-                  Yes, you can change your plan at any time. Upgrades take effect immediately, while downgrades will take effect at the end of your current billing cycle.
-                </p>
+            {/* FAQ Section */}
+            <div className="mt-20">
+              <h2 className="text-3xl font-sora font-bold text-center text-gray-900 mb-12">
+                Frequently Asked Questions
+              </h2>
+              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
+                  <h3 className="font-sora font-semibold text-gray-900 mb-3">
+                    Can I upgrade or downgrade anytime?
+                  </h3>
+                  <p className="text-gray-600 font-sora">
+                    Yes, you can change your plan at any time. Upgrades take effect immediately, and downgrades take effect at the end of your billing cycle.
+                  </p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
+                  <h3 className="font-sora font-semibold text-gray-900 mb-3">
+                    What's included in the storage limit?
+                  </h3>
+                  <p className="text-gray-600 font-sora">
+                    Storage includes all your project files, images, documents, and portfolio content. Premium users get unlimited storage for all content types.
+                  </p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
+                  <h3 className="font-sora font-semibold text-gray-900 mb-3">
+                    Are certifications recognized by employers?
+                  </h3>
+                  <p className="text-gray-600 font-sora">
+                    Our certifications are peer-reviewed and skill-verified. Premium users can add verified badges to their LinkedIn profiles and resumes.
+                  </p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
+                  <h3 className="font-sora font-semibold text-gray-900 mb-3">
+                    Is there a free trial for Premium?
+                  </h3>
+                  <p className="text-gray-600 font-sora">
+                    We offer a generous freemium plan to get you started. You can upgrade to Premium anytime to unlock advanced features and unlimited access.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
