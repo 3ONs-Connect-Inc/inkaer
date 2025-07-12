@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -66,11 +67,14 @@ const ProjectCard = ({
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-        <div className="absolute top-4 right-4">
-          <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(difficulty)}`}>
-            {difficulty}
-          </span>
-        </div>
+        {/* Only show difficulty badge for challenges */}
+        {type === 'challenge' && (
+          <div className="absolute top-4 right-4">
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(difficulty)}`}>
+              {difficulty}
+            </span>
+          </div>
+        )}
         <div className="absolute top-4 left-4">
           <span className={`px-3 py-1 ${getProjectTypeColor(type)} text-white rounded-full text-xs font-semibold font-sora capitalize`}>
             {type}
@@ -99,10 +103,13 @@ const ProjectCard = ({
 
         {/* Project Stats */}
         <div className="flex items-center justify-between text-sm text-gray-500 font-sora">
-          <div className="flex items-center space-x-1">
-            <Clock className="w-4 h-4" />
-            <span>{duration}</span>
-          </div>
+          {/* Show duration only for challenges */}
+          {type === 'challenge' && (
+            <div className="flex items-center space-x-1">
+              <Clock className="w-4 h-4" />
+              <span>{duration}</span>
+            </div>
+          )}
           <div className="flex items-center space-x-1">
             <Users className="w-4 h-4" />
             <span>{participants}</span>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Check, X, Crown, Star } from 'lucide-react';
+import { Check, X, Star } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const Pricing = () => {
@@ -14,16 +14,16 @@ const Pricing = () => {
 
   const faqs = [
     {
-      question: "What's included in the Premium plan?",
-      answer: "Premium includes unlimited project uploads, advanced analytics, priority support, exclusive engineering challenges, certification programs, and unlimited storage for all your projects."
+      question: "What's the difference between Certified and Uncertified?",
+      answer: "Certified users have completed our verification process, demonstrating their engineering expertise through peer reviews and assessments. This gives them enhanced visibility to employers and priority access to opportunities."
     },
     {
-      question: "Can I switch between monthly and yearly billing?",
-      answer: "Yes, you can switch between monthly and yearly billing at any time from your account settings. When switching to yearly, you'll receive a prorated credit for your current billing period."
+      question: "Can I upgrade or downgrade my plan anytime?",
+      answer: "Yes, you can change your plan at any time. Upgrades take effect immediately, while downgrades will take effect at the end of your current billing cycle."
     },
     {
       question: "What happens to my projects if I downgrade?",
-      answer: "Your existing projects will remain accessible, but you'll be limited to the Freemium storage limit of 100MB. You can upgrade again at any time to regain full access."
+      answer: "Your existing projects will remain accessible, but you'll be limited to the Freemium storage limit. You can upgrade again at any time to regain full access."
     },
     {
       question: "Do you offer student discounts?",
@@ -31,39 +31,33 @@ const Pricing = () => {
     },
     {
       question: "Is there a free trial?",
-      answer: "While we don't offer a traditional free trial, our Freemium plan gives you access to core features with a 100MB storage limit so you can explore the platform."
-    },
-    {
-      question: "Can I cancel anytime?",
-      answer: "Absolutely! You can cancel your subscription at any time. Your Premium features will remain active until the end of your current billing period."
+      answer: "While we don't offer a traditional free trial, our Freemium plan gives you access to core features so you can explore the platform."
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30">
+    <div className="min-h-screen bg-gray-50">
       <LoggedInNavbar />
       
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl font-sora font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">
               Choose Your Plan
             </h1>
-            <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto">
-              Unlock your engineering potential with our flexible pricing plans
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+              Select the plan that fits your career goals and unlock opportunities to showcase your engineering skills.
             </p>
-          </div>
 
-          {/* Billing Toggle */}
-          <div className="flex justify-center mb-12">
-            <div className="bg-gray-100 p-1 rounded-full">
-              <div className="flex">
+            {/* Billing Toggle */}
+            <div className="flex justify-center mb-12">
+              <div className="bg-gray-200 p-1 rounded-full inline-flex">
                 <button
                   onClick={() => setIsYearly(false)}
-                  className={`px-6 py-2 rounded-full font-sora font-medium transition-all ${
+                  className={`px-6 py-2 rounded-full font-medium transition-all ${
                     !isYearly
-                      ? 'bg-white text-blue-600 shadow-sm'
+                      ? 'bg-blue-500 text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-800'
                   }`}
                 >
@@ -71,9 +65,9 @@ const Pricing = () => {
                 </button>
                 <button
                   onClick={() => setIsYearly(true)}
-                  className={`px-6 py-2 rounded-full font-sora font-medium transition-all ${
+                  className={`px-6 py-2 rounded-full font-medium transition-all ${
                     isYearly
-                      ? 'bg-white text-blue-600 shadow-sm'
+                      ? 'bg-blue-500 text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-800'
                   }`}
                 >
@@ -83,101 +77,147 @@ const Pricing = () => {
             </div>
           </div>
 
+          {/* Certified vs Uncertified Section */}
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            {/* Certified Engineers */}
+            <div className="text-center p-6 bg-green-50 rounded-2xl border border-green-200">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Check className="w-5 h-5 text-green-600" />
+                <h3 className="text-xl font-bold text-green-800">Certified Engineers</h3>
+              </div>
+              <p className="text-sm text-green-700 leading-relaxed">
+                Engineers who have completed our verification process through peer reviews and assessments. This provides enhanced visibility to employers and priority access to opportunities.
+              </p>
+            </div>
+
+            {/* Uncertified Engineers */}
+            <div className="text-center p-6 bg-blue-50 rounded-2xl border border-blue-200">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <Star className="w-5 h-5 text-blue-600" />
+                <h3 className="text-xl font-bold text-blue-800">Uncertified Engineers</h3>
+              </div>
+              <p className="text-sm text-blue-700 leading-relaxed">
+                Engineers building their portfolio and working towards certification. Full access to platform features and community to help you become certified.
+              </p>
+            </div>
+          </div>
+
           {/* Pricing Cards */}
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
             {/* Freemium Plan */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-gray-200 p-8">
+            <div className="bg-white rounded-3xl shadow-lg border border-gray-200 p-8 relative">
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-sora font-bold text-gray-900 mb-2">Freemium</h3>
-                <div className="text-4xl font-sora font-bold text-gray-900 mb-2">
-                  $0
-                  <span className="text-lg text-gray-500 font-normal">/month</span>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Freemium</h3>
+                <p className="text-sm text-gray-600 mb-4">(Certified & Uncertified)</p>
+                <div className="text-5xl font-bold text-gray-900 mb-2">
+                  Free
                 </div>
-                <p className="text-gray-600 font-sora">Perfect for getting started</p>
+                <p className="text-gray-600">Perfect for getting started with engineering project sharing</p>
               </div>
               
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">Basic project uploads</span>
+                  <span className="text-gray-700">Submit Projects <span className="text-blue-500">Unlimited</span></span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">Community access</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">Basic challenges</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">100MB storage limit</span>
+                  <span className="text-gray-700">Peer Reviews <span className="text-blue-500">Unlimited</span></span>
                 </li>
                 <li className="flex items-center gap-3">
                   <X className="w-5 h-5 text-red-400" />
-                  <span className="font-sora text-gray-400">Advanced analytics</span>
+                  <span className="text-gray-400">See Employer Challenges</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <X className="w-5 h-5 text-red-400" />
-                  <span className="font-sora text-gray-400">Certification programs</span>
+                  <span className="text-gray-400">Apply for Jobs</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <X className="w-5 h-5 text-red-400" />
+                  <span className="text-gray-400">Project Boosting (More Peer Visibility)</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Rank Visibility to Employers <span className="text-gray-500">(Certified Only)</span></span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Certification Badge <span className="text-gray-500">(Certified Only)</span></span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <X className="w-5 h-5 text-red-400" />
+                  <span className="text-gray-400">Priority Job Applications</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <X className="w-5 h-5 text-red-400" />
+                  <span className="text-gray-400">Profile Boosting (More Employer Visibility)</span>
                 </li>
               </ul>
               
-              <Button className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-sora font-semibold py-3 rounded-xl">
-                Current Plan
+              <Button className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 rounded-xl">
+                Get Started
               </Button>
             </div>
 
             {/* Premium Plan */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border-2 border-blue-200 p-8 relative">
+            <div className="bg-white rounded-3xl shadow-xl border-2 border-blue-400 p-8 relative">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-sora font-semibold">
+                <span className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
                   Most Popular
                 </span>
               </div>
               
               <div className="text-center mb-8">
-                <h3 className="text-2xl font-sora font-bold text-gray-900 mb-2 flex items-center justify-center gap-2">
-                  Premium <Crown className="w-6 h-6 text-yellow-500" />
-                </h3>
-                <div className="text-4xl font-sora font-bold text-gray-900 mb-2">
-                  ${isYearly ? yearlyPrice : monthlyPrice}
-                  <span className="text-lg text-gray-500 font-normal">
-                    /{isYearly ? 'year' : 'month'}
-                  </span>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Premium</h3>
+                <p className="text-sm text-gray-600 mb-4">(Certified & Uncertified)</p>
+                <div className="text-5xl font-bold text-blue-500 mb-2">
+                  ${isYearly ? yearlyPrice : monthlyPrice.toFixed(2)}{isYearly ? '' : '/mo'}
+                  {isYearly && <span className="text-lg text-gray-500 font-normal">/year</span>}
                 </div>
-                <p className="text-gray-600 font-sora">For serious engineers</p>
+                <p className="text-gray-600">Unlock full access to job opportunities and enhanced visibility</p>
               </div>
               
               <ul className="space-y-4 mb-8">
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">Unlimited project uploads</span>
+                  <span className="text-gray-700">Submit Projects <span className="text-blue-500">Unlimited</span></span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">Unlimited storage</span>
+                  <span className="text-gray-700">Peer Reviews <span className="text-blue-500">Unlimited</span></span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">Advanced analytics</span>
+                  <span className="text-gray-700">See Employer Challenges</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">Priority support</span>
+                  <span className="text-gray-700">Apply for Jobs</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">Exclusive challenges</span>
+                  <span className="text-gray-700">Project Boosting (More Peer Visibility)</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />
-                  <span className="font-sora text-gray-700">Certification programs</span>
+                  <span className="text-gray-700">Rank Visibility to Employers <span className="text-gray-500">(Certified Only)</span></span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Certification Badge <span className="text-gray-500">(Certified Only)</span></span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Priority Job Applications</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Profile Boosting (More Employer Visibility)</span>
                 </li>
               </ul>
               
-              <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-sora font-semibold py-3 rounded-xl">
-                Upgrade Now
+              <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl">
+                Get Started
               </Button>
             </div>
           </div>
@@ -185,27 +225,26 @@ const Pricing = () => {
           {/* FAQ Section */}
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-sora font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Frequently Asked Questions
               </h2>
-              <p className="text-xl text-gray-600 font-sora">
-                Everything you need to know about our pricing plans
-              </p>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-gray-200 p-8">
-              <Accordion type="single" collapsible className="w-full">
-                {faqs.map((faq, index) => (
-                  <AccordionItem key={index} value={`item-${index}`} className="border-b border-gray-200 last:border-b-0">
-                    <AccordionTrigger className="text-left font-sora font-semibold text-gray-900 hover:text-blue-600 py-6">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="font-sora text-gray-600 pb-6 leading-relaxed">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value={`item-${index}`} className="border-0">
+                      <AccordionTrigger className="text-left font-semibold text-gray-900 hover:text-blue-600 px-6 py-6 hover:no-underline">
+                        {faq.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-gray-600 px-6 pb-6 leading-relaxed">
+                        {faq.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+              ))}
             </div>
           </div>
         </div>
