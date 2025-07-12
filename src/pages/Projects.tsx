@@ -1,16 +1,15 @@
+
 import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Clock, Users, Star, ArrowRight, Grid3X3, List, Filter, Tag, Folder, Target } from 'lucide-react';
+import { Clock, Users, Star, ArrowRight, Grid3X3, List, Filter } from 'lucide-react';
 
 const Projects = () => {
   const [selectedDomain, setSelectedDomain] = useState('all');
   const [selectedSubdomain, setSelectedSubdomain] = useState('all');
-  const [selectedType, setSelectedType] = useState('all');
-  const [selectedTag, setSelectedTag] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const engineeringDomains = [
@@ -34,25 +33,6 @@ const Projects = () => {
     { value: 'simulation', label: 'Simulation' },
     { value: 'analysis', label: 'Analysis' },
     { value: 'prototyping', label: 'Prototyping' },
-  ];
-
-  const projectTypes = [
-    { value: 'all', label: 'All Types' },
-    { value: 'challenge', label: 'Challenges' },
-    { value: 'portfolio', label: 'Portfolio Projects' },
-  ];
-
-  const popularTags = [
-    { value: 'all', label: 'All Tags' },
-    { value: 'CAD', label: 'CAD' },
-    { value: 'Python', label: 'Python' },
-    { value: 'React', label: 'React' },
-    { value: 'Simulation', label: 'Simulation' },
-    { value: 'AI', label: 'AI' },
-    { value: 'IoT', label: 'IoT' },
-    { value: 'Machine Learning', label: 'Machine Learning' },
-    { value: 'CFD', label: 'CFD' },
-    { value: 'FEA', label: 'FEA' },
   ];
 
   const allProjects = [
@@ -136,9 +116,7 @@ const Projects = () => {
   const filteredProjects = allProjects.filter(project => {
     const domainMatch = selectedDomain === 'all' || project.category.toLowerCase().includes(selectedDomain);
     const subdomainMatch = selectedSubdomain === 'all' || project.subdomain === selectedSubdomain;
-    const typeMatch = selectedType === 'all' || project.type === selectedType;
-    const tagMatch = selectedTag === 'all' || project.tags.includes(selectedTag);
-    return domainMatch && subdomainMatch && typeMatch && tagMatch;
+    return domainMatch && subdomainMatch;
   });
 
   const getDifficultyColor = (difficulty: string) => {
@@ -181,41 +159,10 @@ const Projects = () => {
               </p>
             </div>
 
-            {/* Quick Filters */}
-            <div className="flex flex-wrap gap-3 justify-center mb-6">
-              <Button
-                variant={selectedType === 'all' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedType('all')}
-                className="font-sora"
-              >
-                <Folder className="w-4 h-4 mr-2" />
-                All
-              </Button>
-              <Button
-                variant={selectedType === 'challenge' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedType('challenge')}
-                className="font-sora"
-              >
-                <Target className="w-4 h-4 mr-2" />
-                Challenges
-              </Button>
-              <Button
-                variant={selectedType === 'portfolio' ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedType('portfolio')}
-                className="font-sora"
-              >
-                <Star className="w-4 h-4 mr-2" />
-                Portfolio
-              </Button>
-            </div>
-
             {/* Filters and View Toggle */}
             <div className="flex flex-col lg:flex-row gap-4 mb-8">
               {/* Filters */}
-              <div className="grid md:grid-cols-3 gap-4 flex-1">
+              <div className="grid md:grid-cols-2 gap-4 flex-1">
                 <div>
                   <label className="block text-sm font-sora font-medium text-gray-700 mb-2">
                     Engineering Domain
@@ -246,24 +193,6 @@ const Projects = () => {
                       {subdomains.map((subdomain) => (
                         <SelectItem key={subdomain.value} value={subdomain.value} className="font-sora">
                           {subdomain.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-sora font-medium text-gray-700 mb-2">
-                    Popular Tags
-                  </label>
-                  <Select value={selectedTag} onValueChange={setSelectedTag}>
-                    <SelectTrigger className="w-full bg-white/80 backdrop-blur-sm border-gray-200 font-sora">
-                      <SelectValue placeholder="Select Tag" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white/95 backdrop-blur-md border-gray-200 z-50">
-                      {popularTags.map((tag) => (
-                        <SelectItem key={tag.value} value={tag.value} className="font-sora">
-                          {tag.label}
                         </SelectItem>
                       ))}
                     </SelectContent>

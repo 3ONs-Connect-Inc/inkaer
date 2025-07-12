@@ -1,25 +1,5 @@
-
 import React from 'react';
 import ProjectCard from './ProjectCard';
-
-interface ProjectSectionProps {
-  title?: string;
-  projects?: Array<{
-    title: string;
-    category: string;
-    difficulty: string;
-    duration: string;
-    participants: number;
-    rating: number;
-    description: string;
-    tags: string[];
-    image: string;
-    author: string;
-    comments: number;
-    type: 'challenge' | 'portfolio';
-  }>;
-  projectType?: 'challenge' | 'portfolio';
-}
 
 const projects = [
   {
@@ -34,7 +14,7 @@ const projects = [
     image: "/lovable-uploads/project1.jpg",
     author: "John Doe",
     comments: 12,
-    type: 'challenge' as const
+    type: 'challenge'
   },
   {
     title: "E-commerce Platform",
@@ -48,7 +28,7 @@ const projects = [
     image: "/lovable-uploads/project2.jpg",
     author: "Jane Smith",
     comments: 23,
-    type: 'portfolio' as const
+    type: 'portfolio'
   },
   {
     title: "Mobile Game Development",
@@ -62,7 +42,7 @@ const projects = [
     image: "/lovable-uploads/project3.jpg",
     author: "Mike Johnson",
     comments: 8,
-    type: 'challenge' as const
+    type: 'challenge'
   },
   {
     title: "Data Analysis Dashboard",
@@ -76,7 +56,7 @@ const projects = [
     image: "/lovable-uploads/project4.jpg",
     author: "Emily Brown",
     comments: 15,
-    type: 'portfolio' as const
+    type: 'portfolio'
   },
   {
     title: "Cloud Computing Project",
@@ -90,7 +70,7 @@ const projects = [
     image: "/lovable-uploads/project5.jpg",
     author: "David Wilson",
     comments: 29,
-    type: 'challenge' as const
+    type: 'challenge'
   },
   {
     title: "Cybersecurity Challenge",
@@ -104,23 +84,18 @@ const projects = [
     image: "/lovable-uploads/project6.jpg",
     author: "Sarah Lee",
     comments: 11,
-    type: 'challenge' as const
+    type: 'challenge'
   }
 ];
 
-const ProjectSection: React.FC<ProjectSectionProps> = ({ 
-  title = "Featured Projects & Challenges", 
-  projects: customProjects,
-  projectType 
-}) => {
-  const displayProjects = customProjects || projects;
+const ProjectSection = () => {
 
   return (
     <section className="py-16 bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-sora font-bold text-gray-900 mb-4">
-            {title}
+            Featured Projects & Challenges
           </h2>
           <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto">
             Discover exciting engineering projects and challenges from our community
@@ -128,7 +103,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
         </div>
         
         <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide">
-          {displayProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <ProjectCard
               key={index}
               title={project.title}

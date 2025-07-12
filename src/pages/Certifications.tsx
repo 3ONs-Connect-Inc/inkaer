@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Award, CheckCircle, Clock, Users, Linkedin } from 'lucide-react';
+import { Award, CheckCircle, Clock, Users } from 'lucide-react';
 
 const Certifications = () => {
   const certificationProcess = [
@@ -69,10 +69,6 @@ const Certifications = () => {
                 <div className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
                   <p className="text-gray-700 font-sora">Higher ranking in search results</p>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Linkedin className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700 font-sora">LinkedIn badge compatible certification</p>
                 </div>
               </div>
             </div>
