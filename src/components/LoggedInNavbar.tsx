@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, User, LogOut, Crown, Star } from 'lucide-react';
+import { Menu, User, LogOut, Crown, Star, Settings, CreditCard, HelpCircle, Shield, Bell, Bookmark } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -15,12 +14,15 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 
 const LoggedInNavbar = () => {
   // Mock user data - in real app this would come from state/context
   const userRank = "Advanced";
   const userPoints = 2450;
+  const userName = "John Doe";
+  const userEmail = "john.doe@example.com";
 
   return (
     <section className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 py-2">
@@ -70,13 +72,78 @@ const LoggedInNavbar = () => {
                   <User className="size-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-white border border-gray-200 shadow-lg">
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
-                </DropdownMenuItem>
+              <DropdownMenuContent align="end" className="w-56 bg-white border border-gray-200 shadow-lg">
+                <DropdownMenuLabel className="px-4 py-3">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-semibold text-gray-900">{userName}</p>
+                    <p className="text-xs text-gray-500">{userEmail}</p>
+                  </div>
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                
+                <DropdownMenuItem asChild>
+                  <a href="/profile" className="flex items-center cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </a>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem asChild>
+                  <a href="/user-rank-dashboard" className="flex items-center cursor-pointer">
+                    <Crown className="mr-2 h-4 w-4" />
+                    <span>Your Progress</span>
+                  </a>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem asChild>
+                  <a href="/projects" className="flex items-center cursor-pointer">
+                    <Bookmark className="mr-2 h-4 w-4" />
+                    <span>My Projects</span>
+                  </a>
+                </DropdownMenuItem>
+                
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuItem asChild>
+                  <a href="/settings" className="flex items-center cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Settings</span>
+                  </a>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem asChild>
+                  <a href="/notifications" className="flex items-center cursor-pointer">
+                    <Bell className="mr-2 h-4 w-4" />
+                    <span>Notifications</span>
+                  </a>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem asChild>
+                  <a href="/account" className="flex items-center cursor-pointer">
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    <span>Billing & Account</span>
+                  </a>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem asChild>
+                  <a href="/privacy" className="flex items-center cursor-pointer">
+                    <Shield className="mr-2 h-4 w-4" />
+                    <span>Privacy & Security</span>
+                  </a>
+                </DropdownMenuItem>
+                
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuItem asChild>
+                  <a href="/help" className="flex items-center cursor-pointer">
+                    <HelpCircle className="mr-2 h-4 w-4" />
+                    <span>Help & Support</span>
+                  </a>
+                </DropdownMenuItem>
+                
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuItem className="text-red-600 focus:text-red-600 focus:bg-red-50">
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Logout</span>
                 </DropdownMenuItem>
@@ -137,6 +204,12 @@ const LoggedInNavbar = () => {
                       <a href="/profile" className="font-sora">
                         <User className="mr-2 h-4 w-4" />
                         Profile
+                      </a>
+                    </Button>
+                    <Button asChild variant="outline" className="justify-start">
+                      <a href="/settings" className="font-sora">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Settings
                       </a>
                     </Button>
                     <Button asChild variant="ghost" className="justify-start text-red-600 hover:text-red-700 hover:bg-red-50">

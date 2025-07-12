@@ -2,243 +2,360 @@
 import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
-import { Crown, Star, Trophy, Target, CheckCircle, ArrowRight, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Crown, Star, Trophy, Users, Target, ChevronDown, Shield, Award, Lock } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
 
 const UserRankDashboard = () => {
   const [selectedDomain, setSelectedDomain] = useState('mechanical');
   
-  // Mock user data - in real app this would come from state/context
-  const currentRank = "Advanced";
-  const currentPoints = 2450;
-  const nextRank = "Expert";
-  const pointsToNext = 550; // 3000 - 2450
+  // Mock user data
+  const userRank = "Advanced";
+  const userPoints = 2450;
+  const nextRankPoints = 3000;
+  const pointsToNext = nextRankPoints - userPoints;
+
+  const ranks = [
+    {
+      name: "Novice",
+      points: "Newly Joined",
+      color: "bg-gray-100 text-gray-800",
+      current: false,
+      completed: true
+    },
+    {
+      name: "Beginner",
+      points: "1 - 500",
+      color: "bg-green-100 text-green-800",
+      current: false,
+      completed: true
+    },
+    {
+      name: "Intermediate",
+      points: "501 - 1500",
+      color: "bg-blue-100 text-blue-800",
+      current: false,
+      completed: true
+    },
+    {
+      name: "Advanced",
+      points: "1501 - 3000",
+      color: "bg-purple-100 text-purple-800",
+      current: true,
+      completed: false
+    },
+    {
+      name: "Expert",
+      points: "3001 - 5000",
+      color: "bg-orange-100 text-orange-800",
+      current: false,
+      completed: false
+    },
+    {
+      name: "Elite",
+      points: "5000+",
+      color: "bg-red-100 text-red-800",
+      current: false,
+      completed: false
+    }
+  ];
 
   const domains = [
-    { value: 'mechanical', label: 'Mechanical Engineering', code: 'ME' },
-    { value: 'electrical', label: 'Electrical Engineering', code: 'EE' },
-    { value: 'civil', label: 'Civil Engineering', code: 'CE' },
-    { value: 'software', label: 'Software Engineering', code: 'SE' },
-    { value: 'aerospace', label: 'Aerospace Engineering', code: 'AE' }
+    { value: 'mechanical', label: 'Mechanical Engineering' },
+    { value: 'civil', label: 'Civil Engineering' },
+    { value: 'electrical', label: 'Electrical Engineering' },
+    { value: 'chemical', label: 'Chemical Engineering' },
+    { value: 'software', label: 'Software Engineering' },
+    { value: 'aerospace', label: 'Aerospace Engineering' }
   ];
 
-  const rankLevels = [
-    { name: "Novice", points: "Newly Joined", color: "text-gray-600", bgColor: "bg-gray-100", minPoints: 0, maxPoints: 0, code: "0" },
-    { name: "Beginner", points: "1-500", color: "text-brown-600", bgColor: "bg-brown-100", minPoints: 1, maxPoints: 500, code: "1" },
-    { name: "Intermediate", points: "501-1500", color: "text-green-600", bgColor: "bg-green-100", minPoints: 501, maxPoints: 1500, code: "2" },
-    { name: "Advanced", points: "1501-3000", color: "text-blue-600", bgColor: "bg-blue-100", minPoints: 1501, maxPoints: 3000, code: "3" },
-    { name: "Expert", points: "3001-5000", color: "text-purple-600", bgColor: "bg-purple-100", minPoints: 3001, maxPoints: 5000, code: "4" },
-    { name: "Elite", points: "5000+", color: "text-orange-600", bgColor: "bg-orange-100", minPoints: 5000, maxPoints: Infinity, code: "Elite" }
+  const certifications = [
+    {
+      rank: "Beginner",
+      title: "Mechanical Engineering (Beginner)",
+      acronym: "ME1",
+      available: true,
+      earned: true,
+      requirements: [
+        "Complete Beginner rank (1-500 points)",
+        "Submit 3 verified projects",
+        "Pass peer review assessment",
+        "Complete basic safety training"
+      ]
+    },
+    {
+      rank: "Intermediate", 
+      title: "Mechanical Engineering (Intermediate)",
+      acronym: "ME2",
+      available: true,
+      earned: false,
+      requirements: [
+        "Complete Intermediate rank (501-1500 points)",
+        "Submit 5 advanced projects",
+        "Mentor 2 junior engineers",
+        "Pass technical interview",
+        "Complete advanced CAD certification"
+      ]
+    },
+    {
+      rank: "Advanced",
+      title: "Mechanical Engineering (Advanced)",
+      acronym: "ME3",
+      available: false,
+      earned: false,
+      requirements: [
+        "Complete Advanced rank (1501-3000 points)",
+        "Lead 2 major projects",
+        "Publish technical paper",
+        "Complete industry collaboration",
+        "Pass expert-level assessment"
+      ]
+    },
+    {
+      rank: "Expert",
+      title: "Mechanical Engineering (Expert)",
+      acronym: "ME4",
+      available: false,
+      earned: false,
+      requirements: [
+        "Complete Expert rank (3001-5000 points)",
+        "Lead cross-functional team",
+        "Develop innovative solution",
+        "Complete management training",
+        "Industry recognition award"
+      ]
+    },
+    {
+      rank: "Elite",
+      title: "Mechanical Engineering (Elite)",
+      acronym: "ME-Elite",
+      available: false,
+      earned: false,
+      requirements: [
+        "Complete Elite rank (5000+ points)",
+        "Revolutionary contribution to field",
+        "International recognition",
+        "Mentor 10+ engineers to Expert level",
+        "Industry leadership position"
+      ]
+    }
   ];
 
-  const currentRankIndex = rankLevels.findIndex(rank => rank.name === currentRank);
-  const currentRankInfo = rankLevels[currentRankIndex];
-  const progressPercent = currentRankInfo.maxPoints === 0 ? 100 : ((currentPoints - currentRankInfo.minPoints) / (currentRankInfo.maxPoints - currentRankInfo.minPoints)) * 100;
-
-  const selectedDomainInfo = domains.find(d => d.value === selectedDomain);
-
-  const getCertifications = () => {
-    const certs = [];
-    
-    // Start from Beginner (index 1) since certification starts at Beginner
-    for (let i = 1; i < rankLevels.length; i++) {
-      const rank = rankLevels[i];
-      const isAvailable = currentRankIndex >= i; // Available if current rank is equal or higher
-      const certCode = `${selectedDomainInfo?.code}${rank.code}`;
-      
-      certs.push({
-        title: `${selectedDomainInfo?.label} (${rank.name})`,
-        code: certCode,
-        rank: rank.name,
-        available: isAvailable,
-        requirements: getRequirements(rank.name, isAvailable),
-        description: getCertDescription(rank.name, selectedDomainInfo?.label || ''),
-        bgColor: rank.bgColor,
-        color: rank.color
-      });
-    }
-    
-    return certs;
+  const getDomainPrefix = (domain: string) => {
+    const prefixes = {
+      'mechanical': 'ME',
+      'civil': 'CE',
+      'electrical': 'EE',
+      'chemical': 'CH',
+      'software': 'SE',
+      'aerospace': 'AE'
+    };
+    return prefixes[domain as keyof typeof prefixes] || 'ME';
   };
 
-  const getRequirements = (rankName: string, isAvailable: boolean) => {
-    if (!isAvailable) {
-      return `Requires ${rankName} rank or higher`;
-    }
-    
-    switch (rankName) {
-      case 'Beginner':
-        return 'Complete 2 basic projects • Peer review participation • Basic skill assessment';
-      case 'Intermediate':
-        return 'Complete 3 intermediate projects • Mentor 1 beginner • Technical interview';
-      case 'Advanced':
-        return 'Lead 1 complex project • Industry case study • Advanced technical assessment';
-      case 'Expert':
-        return 'Portfolio of 5+ advanced projects • Peer teaching • Expert-level evaluation';
-      case 'Elite':
-        return 'Demonstrate mastery across multiple domains • Industry recognition • Elite assessment';
-      default:
-        return 'Requirements not specified';
-    }
-  };
-
-  const getCertDescription = (rankName: string, domain: string) => {
-    return `Verify your ${domain.toLowerCase()} expertise at the ${rankName.toLowerCase()} level`;
+  const getCurrentRankIndex = () => {
+    return ranks.findIndex(rank => rank.current);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30">
       <LoggedInNavbar />
       
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl font-sora font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl font-sora font-bold text-gray-900 mb-4">
               Your Progress
             </h1>
-            <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto">
-              Track your ranking progress and unlock new certifications
+            <p className="text-xl text-gray-600 font-sora">
+              Track your engineering journey and unlock certifications
             </p>
           </div>
 
-          {/* Domain Selection */}
-          <div className="mb-8 max-w-md mx-auto">
-            <label className="block text-sm font-sora font-medium text-gray-700 mb-2 text-center">
-              Select Engineering Domain
-            </label>
-            <Select value={selectedDomain} onValueChange={setSelectedDomain}>
-              <SelectTrigger className="w-full bg-white border-gray-200 font-sora">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-white border-gray-200 z-50">
-                {domains.map(domain => (
-                  <SelectItem key={domain.value} value={domain.value} className="font-sora">
-                    {domain.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Current Rank Status */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg mb-8">
-            <div className="text-center mb-8">
-              <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full ${currentRankInfo.bgColor} mb-4`}>
-                <Crown className={`w-10 h-10 ${currentRankInfo.color}`} />
+          {/* Current Status */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-gray-200 p-8 mb-8">
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Crown className="w-8 h-8 text-inkaer-blue" />
+                  <span className="text-3xl font-sora font-bold text-inkaer-blue">{userRank}</span>
+                </div>
+                <p className="text-gray-600 font-sora">Current Rank</p>
               </div>
-              <h2 className="text-3xl font-sora font-bold text-gray-900 mb-2">
-                {currentRank}
-              </h2>
-              <p className="text-lg text-gray-600 font-sora mb-4">
-                {currentPoints.toLocaleString()} points
-              </p>
               
-              {/* Progress Bar */}
-              <div className="max-w-md mx-auto">
-                <div className="flex justify-between text-sm text-gray-600 font-sora mb-2">
-                  <span>{currentRankInfo.minPoints}</span>
-                  <span>{pointsToNext} points to {nextRank}</span>
-                  <span>{currentRankInfo.maxPoints === Infinity ? '∞' : currentRankInfo.maxPoints}</span>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Star className="w-8 h-8 text-yellow-500 fill-current" />
+                  <span className="text-3xl font-sora font-bold text-gray-900">{userPoints.toLocaleString()}</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div 
-                    className="bg-gradient-to-r from-blue-500 to-indigo-600 h-3 rounded-full transition-all duration-300"
-                    style={{ width: `${Math.min(progressPercent, 100)}%` }}
-                  ></div>
-                </div>
+                <p className="text-gray-600 font-sora">Total Points</p>
               </div>
+              
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Target className="w-8 h-8 text-green-500" />
+                  <span className="text-3xl font-sora font-bold text-green-600">{pointsToNext}</span>
+                </div>
+                <p className="text-gray-600 font-sora">Points to Next Rank</p>
+              </div>
+            </div>
+            
+            {/* Progress Bar */}
+            <div className="mt-8">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-sora font-semibold text-gray-700">Progress to Expert</span>
+                <span className="text-sm font-sora text-gray-600">{Math.round((userPoints / nextRankPoints) * 100)}%</span>
+              </div>
+              <Progress value={(userPoints / nextRankPoints) * 100} className="h-3" />
             </div>
           </div>
 
-          {/* Rank Roadmap */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg mb-8">
-            <h2 className="text-2xl font-sora font-bold text-gray-900 mb-6 text-center">
-              Roadmap to Elite
-            </h2>
-            <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {rankLevels.map((rank, index) => (
-                <div 
-                  key={index} 
-                  className={`text-center p-4 rounded-xl border-2 transition-all duration-200 ${
-                    index <= currentRankIndex 
-                      ? 'border-green-300 bg-green-50' 
-                      : index === currentRankIndex + 1
-                      ? 'border-blue-300 bg-blue-50'
+          {/* Ranks Progress */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-gray-200 p-8 mb-8">
+            <h2 className="text-2xl font-sora font-bold text-gray-900 mb-6">Rank Progression</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {ranks.map((rank, index) => (
+                <div
+                  key={rank.name}
+                  className={`text-center p-4 rounded-2xl border-2 transition-all ${
+                    rank.current
+                      ? 'border-inkaer-blue bg-blue-50'
+                      : rank.completed
+                      ? 'border-green-200 bg-green-50'
                       : 'border-gray-200 bg-gray-50'
                   }`}
                 >
-                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full ${rank.bgColor} mb-3`}>
-                    {index <= currentRankIndex ? (
-                      <CheckCircle className="w-6 h-6 text-green-600" />
-                    ) : index === currentRankIndex + 1 ? (
-                      <Target className="w-6 h-6 text-blue-600" />
+                  <div className="mb-3">
+                    {rank.completed ? (
+                      <Trophy className="w-8 h-8 text-green-500 mx-auto" />
+                    ) : rank.current ? (
+                      <Crown className="w-8 h-8 text-inkaer-blue mx-auto" />
                     ) : (
-                      <Crown className={`w-6 h-6 ${rank.color}`} />
+                      <div className="w-8 h-8 border-2 border-gray-300 rounded-full mx-auto"></div>
                     )}
                   </div>
-                  <h3 className="font-sora font-semibold text-sm text-gray-900 mb-1">
-                    {rank.name}
-                  </h3>
-                  <p className="text-xs text-gray-600 font-sora">
-                    {rank.points} {rank.name !== "Novice" ? "pts" : ""}
-                  </p>
+                  <h3 className="font-sora font-semibold text-gray-900 mb-1">{rank.name}</h3>
+                  <p className="text-xs text-gray-600 font-sora">{rank.points}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Available Certifications */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h2 className="text-2xl font-sora font-bold text-gray-900 mb-6 text-center">
-              {selectedDomainInfo?.label} Certifications
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {getCertifications().map((cert, index) => (
-                <div 
-                  key={index} 
-                  className={`border-2 rounded-xl p-6 transition-all duration-200 ${
-                    cert.available 
-                      ? 'border-green-300 bg-green-50 hover:shadow-md' 
-                      : 'border-gray-200 bg-gray-50 opacity-60'
-                  }`}
-                >
-                  <div className="text-center mb-4">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${cert.bgColor} mb-3`}>
-                      <Trophy className={`w-8 h-8 ${cert.available ? cert.color : 'text-gray-400'}`} />
-                    </div>
-                    <h3 className="font-sora font-semibold text-gray-900 mb-1">
-                      {cert.title}
-                    </h3>
-                    <p className="text-sm text-gray-500 font-sora mb-2">
-                      Code: {cert.code}
-                    </p>
-                    <p className="text-sm text-gray-600 font-sora mb-3">
-                      {cert.description}
-                    </p>
-                    <div className={`text-xs font-sora p-3 rounded-lg mb-3 ${cert.available ? 'bg-blue-50 text-blue-800' : 'bg-gray-100 text-gray-600'}`}>
-                      <p className="font-medium mb-1">Requirements:</p>
-                      <p>{cert.requirements}</p>
+          {/* Certifications Section */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-gray-200 p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+              <h2 className="text-2xl font-sora font-bold text-gray-900 mb-4 sm:mb-0">
+                Certifications
+              </h2>
+              
+              <div className="flex items-center gap-4">
+                <label className="text-sm font-sora font-semibold text-gray-700">
+                  Engineering Domain:
+                </label>
+                <Select value={selectedDomain} onValueChange={setSelectedDomain}>
+                  <SelectTrigger className="w-64">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {domains.map((domain) => (
+                      <SelectItem key={domain.value} value={domain.value}>
+                        {domain.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {certifications.map((cert, index) => {
+                const prefix = getDomainPrefix(selectedDomain);
+                const certTitle = cert.title.replace('Mechanical Engineering', domains.find(d => d.value === selectedDomain)?.label || 'Mechanical Engineering');
+                const certAcronym = cert.acronym.replace('ME', prefix);
+                
+                return (
+                  <div
+                    key={cert.rank}
+                    className={`p-6 rounded-2xl border-2 transition-all ${
+                      cert.earned
+                        ? 'border-green-200 bg-green-50'
+                        : cert.available
+                        ? 'border-blue-200 bg-blue-50'
+                        : 'border-gray-200 bg-gray-50 opacity-60'
+                    }`}
+                  >
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                          cert.earned
+                            ? 'bg-green-500'
+                            : cert.available
+                            ? 'bg-blue-500'
+                            : 'bg-gray-400'
+                        }`}>
+                          {cert.earned ? (
+                            <Award className="w-6 h-6 text-white" />
+                          ) : cert.available ? (
+                            <Shield className="w-6 h-6 text-white" />
+                          ) : (
+                            <Lock className="w-6 h-6 text-white" />
+                          )}
+                        </div>
+                        
+                        <div>
+                          <div className="flex items-center gap-3 mb-1">
+                            <h3 className="text-lg font-sora font-bold text-gray-900">
+                              {certTitle}
+                            </h3>
+                            <Badge variant="outline" className="text-xs">
+                              {certAcronym}
+                            </Badge>
+                          </div>
+                          <p className={`text-sm font-sora ${
+                            cert.earned
+                              ? 'text-green-600'
+                              : cert.available
+                              ? 'text-blue-600'
+                              : 'text-gray-500'
+                          }`}>
+                            {cert.earned
+                              ? 'Certification Earned'
+                              : cert.available
+                              ? 'Available for Certification'
+                              : `Unlocks at ${cert.rank} Rank`
+                            }
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="lg:w-96">
+                        <h4 className="font-sora font-semibold text-gray-900 mb-2">Requirements:</h4>
+                        <ul className="space-y-1">
+                          {cert.requirements.map((req, reqIndex) => (
+                            <li key={reqIndex} className="text-sm text-gray-600 font-sora flex items-start gap-2">
+                              <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0"></span>
+                              {req}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                  <Button 
-                    className={`w-full font-sora font-semibold ${
-                      cert.available 
-                        ? 'bg-green-600 hover:bg-green-700 text-white' 
-                        : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                    }`}
-                    disabled={!cert.available}
-                  >
-                    {cert.available ? 'Start Certification' : 'Not Available'}
-                    {cert.available && <ArrowRight className="w-4 h-4 ml-2" />}
-                  </Button>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
-      </section>
-
+      </div>
+      
       <Footer />
     </div>
   );
