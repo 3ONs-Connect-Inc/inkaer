@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 const UserRankDashboard = () => {
   const [selectedDomain, setSelectedDomain] = useState('mechanical');
@@ -319,20 +320,30 @@ const UserRankDashboard = () => {
                               {certAcronym}
                             </Badge>
                           </div>
-                          <p className={`text-sm font-sora ${
-                            cert.earned
-                              ? 'text-green-600'
-                              : cert.available
-                              ? 'text-blue-600'
-                              : 'text-gray-500'
-                          }`}>
-                            {cert.earned
-                              ? 'Certification Earned'
-                              : cert.available
-                              ? 'Available for Certification'
-                              : `Unlocks at ${cert.rank} Rank`
-                            }
-                          </p>
+                          <div className="flex items-center gap-3">
+                            <p className={`text-sm font-sora ${
+                              cert.earned
+                                ? 'text-green-600'
+                                : cert.available
+                                ? 'text-blue-600'
+                                : 'text-gray-500'
+                            }`}>
+                              {cert.earned
+                                ? 'Certification Earned'
+                                : cert.available
+                                ? 'Available for Certification'
+                                : `Unlocks at ${cert.rank} Rank`
+                              }
+                            </p>
+                            {cert.available && !cert.earned && (
+                              <Button 
+                                size="sm"
+                                className="bg-blue-500 hover:bg-blue-600 text-white font-sora"
+                              >
+                                Start Certification
+                              </Button>
+                            )}
+                          </div>
                         </div>
                       </div>
                       
