@@ -23,7 +23,7 @@ const Pricing = () => {
     },
     {
       question: "What happens to my projects if I downgrade?",
-      answer: "Your existing projects will remain accessible, but you'll be limited to the Freemium storage limit. You can upgrade again at any time to regain full access."
+      answer: "Your existing projects will remain accessible, but you'll be limited to the Freemium storage limit of 100MB. You can upgrade again at any time to regain unlimited storage."
     },
     {
       question: "Do you offer student discounts?",
@@ -125,6 +125,10 @@ const Pricing = () => {
                   <span className="text-gray-700">Peer Reviews <span className="text-blue-500">Unlimited</span></span>
                 </li>
                 <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Storage <span className="text-blue-500">100MB</span></span>
+                </li>
+                <li className="flex items-center gap-3">
                   <X className="w-5 h-5 text-red-400" />
                   <span className="text-gray-400">See Employer Challenges</span>
                 </li>
@@ -185,6 +189,10 @@ const Pricing = () => {
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />
                   <span className="text-gray-700">Peer Reviews <span className="text-blue-500">Unlimited</span></span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Check className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Storage <span className="text-blue-500">Unlimited</span></span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Check className="w-5 h-5 text-green-500" />

@@ -67,14 +67,12 @@ const ProjectCard = ({
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-        {/* Only show difficulty badge for challenges */}
-        {type === 'challenge' && (
-          <div className="absolute top-4 right-4">
-            <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(difficulty)}`}>
-              {difficulty}
-            </span>
-          </div>
-        )}
+        {/* Show difficulty badge for both challenges and portfolio projects */}
+        <div className="absolute top-4 right-4">
+          <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(difficulty)}`}>
+            {difficulty}
+          </span>
+        </div>
         <div className="absolute top-4 left-4">
           <span className={`px-3 py-1 ${getProjectTypeColor(type)} text-white rounded-full text-xs font-semibold font-sora capitalize`}>
             {type}

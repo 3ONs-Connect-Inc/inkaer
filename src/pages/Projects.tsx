@@ -127,14 +127,12 @@ const Projects = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
             
-            {/* Only show difficulty for challenges */}
-            {project.type === 'challenge' && (
-              <div className="absolute top-4 right-4">
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(project.difficulty)}`}>
-                  {project.difficulty}
-                </span>
-              </div>
-            )}
+            {/* Show difficulty for both challenges and portfolio projects */}
+            <div className="absolute top-4 right-4">
+              <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(project.difficulty)}`}>
+                {project.difficulty}
+              </span>
+            </div>
             
             <div className="absolute top-4 left-4">
               <span className={`px-3 py-1 ${getProjectTypeColor(project.type)} text-white rounded-full text-xs font-semibold font-sora capitalize`}>
@@ -218,13 +216,12 @@ const Projects = () => {
                   {project.type}
                 </span>
               </div>
-              {project.type === 'challenge' && (
-                <div className="absolute top-3 right-3">
-                  <span className={`px-2 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(project.difficulty)}`}>
-                    {project.difficulty}
-                  </span>
-                </div>
-              )}
+              {/* Show difficulty for both challenges and portfolio projects */}
+              <div className="absolute top-3 right-3">
+                <span className={`px-2 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(project.difficulty)}`}>
+                  {project.difficulty}
+                </span>
+              </div>
             </div>
 
             {/* Project Content */}
