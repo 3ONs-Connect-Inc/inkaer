@@ -1,15 +1,17 @@
-
 import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Clock, Users, Star, ArrowRight, Grid3X3, List, Filter } from 'lucide-react';
+import { Clock, Users, Star, ArrowRight, Grid3X3, List, Filter, Tag } from 'lucide-react';
 
 const Projects = () => {
   const [selectedDomain, setSelectedDomain] = useState('all');
   const [selectedSubdomain, setSelectedSubdomain] = useState('all');
+  const [selectedType, setSelectedType] = useState('all');
+  const [selectedDifficulty, setSelectedDifficulty] = useState('all');
+  const [selectedTag, setSelectedTag] = useState('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const engineeringDomains = [
@@ -33,6 +35,32 @@ const Projects = () => {
     { value: 'simulation', label: 'Simulation' },
     { value: 'analysis', label: 'Analysis' },
     { value: 'prototyping', label: 'Prototyping' },
+  ];
+
+  const projectTypes = [
+    { value: 'all', label: 'All Types' },
+    { value: 'challenge', label: 'Challenges' },
+    { value: 'portfolio', label: 'Portfolio' },
+  ];
+
+  const difficulties = [
+    { value: 'all', label: 'All Difficulties' },
+    { value: 'Beginner', label: 'Beginner' },
+    { value: 'Intermediate', label: 'Intermediate' },
+    { value: 'Advanced', label: 'Advanced' },
+    { value: 'Elite', label: 'Elite' },
+  ];
+
+  const availableTags = [
+    { value: 'all', label: 'All Tags' },
+    { value: 'CAD', label: 'CAD' },
+    { value: 'React', label: 'React' },
+    { value: 'Python', label: 'Python' },
+    { value: 'CFD', label: 'CFD' },
+    { value: 'FEA', label: 'FEA' },
+    { value: 'IoT', label: 'IoT' },
+    { value: 'AI', label: 'AI' },
+    { value: 'Machine Learning', label: 'Machine Learning' },
   ];
 
   const allProjects = [
@@ -116,7 +144,11 @@ const Projects = () => {
   const filteredProjects = allProjects.filter(project => {
     const domainMatch = selectedDomain === 'all' || project.category.toLowerCase().includes(selectedDomain);
     const subdomainMatch = selectedSubdomain === 'all' || project.subdomain === selectedSubdomain;
-    return domainMatch && subdomainMatch;
+    const typeMatch = selectedType === 'all' || project.type === selectedType;
+    const difficultyMatch = selectedDifficulty === 'all' || project.difficulty === selectedDifficulty;
+    const tagMatch = selectedTag === 'all' || project.tags.includes(selectedTag);
+    
+    return domainMatch && subdomainMatch && typeMatch && difficultyMatch && tagMatch;
   });
 
   const getDifficultyColor = (difficulty: string) => {
@@ -159,10 +191,38 @@ const Projects = () => {
               </p>
             </div>
 
-            {/* Filters and View Toggle */}
+            {/* Quick Filters */}
+            <div className="flex flex-wrap gap-3 mb-6 justify-center">
+              <Button
+                variant={selectedType === 'all' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedType('all')}
+                className={`${selectedType === 'all' ? 'bg-inkaer-blue hover:bg-inkaer-dark-blue' : ''} font-sora`}
+              >
+                All Projects
+              </Button>
+              <Button
+                variant={selectedType === 'challenge' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedType('challenge')}
+                className={`${selectedType === 'challenge' ? 'bg-green-600 hover:bg-green-700' : ''} font-sora`}
+              >
+                Challenges
+              </Button>
+              <Button
+                variant={selectedType === 'portfolio' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedType('portfolio')}
+                className={`${selectedType === 'portfolio' ? 'bg-blue-600 hover:bg-blue-700' : ''} font-sora`}
+              >
+                Portfolio
+              </Button>
+            </div>
+
+            {/* Advanced Filters and View Toggle */}
             <div className="flex flex-col lg:flex-row gap-4 mb-8">
               {/* Filters */}
-              <div className="grid md:grid-cols-2 gap-4 flex-1">
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 flex-1">
                 <div>
                   <label className="block text-sm font-sora font-medium text-gray-700 mb-2">
                     Engineering Domain
@@ -183,6 +243,24 @@ const Projects = () => {
 
                 <div>
                   <label className="block text-sm font-sora font-medium text-gray-700 mb-2">
+                    Difficulty
+                  </label>
+                  <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
+                    <SelectTrigger className="w-full bg-white/80 backdrop-blur-sm border-gray-200 font-sora">
+                      <SelectValue placeholder="Select Difficulty" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white/95 backdrop-blur-md border-gray-200 z-50">
+                      {difficulties.map((difficulty) => (
+                        <SelectItem key={difficulty.value} value={difficulty.value} className="font-sora">
+                          {difficulty.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-sora font-medium text-gray-700 mb-2">
                     Subdomain
                   </label>
                   <Select value={selectedSubdomain} onValueChange={setSelectedSubdomain}>
@@ -193,6 +271,24 @@ const Projects = () => {
                       {subdomains.map((subdomain) => (
                         <SelectItem key={subdomain.value} value={subdomain.value} className="font-sora">
                           {subdomain.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-sora font-medium text-gray-700 mb-2">
+                    Tags
+                  </label>
+                  <Select value={selectedTag} onValueChange={setSelectedTag}>
+                    <SelectTrigger className="w-full bg-white/80 backdrop-blur-sm border-gray-200 font-sora">
+                      <SelectValue placeholder="Select Tag" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white/95 backdrop-blur-md border-gray-200 z-50">
+                      {availableTags.map((tag) => (
+                        <SelectItem key={tag.value} value={tag.value} className="font-sora">
+                          {tag.label}
                         </SelectItem>
                       ))}
                     </SelectContent>

@@ -1,5 +1,12 @@
+
 import React from 'react';
 import ProjectCard from './ProjectCard';
+
+interface ProjectSectionProps {
+  title?: string;
+  projects?: any[];
+  projectType?: 'challenge' | 'portfolio';
+}
 
 const projects = [
   {
@@ -14,7 +21,7 @@ const projects = [
     image: "/lovable-uploads/project1.jpg",
     author: "John Doe",
     comments: 12,
-    type: 'challenge'
+    type: 'challenge' as const
   },
   {
     title: "E-commerce Platform",
@@ -28,7 +35,7 @@ const projects = [
     image: "/lovable-uploads/project2.jpg",
     author: "Jane Smith",
     comments: 23,
-    type: 'portfolio'
+    type: 'portfolio' as const
   },
   {
     title: "Mobile Game Development",
@@ -42,7 +49,7 @@ const projects = [
     image: "/lovable-uploads/project3.jpg",
     author: "Mike Johnson",
     comments: 8,
-    type: 'challenge'
+    type: 'challenge' as const
   },
   {
     title: "Data Analysis Dashboard",
@@ -56,7 +63,7 @@ const projects = [
     image: "/lovable-uploads/project4.jpg",
     author: "Emily Brown",
     comments: 15,
-    type: 'portfolio'
+    type: 'portfolio' as const
   },
   {
     title: "Cloud Computing Project",
@@ -70,7 +77,7 @@ const projects = [
     image: "/lovable-uploads/project5.jpg",
     author: "David Wilson",
     comments: 29,
-    type: 'challenge'
+    type: 'challenge' as const
   },
   {
     title: "Cybersecurity Challenge",
@@ -84,18 +91,19 @@ const projects = [
     image: "/lovable-uploads/project6.jpg",
     author: "Sarah Lee",
     comments: 11,
-    type: 'challenge'
+    type: 'challenge' as const
   }
 ];
 
-const ProjectSection = () => {
+const ProjectSection: React.FC<ProjectSectionProps> = ({ title, projects: propProjects, projectType }) => {
+  const projectsToShow = propProjects || projects;
 
   return (
     <section className="py-16 bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-sora font-bold text-gray-900 mb-4">
-            Featured Projects & Challenges
+            {title || "Featured Projects & Challenges"}
           </h2>
           <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto">
             Discover exciting engineering projects and challenges from our community
@@ -103,7 +111,7 @@ const ProjectSection = () => {
         </div>
         
         <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide">
-          {projects.map((project, index) => (
+          {projectsToShow.map((project, index) => (
             <ProjectCard
               key={index}
               title={project.title}

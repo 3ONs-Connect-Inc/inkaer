@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Award, CheckCircle, Clock, Users } from 'lucide-react';
+import { Award, CheckCircle, Clock, Users, Linkedin } from 'lucide-react';
 
 const Certifications = () => {
   const certificationProcess = [
@@ -43,9 +43,17 @@ const Certifications = () => {
             <h1 className="text-4xl sm:text-5xl font-sora font-bold text-gray-900 mb-6">
               Engineer Certification
             </h1>
-            <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto mb-6">
               Get verified as a certified engineer and unlock premium opportunities with top employers
             </p>
+            
+            {/* LinkedIn Badge Info */}
+            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-blue-200">
+              <Linkedin className="w-5 h-5 text-blue-600" />
+              <span className="text-sm font-sora font-medium text-gray-700">
+                Display your certification badge on LinkedIn
+              </span>
+            </div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
@@ -64,7 +72,7 @@ const Certifications = () => {
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700 font-sora">Verified badge on your profile and projects</p>
+                  <p className="text-gray-700 font-sora">Verified badge on your profile and LinkedIn</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
