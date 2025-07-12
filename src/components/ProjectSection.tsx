@@ -1,7 +1,29 @@
+
 import React from 'react';
 import ProjectCard from './ProjectCard';
 
-const projects = [
+interface Project {
+  title: string;
+  category: string;
+  difficulty: string;
+  duration: string;
+  participants: number;
+  rating: number;
+  description: string;
+  tags: string[];
+  image: string;
+  author: string;
+  comments: number;
+  type: 'challenge' | 'portfolio';
+}
+
+interface ProjectSectionProps {
+  title?: string;
+  projects?: Project[];
+  projectType?: 'challenge' | 'portfolio';
+}
+
+const defaultProjects: Project[] = [
   {
     title: "AI-Powered Chatbot",
     category: "Artificial Intelligence",
@@ -88,14 +110,21 @@ const projects = [
   }
 ];
 
-const ProjectSection = () => {
+const ProjectSection: React.FC<ProjectSectionProps> = ({ 
+  title = "Featured Projects & Challenges",
+  projects = defaultProjects,
+  projectType 
+}) => {
+  const displayProjects = projectType 
+    ? projects.filter(project => project.type === projectType)
+    : projects;
 
   return (
     <section className="py-16 bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-sora font-bold text-gray-900 mb-4">
-            Featured Projects & Challenges
+            {title}
           </h2>
           <p className="text-xl text-gray-600 font-sora max-w-3xl mx-auto">
             Discover exciting engineering projects and challenges from our community
@@ -103,7 +132,7 @@ const ProjectSection = () => {
         </div>
         
         <div className="flex overflow-x-auto gap-6 pb-4 scrollbar-hide">
-          {projects.map((project, index) => (
+          {displayProjects.map((project, index) => (
             <ProjectCard
               key={index}
               title={project.title}

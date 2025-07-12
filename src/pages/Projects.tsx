@@ -1,15 +1,19 @@
-
 import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Clock, Users, Star, ArrowRight, Grid3X3, List, Filter } from 'lucide-react';
+import { Clock, Users, Star, ArrowRight, Grid3X3, List, Filter, Search, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 const Projects = () => {
   const [selectedDomain, setSelectedDomain] = useState('all');
   const [selectedSubdomain, setSelectedSubdomain] = useState('all');
+  const [selectedType, setSelectedType] = useState('all');
+  const [selectedDifficulty, setSelectedDifficulty] = useState('all');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const engineeringDomains = [
@@ -34,6 +38,8 @@ const Projects = () => {
     { value: 'analysis', label: 'Analysis' },
     { value: 'prototyping', label: 'Prototyping' },
   ];
+
+  const allTags = ['CAD', 'Drone', 'Modular', 'React', 'Node.js', 'IoT', 'Thermal', 'Engineering', 'CFD', 'Simulation', 'FEA', 'Testing', 'Structural'];
 
   const allProjects = [
     {
@@ -116,7 +122,15 @@ const Projects = () => {
   const filteredProjects = allProjects.filter(project => {
     const domainMatch = selectedDomain === 'all' || project.category.toLowerCase().includes(selectedDomain);
     const subdomainMatch = selectedSubdomain === 'all' || project.subdomain === selectedSubdomain;
-    return domainMatch && subdomainMatch;
+    const typeMatch = selectedType === 'all' || project.type === selectedType;
+    const difficultyMatch = selectedDifficulty === 'all' || project.difficulty === selectedDifficulty;
+    const tagMatch = selectedTags.length === 0 || selectedTags.some(tag => project.tags.includes(tag));
+    const searchMatch = searchTerm === '' || 
+      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      project.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    return domainMatch && subdomainMatch && typeMatch && difficultyMatch && tagMatch && searchMatch;
   });
 
   const getDifficultyColor = (difficulty: string) => {
@@ -135,6 +149,27 @@ const Projects = () => {
 
   const getButtonText = (type: string) => {
     return type === 'portfolio' ? 'View Project' : 'Start Challenge';
+  };
+
+  const clearAllFilters = () => {
+    setSelectedDomain('all');
+    setSelectedSubdomain('all');
+    setSelectedType('all');
+    setSelectedDifficulty('all');
+    setSelectedTags([]);
+    setSearchTerm('');
+  };
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    );
+  };
+
+  const removeTag = (tag: string) => {
+    setSelectedTags(prev => prev.filter(t => t !== tag));
   };
 
   return (
@@ -159,10 +194,91 @@ const Projects = () => {
               </p>
             </div>
 
-            {/* Filters and View Toggle */}
+            {/* Search Bar */}
+            <div className="mb-6">
+              <div className="relative max-w-md mx-auto">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Input
+                  placeholder="Search projects, tags, or descriptions..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 bg-white/80 backdrop-blur-sm border-gray-200 font-sora"
+                />
+              </div>
+            </div>
+
+            {/* Quick Filters */}
+            <div className="mb-6">
+              <div className="flex flex-wrap gap-3 justify-center">
+                <Button
+                  variant={selectedType === 'challenge' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setSelectedType(selectedType === 'challenge' ? 'all' : 'challenge')}
+                  className="bg-white/80 backdrop-blur-sm font-sora"
+                >
+                  Challenges
+                </Button>
+                <Button
+                  variant={selectedType === 'portfolio' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setSelectedType(selectedType === 'portfolio' ? 'all' : 'portfolio')}
+                  className="bg-white/80 backdrop-blur-sm font-sora"
+                >
+                  Portfolio
+                </Button>
+                <Button
+                  variant={selectedDifficulty === 'Beginner' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setSelectedDifficulty(selectedDifficulty === 'Beginner' ? 'all' : 'Beginner')}
+                  className="bg-white/80 backdrop-blur-sm font-sora"
+                >
+                  Beginner
+                </Button>
+                <Button
+                  variant={selectedDifficulty === 'Intermediate' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setSelectedDifficulty(selectedDifficulty === 'Intermediate' ? 'all' : 'Intermediate')}
+                  className="bg-white/80 backdrop-blur-sm font-sora"
+                >
+                  Intermediate
+                </Button>
+                <Button
+                  variant={selectedDifficulty === 'Advanced' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setSelectedDifficulty(selectedDifficulty === 'Advanced' ? 'all' : 'Advanced')}
+                  className="bg-white/80 backdrop-blur-sm font-sora"
+                >
+                  Advanced
+                </Button>
+              </div>
+            </div>
+
+            {/* Selected Tags Display */}
+            {selectedTags.length > 0 && (
+              <div className="mb-6">
+                <div className="flex flex-wrap gap-2 justify-center">
+                  {selectedTags.map(tag => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center px-3 py-1 bg-inkaer-blue text-white text-sm font-sora font-medium rounded-full"
+                    >
+                      {tag}
+                      <button
+                        onClick={() => removeTag(tag)}
+                        className="ml-2 hover:bg-white/20 rounded-full p-0.5"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Advanced Filters and View Toggle */}
             <div className="flex flex-col lg:flex-row gap-4 mb-8">
-              {/* Filters */}
-              <div className="grid md:grid-cols-2 gap-4 flex-1">
+              {/* Advanced Filters */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 flex-1">
                 <div>
                   <label className="block text-sm font-sora font-medium text-gray-700 mb-2">
                     Engineering Domain
@@ -198,10 +314,38 @@ const Projects = () => {
                     </SelectContent>
                   </Select>
                 </div>
+
+                <div>
+                  <label className="block text-sm font-sora font-medium text-gray-700 mb-2">
+                    Tags
+                  </label>
+                  <div className="flex flex-wrap gap-1 p-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-md max-h-20 overflow-y-auto">
+                    {allTags.map(tag => (
+                      <button
+                        key={tag}
+                        onClick={() => toggleTag(tag)}
+                        className={`px-2 py-1 text-xs rounded-full transition-colors ${
+                          selectedTags.includes(tag)
+                            ? 'bg-inkaer-blue text-white'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        } font-sora`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              {/* View Toggle */}
-              <div className="flex items-end">
+              {/* View Toggle and Clear Filters */}
+              <div className="flex items-end gap-2">
+                <Button
+                  variant="outline"
+                  onClick={clearAllFilters}
+                  className="bg-white/80 backdrop-blur-sm border-gray-200 font-sora"
+                >
+                  Clear All
+                </Button>
                 <div className="flex bg-white/80 backdrop-blur-sm rounded-lg p-1 border border-gray-200">
                   <Button
                     variant={viewMode === 'grid' ? 'default' : 'ghost'}

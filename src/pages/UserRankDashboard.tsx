@@ -13,8 +13,8 @@ const UserRankDashboard = () => {
   const pointsToNext = 550; // 3000 - 2450
 
   const rankLevels = [
-    { name: "Newly Joined", points: "0-50", color: "text-gray-600", bgColor: "bg-gray-100", minPoints: 0, maxPoints: 50 },
-    { name: "Beginner", points: "51-500", color: "text-brown-600", bgColor: "bg-brown-100", minPoints: 51, maxPoints: 500 },
+    { name: "Novice", points: "Newly Joined", color: "text-gray-600", bgColor: "bg-gray-100", minPoints: 0, maxPoints: 0 },
+    { name: "Beginner", points: "1-500", color: "text-brown-600", bgColor: "bg-brown-100", minPoints: 1, maxPoints: 500 },
     { name: "Intermediate", points: "501-1500", color: "text-green-600", bgColor: "bg-green-100", minPoints: 501, maxPoints: 1500 },
     { name: "Advanced", points: "1501-3000", color: "text-blue-600", bgColor: "bg-blue-100", minPoints: 1501, maxPoints: 3000 },
     { name: "Expert", points: "3001-5000", color: "text-purple-600", bgColor: "bg-purple-100", minPoints: 3001, maxPoints: 5000 },
@@ -23,7 +23,7 @@ const UserRankDashboard = () => {
 
   const currentRankIndex = rankLevels.findIndex(rank => rank.name === currentRank);
   const currentRankInfo = rankLevels[currentRankIndex];
-  const progressPercent = ((currentPoints - currentRankInfo.minPoints) / (currentRankInfo.maxPoints - currentRankInfo.minPoints)) * 100;
+  const progressPercent = currentRankInfo.maxPoints === 0 ? 100 : ((currentPoints - currentRankInfo.minPoints) / (currentRankInfo.maxPoints - currentRankInfo.minPoints)) * 100;
 
   const availableCertifications = [
     {
@@ -121,7 +121,7 @@ const UserRankDashboard = () => {
                     {rank.name}
                   </h3>
                   <p className="text-xs text-gray-600 font-sora">
-                    {rank.points} pts
+                    {rank.points} {rank.name !== "Novice" ? "pts" : ""}
                   </p>
                 </div>
               ))}
