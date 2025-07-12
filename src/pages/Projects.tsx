@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import Footer from '@/components/Footer';
@@ -161,23 +160,23 @@ const Projects = () => {
               </p>
             </div>
 
-            {/* Project Stats - Only for challenges */}
-            {project.type === 'challenge' && (
-              <div className="flex items-center justify-between text-sm text-gray-500 font-sora">
+            {/* Project Stats - Duration only for challenges, participants and rating for both */}
+            <div className="flex items-center justify-between text-sm text-gray-500 font-sora">
+              {project.type === 'challenge' && (
                 <div className="flex items-center space-x-1">
                   <Clock className="w-4 h-4" />
                   <span>{project.duration}</span>
                 </div>
-                <div className="flex items-center space-x-1">
-                  <Users className="w-4 h-4" />
-                  <span>{project.participants}</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Star className="w-4 h-4 fill-current text-yellow-400" />
-                  <span>{project.rating}</span>
-                </div>
+              )}
+              <div className="flex items-center space-x-1">
+                <Users className="w-4 h-4" />
+                <span>{project.participants}</span>
               </div>
-            )}
+              <div className="flex items-center space-x-1">
+                <Star className="w-4 h-4 fill-current text-yellow-400" />
+                <span>{project.rating}</span>
+              </div>
+            </div>
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2">
@@ -246,34 +245,23 @@ const Projects = () => {
               </div>
 
               <div className="flex items-center justify-between mt-4">
-                {/* Project Stats - Only for challenges */}
-                {project.type === 'challenge' ? (
-                  <div className="flex items-center gap-6 text-sm text-gray-500 font-sora">
+                {/* Project Stats - Duration only for challenges, participants and rating for both */}
+                <div className="flex items-center gap-6 text-sm text-gray-500 font-sora">
+                  {project.type === 'challenge' && (
                     <div className="flex items-center space-x-1">
                       <Clock className="w-4 h-4" />
                       <span>{project.duration}</span>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <Users className="w-4 h-4" />
-                      <span>{project.participants}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="w-4 h-4 fill-current text-yellow-400" />
-                      <span>{project.rating}</span>
-                    </div>
+                  )}
+                  <div className="flex items-center space-x-1">
+                    <Users className="w-4 h-4" />
+                    <span>{project.participants}</span>
                   </div>
-                ) : (
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, tagIndex) => (
-                      <span
-                        key={tagIndex}
-                        className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-sora font-medium rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="flex items-center space-x-1">
+                    <Star className="w-4 h-4 fill-current text-yellow-400" />
+                    <span>{project.rating}</span>
                   </div>
-                )}
+                </div>
 
                 <Button className="bg-blue-500 hover:bg-blue-600 text-white font-sora font-semibold px-6 py-2 rounded-lg group transition-all duration-200">
                   {getButtonText(project.type)}
