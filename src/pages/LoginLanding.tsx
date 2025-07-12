@@ -1,4 +1,3 @@
-
 import React from 'react';
 import LoggedInNavbar from '@/components/LoggedInNavbar';
 import ShowWhatYouGotSection from '@/components/ShowWhatYouGotSection';
@@ -10,7 +9,7 @@ const LoginLanding = () => {
   const portfolioProjects = [
     {
       title: "Automated Assembly Line Design",
-      category: "Mechanical Engineering",
+      category: "Mechanical Engineering", 
       difficulty: "Advanced",
       duration: "Submitted 2 days ago",
       participants: 1,
@@ -20,10 +19,11 @@ const LoginLanding = () => {
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
       author: "Sarah Mitchell",
       comments: 3,
-      type: "portfolio" as const
+      type: "portfolio" as const,
+      rankLevel: "Gold"
     },
     {
-      title: "Wind Turbine Blade Optimization", 
+      title: "Wind Turbine Blade Optimization",
       category: "Aerospace Engineering",
       difficulty: "Expert",
       duration: "Submitted 1 week ago",
@@ -34,7 +34,8 @@ const LoginLanding = () => {
       image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
       author: "Marcus Chen",
       comments: 7,
-      type: "portfolio" as const
+      type: "portfolio" as const,
+      rankLevel: "Platinum"
     }
   ];
 
@@ -55,7 +56,7 @@ const LoginLanding = () => {
       type: "challenge" as const
     },
     {
-      title: "Heat Exchanger Redesign", 
+      title: "Heat Exchanger Redesign",
       category: "CAD Design",
       difficulty: "Advanced",
       duration: "6-8 hrs",
@@ -75,7 +76,7 @@ const LoginLanding = () => {
       title: "Modular Drone Frame",
       category: "Mechanical Design",
       difficulty: "Beginner",
-      duration: "2-3 hrs", 
+      duration: "2-3 hrs",
       participants: 23,
       rating: 4.2,
       description: "Design and prototype a modular drone frame system with interchangeable components.",
@@ -90,7 +91,7 @@ const LoginLanding = () => {
   const myProjects = [
     {
       title: "Cooling Plate Simulation",
-      category: "Thermal Analysis", 
+      category: "Thermal Analysis",
       difficulty: "Elite",
       duration: "8-10 hrs",
       participants: 78,
@@ -108,7 +109,7 @@ const LoginLanding = () => {
     {
       title: "Bracket Fatigue Test",
       category: "Structural Analysis",
-      difficulty: "Intermediate", 
+      difficulty: "Intermediate",
       duration: "5-7 hrs",
       participants: 45,
       rating: 4.4,

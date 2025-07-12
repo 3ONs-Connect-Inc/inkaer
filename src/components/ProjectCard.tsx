@@ -17,6 +17,7 @@ interface ProjectCardProps {
   author?: string;
   comments?: number;
   type?: 'portfolio' | 'challenge';
+  rankLevel?: string;
 }
 
 const ProjectCard = ({
@@ -31,7 +32,8 @@ const ProjectCard = ({
   image,
   author,
   comments,
-  type = 'challenge'
+  type = 'challenge',
+  rankLevel
 }: ProjectCardProps) => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -39,6 +41,17 @@ const ProjectCard = ({
       case 'Intermediate': return 'text-yellow-600 bg-yellow-100';
       case 'Advanced': return 'text-orange-600 bg-orange-100';
       case 'Elite': return 'text-red-600 bg-red-100';
+      default: return 'text-gray-600 bg-gray-100';
+    }
+  };
+
+  const getRankLevelColor = (rank: string) => {
+    switch (rank) {
+      case 'Bronze': return 'text-amber-700 bg-amber-100';
+      case 'Silver': return 'text-gray-700 bg-gray-100';
+      case 'Gold': return 'text-yellow-700 bg-yellow-100';
+      case 'Platinum': return 'text-blue-700 bg-blue-100';
+      case 'Diamond': return 'text-purple-700 bg-purple-100';
       default: return 'text-gray-600 bg-gray-100';
     }
   };
@@ -67,14 +80,20 @@ const ProjectCard = ({
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-        {/* Only show difficulty badge for challenges */}
-        {type === 'challenge' && (
-          <div className="absolute top-4 right-4">
+        
+        {/* Show difficulty badge for challenges or rank level for portfolio */}
+        <div className="absolute top-4 right-4">
+          {type === 'challenge' ? (
             <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(difficulty)}`}>
               {difficulty}
             </span>
-          </div>
-        )}
+          ) : rankLevel ? (
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getRankLevelColor(rankLevel)}`}>
+              {rankLevel}
+            </span>
+          ) : null}
+        </div>
+        
         <div className="absolute top-4 left-4">
           <span className={`px-3 py-1 ${getProjectTypeColor(type)} text-white rounded-full text-xs font-semibold font-sora capitalize`}>
             {type}

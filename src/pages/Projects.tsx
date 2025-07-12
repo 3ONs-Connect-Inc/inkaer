@@ -39,7 +39,8 @@ const Projects = () => {
       tags: ["React", "Node.js", "IoT"],
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop",
       author: "Sarah Chen",
-      type: "portfolio"
+      type: "portfolio",
+      rankLevel: "Silver"
     },
     {
       title: "Heat Exchanger Redesign", 
@@ -65,7 +66,8 @@ const Projects = () => {
       tags: ["CFD", "Simulation", "Thermal"],
       image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
       author: "Ivy Timmons",
-      type: "portfolio"
+      type: "portfolio",
+      rankLevel: "Diamond"
     },
     {
       title: "Bracket Fatigue Test",
@@ -103,6 +105,17 @@ const Projects = () => {
     }
   };
 
+  const getRankLevelColor = (rank: string) => {
+    switch (rank) {
+      case 'Bronze': return 'text-amber-700 bg-amber-100';
+      case 'Silver': return 'text-gray-700 bg-gray-100';
+      case 'Gold': return 'text-yellow-700 bg-yellow-100';
+      case 'Platinum': return 'text-blue-700 bg-blue-100';
+      case 'Diamond': return 'text-purple-700 bg-purple-100';
+      default: return 'text-gray-600 bg-gray-100';
+    }
+  };
+
   const getProjectTypeColor = (type: string) => {
     return type === 'portfolio' ? 'bg-blue-600' : 'bg-green-600';
   };
@@ -127,14 +140,18 @@ const Projects = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
             
-            {/* Only show difficulty for challenges */}
-            {project.type === 'challenge' && (
-              <div className="absolute top-4 right-4">
+            {/* Show difficulty for challenges or rank level for portfolio */}
+            <div className="absolute top-4 right-4">
+              {project.type === 'challenge' ? (
                 <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(project.difficulty)}`}>
                   {project.difficulty}
                 </span>
-              </div>
-            )}
+              ) : project.rankLevel ? (
+                <span className={`px-3 py-1 rounded-full text-xs font-semibold font-sora ${getRankLevelColor(project.rankLevel)}`}>
+                  {project.rankLevel}
+                </span>
+              ) : null}
+            </div>
             
             <div className="absolute top-4 left-4">
               <span className={`px-3 py-1 ${getProjectTypeColor(project.type)} text-white rounded-full text-xs font-semibold font-sora capitalize`}>
@@ -218,13 +235,18 @@ const Projects = () => {
                   {project.type}
                 </span>
               </div>
-              {project.type === 'challenge' && (
-                <div className="absolute top-3 right-3">
+              {/* Show difficulty for challenges or rank level for portfolio */}
+              <div className="absolute top-3 right-3">
+                {project.type === 'challenge' ? (
                   <span className={`px-2 py-1 rounded-full text-xs font-semibold font-sora ${getDifficultyColor(project.difficulty)}`}>
                     {project.difficulty}
                   </span>
-                </div>
-              )}
+                ) : project.rankLevel ? (
+                  <span className={`px-2 py-1 rounded-full text-xs font-semibold font-sora ${getRankLevelColor(project.rankLevel)}`}>
+                    {project.rankLevel}
+                  </span>
+                ) : null}
+              </div>
             </div>
 
             {/* Project Content */}
