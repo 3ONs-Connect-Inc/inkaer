@@ -9,16 +9,18 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import ProfileSearchBar from '@/components/ProfileSearchBar';
 
 const Navbar = () => {
   return (
     <section className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 py-2">
       <div className="container">
         <nav className="hidden justify-between lg:flex">
-          <div className="flex items-center">
+          <div className="flex items-center gap-8">
             <a href="/" className="flex items-center gap-2">
               <img src="/lovable-uploads/43b0acd6-b3f5-4c6c-8343-272a5aefe7c2.png" className="h-8 w-auto" alt="Inkaer" />
             </a>
+            <ProfileSearchBar className="w-64" />
           </div>
           <div className="flex items-center gap-6">
             <a href="/how-it-works" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200 font-sora font-medium">
@@ -42,10 +44,13 @@ const Navbar = () => {
           </div>
         </nav>
         <div className="block lg:hidden">
-          <div className="flex items-center justify-between">
-            <a href="/" className="flex items-center gap-2">
+          <div className="flex items-center justify-between gap-4">
+            <a href="/" className="flex items-center gap-2 flex-shrink-0">
               <img src="/lovable-uploads/43b0acd6-b3f5-4c6c-8343-272a5aefe7c2.png" className="h-8 w-auto" alt="Inkaer" />
             </a>
+            <div className="flex-1 max-w-xs">
+              <ProfileSearchBar />
+            </div>
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="text-gray-700 hover:text-inkaer-blue transition-colors duration-200">

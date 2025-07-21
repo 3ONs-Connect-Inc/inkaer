@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
+import ProfileSearchBar from '@/components/ProfileSearchBar';
 
 const LoggedInNavbar = () => {
   // Mock user data - in real app this would come from state/context
@@ -28,10 +29,11 @@ const LoggedInNavbar = () => {
     <section className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 py-2">
       <div className="container">
         <nav className="hidden justify-between lg:flex">
-          <div className="flex items-center">
+          <div className="flex items-center gap-8">
             <a href="/" className="flex items-center gap-2">
               <img src="/lovable-uploads/43b0acd6-b3f5-4c6c-8343-272a5aefe7c2.png" className="h-8 w-auto" alt="Inkaer" />
             </a>
+            <ProfileSearchBar className="w-64" />
           </div>
           
           <div className="flex items-center gap-6">
@@ -153,13 +155,17 @@ const LoggedInNavbar = () => {
         </nav>
         
         <div className="block lg:hidden">
-          <div className="flex items-center justify-between">
-            <a href="/" className="flex items-center gap-2">
+          <div className="flex items-center justify-between gap-2">
+            <a href="/" className="flex items-center gap-2 flex-shrink-0">
               <img src="/lovable-uploads/43b0acd6-b3f5-4c6c-8343-272a5aefe7c2.png" className="h-8 w-auto" alt="Inkaer" />
             </a>
             
+            <div className="flex-1 max-w-xs mx-2">
+              <ProfileSearchBar />
+            </div>
+            
             {/* Mobile Rank and Points - Now Clickable */}
-            <a href="/user-rank-dashboard" className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200 hover:shadow-md transition-all duration-200">
+            <a href="/user-rank-dashboard" className="flex items-center gap-2 px-2 py-1 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-full border border-blue-200 hover:shadow-md transition-all duration-200 flex-shrink-0">
               <div className="flex items-center gap-1">
                 <Crown className="w-3 h-3 text-inkaer-blue" />
                 <span className="text-xs font-sora font-semibold text-inkaer-blue">{userRank}</span>
