@@ -15,7 +15,7 @@ const Profile = () => {
       title: "Autonomous Drone Design",
       type: "Portfolio",
       difficulty: "Expert",
-      grade: "A+",
+      grade: 5,
       submittedDate: "2024-01-15",
       category: "Aerospace Engineering"
     },
@@ -24,7 +24,7 @@ const Profile = () => {
       title: "Thermal Management System",
       type: "Challenge",
       difficulty: "Intermediate",
-      grade: "A",
+      grade: 4,
       submittedDate: "2024-02-20",
       category: "Mechanical Engineering"
     },
@@ -33,7 +33,7 @@ const Profile = () => {
       title: "Smart Building HVAC",
       type: "Portfolio",
       difficulty: "Advanced",
-      grade: "A-",
+      grade: 4,
       submittedDate: "2024-03-10",
       category: "Civil Engineering"
     },
@@ -42,7 +42,7 @@ const Profile = () => {
       title: "Bridge Load Analysis",
       type: "Challenge",
       difficulty: "Beginner",
-      grade: "B+",
+      grade: 3,
       submittedDate: "2024-03-25",
       category: "Structural Engineering"
     }
@@ -52,27 +52,24 @@ const Profile = () => {
   const certifications = [
     {
       id: 1,
-      name: "Mechanical Engineering Professional",
-      domain: "Mechanical Engineering",
-      level: "Expert",
+      code: "ME4",
+      name: "Expert Mechanical Engineer",
       earnedDate: "2024-01-20",
       requirements: "Complete 3 Expert projects + Pass certification exam"
     },
     {
       id: 2,
-      name: "CAD Design Specialist",
-      domain: "Design Engineering",
-      level: "Advanced",
+      code: "ME3",
+      name: "Advanced Mechanical Engineer",
       earnedDate: "2024-02-15",
-      requirements: "Complete 5 CAD projects + Portfolio review"
+      requirements: "Complete 5 Advanced projects + Portfolio review"
     },
     {
       id: 3,
-      name: "Thermal Analysis Expert",
-      domain: "Thermal Engineering",
-      level: "Expert",
+      code: "ME2",
+      name: "Intermediate Mechanical Engineer",
       earnedDate: "2024-03-05",
-      requirements: "Complete thermal challenges + Peer review"
+      requirements: "Complete intermediate challenges + Peer review"
     }
   ];
 
@@ -86,11 +83,21 @@ const Profile = () => {
     }
   };
 
-  const getGradeColor = (grade: string) => {
-    if (grade.startsWith('A')) return 'text-green-600';
-    if (grade.startsWith('B')) return 'text-blue-600';
-    if (grade.startsWith('C')) return 'text-yellow-600';
-    return 'text-gray-600';
+  const renderStarRating = (rating: number) => {
+    return (
+      <div className="flex items-center gap-1">
+        {[1, 2, 3, 4, 5].map((star) => (
+          <Star
+            key={star}
+            className={`w-4 h-4 ${
+              star <= rating 
+                ? 'fill-yellow-400 text-yellow-400' 
+                : 'text-gray-300'
+            }`}
+          />
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -213,8 +220,9 @@ const Profile = () => {
                             </div>
                           </div>
                           <div className="flex flex-col sm:items-end gap-2">
-                            <div className={`font-sora font-bold text-xl ${getGradeColor(project.grade)}`}>
-                              {project.grade}
+                            <div className="flex flex-col items-center sm:items-end gap-1">
+                              {renderStarRating(project.grade)}
+                              <span className="text-sm text-gray-600 font-sora">{project.grade}/5</span>
                             </div>
                             <div className="flex items-center gap-1 text-sm text-gray-500">
                               <Clock className="w-4 h-4" />
@@ -239,27 +247,22 @@ const Profile = () => {
                 <CardContent>
                   <div className="space-y-4">
                     {certifications.map((cert) => (
-                      <div key={cert.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
-                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <CheckCircle className="w-5 h-5 text-green-600" />
-                              <h3 className="font-sora font-semibold text-lg">{cert.name}</h3>
+                        <div key={cert.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <CheckCircle className="w-5 h-5 text-green-600" />
+                                <h3 className="font-sora font-semibold text-lg">{cert.name}</h3>
+                              </div>
+                              <p className="text-sm text-gray-600 font-sora mb-2">Code: {cert.code}</p>
+                              <p className="text-xs text-gray-500 font-sora">{cert.requirements}</p>
                             </div>
-                            <p className="text-sm text-gray-600 font-sora mb-2">{cert.domain}</p>
-                            <p className="text-xs text-gray-500 font-sora">{cert.requirements}</p>
-                            <div className="mt-2">
-                              <Badge className={`text-xs ${getDifficultyColor(cert.level)}`}>
-                                {cert.level} Level
-                              </Badge>
+                            <div className="flex items-center gap-1 text-sm text-gray-500">
+                              <Calendar className="w-4 h-4" />
+                              <span className="font-sora">Earned {new Date(cert.earnedDate).toLocaleDateString()}</span>
                             </div>
-                          </div>
-                          <div className="flex items-center gap-1 text-sm text-gray-500">
-                            <Calendar className="w-4 h-4" />
-                            <span className="font-sora">Earned {new Date(cert.earnedDate).toLocaleDateString()}</span>
                           </div>
                         </div>
-                      </div>
                     ))}
                   </div>
                 </CardContent>
