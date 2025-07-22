@@ -48,10 +48,10 @@ const defaultSections = [
   {
     title: "Resources",
     links: [
-      { name: "Help Center", href: "#help" },
-      { name: "Community", href: "#community" },
-      { name: "Documentation", href: "#docs" },
-      { name: "Support", href: "#support" },
+      { name: "Help Center", href: "/help" },
+      { name: "Community", href: "/community" },
+      { name: "Documentation", href: "/documentation" },
+      { name: "Support", href: "/support" },
     ],
   },
 ];
@@ -64,8 +64,8 @@ const defaultSocialLinks = [
 ];
 
 const defaultLegalLinks = [
-  { name: "Terms and Conditions", href: "#terms" },
-  { name: "Privacy Policy", href: "#privacy" },
+  { name: "Terms and Conditions", href: "/terms" },
+  { name: "Privacy Policy", href: "/privacy" },
 ];
 
 export const Footer7 = ({

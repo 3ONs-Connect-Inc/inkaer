@@ -22,6 +22,10 @@ import Blog from './pages/Blog';
 import Contact from './pages/Contact';
 import Help from './pages/Help';
 import Community from './pages/Community';
+import Terms from './pages/Terms';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Documentation from './pages/Documentation';
+import Support from './pages/Support';
 import NotFound from './pages/NotFound';
 import './App.css';
 
@@ -50,6 +54,10 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/help" element={<Help />} />
         <Route path="/community" element={<Community />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/documentation" element={<Documentation />} />
+        <Route path="/support" element={<Support />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
