@@ -26,6 +26,9 @@ import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Documentation from './pages/Documentation';
 import Support from './pages/Support';
+import Settings from './pages/Settings';
+import Notifications from './pages/Notifications';
+import BillingAccount from './pages/BillingAccount';
 import NotFound from './pages/NotFound';
 import './App.css';
 
@@ -58,6 +61,9 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/support" element={<Support />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/billing" element={<BillingAccount />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
