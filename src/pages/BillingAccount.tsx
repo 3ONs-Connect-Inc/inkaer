@@ -18,7 +18,7 @@ const BillingAccount = () => {
   // Mock data
   const currentPlan = {
     name: 'Premium',
-    price: 29,
+    price: 9.99,
     billing: 'monthly',
     nextBilling: '2024-02-15',
     features: ['Unlimited storage', 'Priority support', 'Advanced analytics', 'Custom branding']
@@ -47,28 +47,28 @@ const BillingAccount = () => {
     {
       id: 'INV-001',
       date: '2024-01-15',
-      amount: 29.00,
+      amount: 9.99,
       status: 'paid',
       description: 'Premium Plan - January 2024'
     },
     {
       id: 'INV-002',
       date: '2023-12-15',
-      amount: 29.00,
+      amount: 9.99,
       status: 'paid',
       description: 'Premium Plan - December 2023'
     },
     {
       id: 'INV-003',
       date: '2023-11-15',
-      amount: 29.00,
+      amount: 9.99,
       status: 'paid',
       description: 'Premium Plan - November 2023'
     },
     {
       id: 'INV-004',
       date: '2023-10-15',
-      amount: 29.00,
+      amount: 9.99,
       status: 'paid',
       description: 'Premium Plan - October 2023'
     }
