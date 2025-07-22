@@ -121,7 +121,7 @@ const LoggedInNavbar = () => {
                 </DropdownMenuItem>
                 
                 <DropdownMenuItem asChild>
-                  <a href="/account" className="flex items-center cursor-pointer">
+                  <a href="/billing" className="flex items-center cursor-pointer">
                     <CreditCard className="mr-2 h-4 w-4" />
                     <span>Billing & Account</span>
                   </a>
