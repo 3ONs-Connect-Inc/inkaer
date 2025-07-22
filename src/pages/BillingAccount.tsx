@@ -21,7 +21,7 @@ const BillingAccount = () => {
     price: 9.99,
     billing: 'monthly',
     nextBilling: '2024-02-15',
-    features: ['Unlimited storage', 'Priority support', 'Advanced analytics', 'Custom branding']
+    features: ['Unlimited storage', 'Priority support', 'Profile boosting', 'See employer challenges', 'Priority job access']
   };
 
   const paymentMethods = [
@@ -163,7 +163,7 @@ const BillingAccount = () => {
             </div>
             <div>
               <div className="flex justify-between text-sm mb-2">
-                <span>Reviews Requested</span>
+                <span>Reviews</span>
                 <span>45 / Unlimited</span>
               </div>
               <div className="w-full bg-secondary rounded-full h-2">
