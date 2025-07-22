@@ -30,19 +30,19 @@ const defaultSections = [
   {
     title: "Product",
     links: [
-      { name: "How It Works", href: "#how-it-works" },
-      { name: "Projects", href: "#projects" },
-      { name: "Certification", href: "#certification" },
-      { name: "Rankings", href: "#rankings" },
+      { name: "How It Works", href: "/how-it-works" },
+      { name: "Projects", href: "/projects" },
+      { name: "Certification", href: "/certification" },
+      { name: "Rankings", href: "/rankings" },
     ],
   },
   {
     title: "Company",
     links: [
-      { name: "About", href: "#about" },
-      { name: "Careers", href: "#careers" },
-      { name: "Blog", href: "#blog" },
-      { name: "Contact", href: "#contact" },
+      { name: "About", href: "/about" },
+      { name: "Careers", href: "/careers" },
+      { name: "Blog", href: "/blog" },
+      { name: "Contact", href: "/contact" },
     ],
   },
   {
