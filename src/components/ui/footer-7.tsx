@@ -33,7 +33,7 @@ const defaultSections = [
       { name: "How It Works", href: "/how-it-works" },
       { name: "Projects", href: "/projects" },
       { name: "Certification", href: "/certifications" },
-      { name: "Rankings", href: "/rankings" },
+      { name: "Rankings", href: "/rank" },
     ],
   },
   {
