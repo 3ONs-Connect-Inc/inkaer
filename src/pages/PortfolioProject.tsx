@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Star, ThumbsUp, ThumbsDown, MessageSquare, FileText } from 'lucide-react';
+import { Star, ThumbsUp, ThumbsDown, MessageSquare, FileText, Download } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Vote {
@@ -135,6 +135,15 @@ const PortfolioProject = () => {
     return { upvotes, downvotes };
   };
 
+  const handleDownload = (filename: string) => {
+    // In a real app, this would download the actual file from the server
+    const link = document.createElement('a');
+    link.href = '#';
+    link.download = filename;
+    link.click();
+    toast.success(`Downloading ${filename}...`);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30 relative overflow-hidden">
       {/* Premium Background */}
@@ -180,9 +189,19 @@ const PortfolioProject = () => {
               {/* STEP File Viewer */}
               <Card className="bg-white/80 backdrop-blur-sm border-gray-200">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-2 font-sora">
-                    <FileText className="w-5 h-5" />
-                    3D Model ({project.stepFile})
+                  <CardTitle className="flex items-center justify-between font-sora">
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-5 h-5" />
+                      3D Model ({project.stepFile})
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDownload(project.stepFile)}
+                      className="text-gray-600 hover:text-gray-900"
+                    >
+                      <Download className="w-4 h-4" />
+                    </Button>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -199,9 +218,19 @@ const PortfolioProject = () => {
               {/* PDF Viewer */}
               <Card className="bg-white/80 backdrop-blur-sm border-gray-200">
                 <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-2 font-sora">
-                    <FileText className="w-5 h-5" />
-                    Report ({project.pdfFile})
+                  <CardTitle className="flex items-center justify-between font-sora">
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-5 h-5" />
+                      Report ({project.pdfFile})
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDownload(project.pdfFile)}
+                      className="text-gray-600 hover:text-gray-900"
+                    >
+                      <Download className="w-4 h-4" />
+                    </Button>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
