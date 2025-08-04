@@ -7,17 +7,22 @@ import { ChatInput } from '@/components/ui/chat-input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Upload, FileText, File, AlertTriangle, X } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Upload, FileText, File, AlertTriangle, X, Tag } from 'lucide-react';
 import { toast } from 'sonner';
 
 const UploadPortfolio = () => {
   const [stepFile, setStepFile] = useState<File | null>(null);
   const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [title, setTitle] = useState('');
   const [explanation, setExplanation] = useState('');
   const [selectedDomain, setSelectedDomain] = useState('mechanical');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [errors, setErrors] = useState({
     stepFile: '',
     pdfFile: '',
+    title: '',
     explanation: '',
     general: ''
   });
@@ -35,10 +40,18 @@ const UploadPortfolio = () => {
     { value: 'aerospace', label: 'Aerospace', available: false },
   ];
 
+  const predefinedTags = [
+    'CAD Design', 'Simulation', 'Prototyping', 'Manufacturing', 'Assembly',
+    'Analysis', 'Testing', 'Optimization', 'Materials', 'Thermal',
+    'Structural', 'Mechanical', 'Innovation', 'Automation', 'Robotics',
+    'Product Design', 'Research', 'Development', 'Engineering'
+  ];
+
   const clearErrors = () => {
     setErrors({
       stepFile: '',
       pdfFile: '',
+      title: '',
       explanation: '',
       general: ''
     });
@@ -116,6 +129,7 @@ const UploadPortfolio = () => {
     const newErrors = {
       stepFile: '',
       pdfFile: '',
+      title: '',
       explanation: '',
       general: ''
     };
@@ -126,6 +140,14 @@ const UploadPortfolio = () => {
 
     if (!pdfFile) {
       newErrors.pdfFile = 'PDF file is required';
+    }
+
+    if (!title.trim()) {
+      newErrors.title = 'Project title is required';
+    } else if (title.trim().length < 3) {
+      newErrors.title = 'Title must be at least 3 characters long';
+    } else if (title.trim().length > 100) {
+      newErrors.title = 'Title must not exceed 100 characters';
     }
 
     if (!explanation.trim()) {
@@ -160,12 +182,14 @@ const UploadPortfolio = () => {
       }
 
       toast.success('Project submitted successfully!');
-      console.log('Submitting project:', { stepFile, pdfFile, explanation, domain: selectedDomain });
+      console.log('Submitting project:', { stepFile, pdfFile, title, explanation, domain: selectedDomain, tags: selectedTags });
       
       // Reset form on success
       setStepFile(null);
       setPdfFile(null);
+      setTitle('');
       setExplanation('');
+      setSelectedTags([]);
       
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
@@ -184,6 +208,14 @@ const UploadPortfolio = () => {
       setPdfFile(null);
       setErrors(prev => ({ ...prev, pdfFile: '' }));
     }
+  };
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag)
+        : [...prev, tag]
+    );
   };
 
   return (
@@ -235,6 +267,75 @@ const UploadPortfolio = () => {
                 </Select>
               </div>
             </div>
+
+            {/* Project Title */}
+            <Card className={`bg-white/80 backdrop-blur-sm border-gray-200 shadow-lg mb-8 ${errors.title ? 'border-red-300' : ''}`}>
+              <CardHeader>
+                <CardTitle className="font-sora text-gray-900">Project Title</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {errors.title && (
+                  <Alert variant="destructive" className="mb-4">
+                    <AlertTriangle className="h-4 w-4" />
+                    <AlertDescription>{errors.title}</AlertDescription>
+                  </Alert>
+                )}
+                <Input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Enter your project title (3-100 characters)"
+                  className="font-sora"
+                  disabled={isSubmitting}
+                  maxLength={100}
+                />
+                <p className="text-sm text-gray-600 mt-2">
+                  {title.length}/100 characters
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Project Tags */}
+            <Card className="bg-white/80 backdrop-blur-sm border-gray-200 shadow-lg mb-8">
+              <CardHeader>
+                <CardTitle className="font-sora text-gray-900 flex items-center gap-2">
+                  <Tag className="w-5 h-5 text-inkaer-blue" />
+                  Project Tags
+                </CardTitle>
+                <p className="text-sm text-gray-600">
+                  Select relevant tags to categorize your project
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {predefinedTags.map((tag) => (
+                    <Badge
+                      key={tag}
+                      variant={selectedTags.includes(tag) ? "default" : "outline"}
+                      className={`cursor-pointer transition-colors font-sora ${
+                        selectedTags.includes(tag) 
+                          ? 'bg-inkaer-blue hover:bg-inkaer-dark-blue text-white' 
+                          : 'hover:bg-inkaer-blue hover:text-white'
+                      }`}
+                      onClick={() => toggleTag(tag)}
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+                {selectedTags.length > 0 && (
+                  <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                    <p className="text-sm font-medium text-gray-700 mb-2">Selected tags:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {selectedTags.map((tag) => (
+                        <Badge key={tag} className="bg-inkaer-blue text-white font-sora">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
             {/* General Error Alert */}
             {errors.general && (
