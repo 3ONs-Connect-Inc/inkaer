@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Star, ThumbsUp, ThumbsDown, MessageSquare, FileText, Download } from 'lucide-react';
+import { Star, ThumbsUp, ThumbsDown, MessageSquare, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Vote {
@@ -72,8 +72,6 @@ const PortfolioProject = () => {
     description: 'This project presents a comprehensive thermal analysis and optimization of a shell-and-tube heat exchanger design. The work includes detailed CFD simulations, performance analysis, and design recommendations for improved efficiency. The study demonstrates advanced engineering principles and practical application of thermal engineering concepts.',
     stepFile: 'heat_exchanger_model.step',
     pdfFile: 'thermal_analysis_report.pdf',
-    stepFileUrl: '/files/heat_exchanger_model.step', // Mock download URL
-    pdfFileUrl: '/files/thermal_analysis_report.pdf', // Mock download URL
     tags: ['Thermal Engineering', 'CFD', 'Heat Transfer', 'Design Optimization']
   };
 
@@ -137,20 +135,6 @@ const PortfolioProject = () => {
     return { upvotes, downvotes };
   };
 
-  const handleDownload = (fileUrl: string, fileName: string) => {
-    // In a real app, this would handle the actual file download
-    // For now, we'll simulate the download action
-    toast.success(`Downloading ${fileName}...`);
-    
-    // Mock download implementation
-    const link = document.createElement('a');
-    link.href = fileUrl;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-indigo-50/30 relative overflow-hidden">
       {/* Premium Background */}
@@ -196,21 +180,10 @@ const PortfolioProject = () => {
               {/* STEP File Viewer */}
               <Card className="bg-white/80 backdrop-blur-sm border-gray-200">
                 <CardHeader className="pb-4">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2 font-sora">
-                      <FileText className="w-5 h-5" />
-                      3D Model ({project.stepFile})
-                    </CardTitle>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleDownload(project.stepFileUrl, project.stepFile)}
-                      className="font-sora"
-                    >
-                      <Download className="w-4 h-4 mr-2" />
-                      Download STEP
-                    </Button>
-                  </div>
+                  <CardTitle className="flex items-center gap-2 font-sora">
+                    <FileText className="w-5 h-5" />
+                    3D Model ({project.stepFile})
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
@@ -226,21 +199,10 @@ const PortfolioProject = () => {
               {/* PDF Viewer */}
               <Card className="bg-white/80 backdrop-blur-sm border-gray-200">
                 <CardHeader className="pb-4">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2 font-sora">
-                      <FileText className="w-5 h-5" />
-                      Report ({project.pdfFile})
-                    </CardTitle>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleDownload(project.pdfFileUrl, project.pdfFile)}
-                      className="font-sora"
-                    >
-                      <Download className="w-4 h-4 mr-2" />
-                      Download PDF
-                    </Button>
-                  </div>
+                  <CardTitle className="flex items-center gap-2 font-sora">
+                    <FileText className="w-5 h-5" />
+                    Report ({project.pdfFile})
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="aspect-video bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
